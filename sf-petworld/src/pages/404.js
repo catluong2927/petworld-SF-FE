@@ -4,7 +4,7 @@ import Breadcrumb from "../components/breadcrumb/Breadcrumb";
 import {Footer1} from "../components/footer/Footer1";
 import Header1 from "../components/header/Header1";
 
-function errorPage() {
+function ErrorPage() {
   return (
     <>
       <Header1 />
@@ -17,7 +17,7 @@ function errorPage() {
                 <div className="error-img">
                   <img
                     className="img-fluid"
-                    src="assets/images/bg/error-img.png"
+                    src="/assets/images/bg/error-img.png"
                     alt=""
                   />
                 </div>
@@ -32,7 +32,7 @@ function errorPage() {
                 <div className="error-btn">
                   <Link legacyBehavior href="/">
                     <a className="primary-btn1">
-                      <img src="assets/images/icon/home-icon.svg" alt="" /> Back
+                      <img src="/assets/images/icon/home-icon.svg" alt="" /> Back
                       to home
                     </a>
                   </Link>
@@ -47,4 +47,4 @@ function errorPage() {
   );
 }
 
-export default errorPage;
+export default ErrorPage;
