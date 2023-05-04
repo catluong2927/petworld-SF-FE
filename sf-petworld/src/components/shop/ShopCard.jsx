@@ -16,7 +16,7 @@ function ShopCard() {
         })
         .catch(err => {console.log(err)
         })
-}, []);
+}, [products]);
 
 
 console.log(products)
