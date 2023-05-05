@@ -2,14 +2,19 @@ import {Link} from "react-router-dom";
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 
+
+
+
+
 function discoutPrice(price, sale){
   return price*(1 - (sale/100));
 }
 
-function ShopCard() {
-
-  const PRODUCT_API = `http://localhost:8080/api/products`;
+function ShopCard(props) {
+  console.log(props.sizePages);
+  const PRODUCT_API = process.env.REACT_APP_FETCH_API + `/products?size=${props.sizePages}`;
   const [products, setProducts] = useState([]);
+console.log(PRODUCT_API)
 
   useEffect(() => {
     axios
@@ -20,10 +25,9 @@ function ShopCard() {
         })
         .catch(err => {console.log(err)
         })
-  }, []);
+  }, [PRODUCT_API, props.sizePages]);
 
 
-console.log(products)
   return (
     <>
       {products.map((item) => {
