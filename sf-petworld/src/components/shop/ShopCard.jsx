@@ -2,6 +2,10 @@ import {Link} from "react-router-dom";
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 
+function discoutPrice(price, sale){
+  return price*(1 - (sale/100));
+}
+
 function ShopCard() {
 
   const PRODUCT_API = `http://localhost:8080/api/products`;
@@ -16,7 +20,7 @@ function ShopCard() {
         })
         .catch(err => {console.log(err)
         })
-}, [products]);
+  }, []);
 
 
 console.log(products)
@@ -26,7 +30,8 @@ console.log(products)
         const {
           name, 
           image,
-          price
+          price,
+          sale
         } = item;
         return (
           <div key={name} className="col-lg-4 col-md-4 col-sm-6">
@@ -75,8 +80,8 @@ console.log(products)
                   </Link>
                 </h4>
                 <div className="price">
-                  <h6>${price}</h6>
-                  <del>${price}</del>
+                  <h6>${discoutPrice(price, sale)}</h6>
+                  {sale !==  0 && <del>${price}</del>}
                 </div>
                 <div className="review">
                   <ul>
