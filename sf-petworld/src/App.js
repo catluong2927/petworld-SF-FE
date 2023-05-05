@@ -1,4 +1,3 @@
-
 import {createBrowserRouter,  RouterProvider} from "react-router-dom";
 import {ServicePackage, loaderPackages as packageLoader} from "./pages/ServicePackage";
 import ServiceDetails, {loader as serviceLoader} from "./pages/service-details";

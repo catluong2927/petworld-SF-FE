@@ -6,22 +6,7 @@ import '../../pages/test.css'
 
 const OtherServiceSlide = (props) => {
 
-    // ********Paging test************** //
-    const [currentPage, setCurrentPage] = useState(1);
-    const [pageSize, setPageSize] = useState(10);
-    const [data, setData] = useState([]);
-    const [totalCount, setTotalCount] = useState(0);
 
-    useEffect(() => {
-        const fetchPage = async () => {
-            const { data, totalCount } = await fetchData(currentPage, pageSize);
-            setData(data);
-            setTotalCount(totalCount);
-        };
-        fetchPage();
-    }, [currentPage, pageSize]);
-    const totalPages = Math.ceil(totalCount / pageSize);
-    //****************************//
 
   const servicePackages = useRouteLoaderData('packages');
   return (
