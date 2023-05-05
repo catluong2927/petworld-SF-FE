@@ -1,15 +1,21 @@
-
 import {createBrowserRouter,  RouterProvider} from "react-router-dom";
-import Header1 from "./components/header/Header1";
-import ShopCard from "./components/shop/ShopCard";
-import Shop from "./pages/shop.js";
+import {ServicePackage, loaderPackages as packageLoader} from "./pages/ServicePackage";
+import ServiceDetails, {loader as serviceLoader} from "./pages/service-details";
+import Shop from "./pages/shop";
+import Home1Service from "./components/service/Home1Service";
+
 
 
 const router = createBrowserRouter([
-  {path:  '/', element: <Shop/>},
-  // {path: '/shop', element: <Shop/>}
+  {path:  '/',children:[
+      {path: 'service-packages/search/:name',id:'packages', loader: packageLoader,  element: <ServicePackage/>},
+      {path: 'service-packages/:packageId',id:'services', loader: serviceLoader,  element: <ServiceDetails/>},
+      {path: 'shop', loader: packageLoader,  element: <Shop/>},
+      {path: 'test',  element: <Home1Service/>},
 
-])
+    ]},
+    ]
+)
 function App() {
   return (
       <RouterProvider router={router} />

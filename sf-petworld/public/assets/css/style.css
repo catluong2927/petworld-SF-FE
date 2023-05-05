@@ -4021,12 +4021,14 @@ a.ui-button:active,
  7. Home One Services
 =======================================*/
 .services-card1 {
-  background: #f3f2fd;
+  background: #ffffff;
   border-radius: 10px;
   padding: 30px 20px;
   position: relative;
   transition: 0.35s;
   overflow: hidden;
+  max-width: 18.75rem;
+  max-height: 25rem;
 }
 .services-card1 .services-card-vec {
   position: absolute;
@@ -4060,6 +4062,16 @@ a.ui-button:active,
   color: #868686;
   font-family: var(--font-cabin);
   line-height: 30px;
+}
+
+.services-card1::-webkit-scrollbar {
+  width: 5px;
+}
+.services-card1::-webkit-scrollbar-track {
+  background-color: #f0eccd;
+}
+.services-card1::-webkit-scrollbar-thumb {
+  background-color: lightslategray;
 }
 .services-card1 .more-btn {
   font-size: 1rem;
@@ -8762,7 +8774,8 @@ footer.style2 .social-area ul li:hover a i {
   width: 100%;
 }
 .services-details-area .tab-content1 .tab-pane img {
-  width: 100%;
+  width: 43.75rem;
+  height: 32.5rem;
 }
 .services-details-area .nav1 {
   gap: 16px;
@@ -12922,3 +12935,33 @@ select#duration:focus {
   border: none;
   outline: none;
 }/*# sourceMappingURL=style.css.map */
+
+/*ADD FOR NEW INTERFACE*/
+.pet-image{
+  width: 40%;
+  height: 60%;
+  margin-left: 20rem;
+  margin-top: 7rem;
+}
+.service-image {
+  width: 112px;
+  height: 113px;
+}
+.logo-image{
+  width: 19.5rem;
+  height: 21.25rem;
+  margin-top: 6.25rem;
+  margin-left: 100%;
+}
+.service-package-detail-content {
+  width: 100%;
+}
+.service-image-swiper {
+  max-width: 10rem;
+}
+.swiper-page-service-details {
+  max-width: 4rem;
+}
+.pagination-service-details {
+  max-width: 18.5rem;
+}

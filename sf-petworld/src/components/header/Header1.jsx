@@ -29,8 +29,7 @@ function reducer(state, action) {
 }
 
 function Header1() {
-  const location = useLocation();
-  const currentRoute = location.pathname;
+  const currentRoute = useLocation().pathname;
   const [state, dispatch] = useReducer(reducer, initialState);
   const headerRef = useRef(null);
   const handleScroll = () => {
@@ -54,22 +53,22 @@ function Header1() {
                 <div className="social-area">
                   <ul>
                     <li>
-                      <a to="https://www.facebook.com/">
+                      <a href="https://www.facebook.com/">
                         <i className="bx bxl-facebook" />
                       </a>
                     </li>
                     <li>
-                      <a to="https://twitter.com/">
+                      <a href="https://twitter.com/">
                         <i className="bx bxl-twitter" />
                       </a>
                     </li>
                     <li>
-                      <a to="https://www.pinterest.com/">
+                      <a href="https://www.pinterest.com/">
                         <i className="bx bxl-pinterest-alt" />
                       </a>
                     </li>
                     <li>
-                      <a to="https://www.instagram.com/">
+                      <a href="https://www.instagram.com/">
                         <i className="bx bxl-instagram" />
                       </a>
                     </li>
@@ -83,9 +82,9 @@ function Header1() {
                   </p>
                 </div>
                 <div className="contact-number">
-                  <a to="tel:+1(541)754-3020">
+                  <a href="tel:+1(541)754-3020">
                     +1 (541) 754-3010{" "}
-                    <img src="assets/images/icon/support.svg" alt="" />
+                    <img src="/assets/images/icon/support.svg" alt="" />
                   </a>
                 </div>
               </div>
@@ -108,7 +107,7 @@ function Header1() {
                   <img
                       alt="image"
                       className="img-fluid"
-                      src="assets/images/header1-logo.svg"
+                      src="/assets/images/header1-logo.svg"
                   />
                 </a>
               </Link>
@@ -125,7 +124,7 @@ function Header1() {
                   <Link legacyBehavior to="/">
                     <a>
                       {" "}
-                      <img alt="image" src="assets/images/header1-logo.svg" />
+                      <img alt="image" src="/assets/images/header1-logo.svg" />
                     </a>
                   </Link>
                 </div>
@@ -144,7 +143,7 @@ function Header1() {
                     <a className="drop-down">Home</a>
                   </Link>
                   <i
-                      className="bi bi-plus dropdown-icon"
+                      className="bi bi-plus dropdown-icon "
                       onClick={() => dispatch({ type: "home" })}
                   />
                   <ul
@@ -155,31 +154,31 @@ function Header1() {
                       }
                   >
                     <li>
-                      <Link className="active" legacyBehavior to="/">
+                      <Link className="active" legacyBehavior href="/">
                         <a className={currentRoute === "/" ? "active" : ""}>
                           Home One
                         </a>
                       </Link>
                     </li>
                     <li>
-                      <Link legacyBehavior to="/index2">
+                      <Link legacyBehavior href="/index2">
                         <a>Home Two</a>
                       </Link>
                     </li>
                     <li>
-                      <Link legacyBehavior to="/index3">
+                      <Link legacyBehavior href="/index3">
                         <a>Home Three</a>
                       </Link>
                     </li>
                   </ul>
                 </li>
                 <li className={currentRoute === "/about" ? "active" : ""}>
-                  <Link legacyBehavior to="/about">
+                  <Link legacyBehavior href="/about">
                     <a>About</a>
                   </Link>
                 </li>
                 <li className="menu-item-has-children">
-                  <Link legacyBehavior to="#">
+                  <Link legacyBehavior href="#">
                     <a>Services</a>
                   </Link>
                   <i
@@ -194,7 +193,7 @@ function Header1() {
                       }
                   >
                     <li>
-                      <Link legacyBehavior to="/service-details">
+                      <Link legacyBehavior href="/service-details">
                         <a
                             className={
                               currentRoute === "/service-details" ? "active" : ""
@@ -205,24 +204,24 @@ function Header1() {
                       </Link>
                     </li>
                     <li>
-                      <Link legacyBehavior to="/service-details">
+                      <Link legacyBehavior href="/service-details">
                         <a>Grooming</a>
                       </Link>
                     </li>
                     <li>
-                      <Link legacyBehavior to="/service-details">
+                      <Link legacyBehavior href="/service-details">
                         <a>Boarding</a>
                       </Link>
                     </li>
                     <li>
-                      <Link legacyBehavior to="/service-details">
+                      <Link legacyBehavior href="/service-details">
                         <a>Veterinary</a>
                       </Link>
                     </li>
                   </ul>
                 </li>
                 <li className="menu-item-has-children">
-                  <Link to="#" legacyBehavior>
+                  <Link href="#" legacyBehavior>
                     <a className="drop-down">Pages</a>
                   </Link>
                   <i
@@ -237,7 +236,7 @@ function Header1() {
                       }
                   >
                     <li>
-                      <Link legacyBehavior to="/pricing-plan">
+                      <Link legacyBehavior href="/pricing-plan">
                         <a
                             className={
                               currentRoute === "/pricing-plan" ? "active" : ""
@@ -248,14 +247,14 @@ function Header1() {
                       </Link>
                     </li>
                     <li>
-                      <Link legacyBehavior to="/login">
+                      <Link legacyBehavior href="/login">
                         <a className={currentRoute === "/login" ? "active" : ""}>
                           Login
                         </a>
                       </Link>
                     </li>
                     <li>
-                      <Link legacyBehavior to="/sign-up">
+                      <Link legacyBehavior href="/sign-up">
                         <a
                             className={currentRoute === "/sign-up" ? "active" : ""}
                         >
@@ -264,14 +263,14 @@ function Header1() {
                       </Link>
                     </li>
                     <li>
-                      <Link legacyBehavior to="/team">
+                      <Link legacyBehavior href="/team">
                         <a className={currentRoute === "/team" ? "active" : ""}>
                           Our Team
                         </a>
                       </Link>
                     </li>
                     <li>
-                      <Link legacyBehavior to="/gallery">
+                      <Link legacyBehavior href="/gallery">
                         <a
                             className={currentRoute === "/gallery" ? "active" : ""}
                         >
@@ -280,21 +279,21 @@ function Header1() {
                       </Link>
                     </li>
                     <li>
-                      <Link legacyBehavior to="/faq">
+                      <Link legacyBehavior href="/faq">
                         <a className={currentRoute === "/faq" ? "active" : ""}>
                           Faq
                         </a>
                       </Link>
                     </li>
                     <li>
-                      <Link legacyBehavior to="/error">
+                      <Link legacyBehavior href="/error">
                         <a>Error</a>
                       </Link>
                     </li>
                   </ul>
                 </li>
                 <li className="menu-item-has-children">
-                  <Link legacyBehavior to="#">
+                  <Link legacyBehavior href="#">
                     <a>Shop</a>
                   </Link>
                   <i
@@ -309,14 +308,14 @@ function Header1() {
                       }
                   >
                     <li>
-                      <Link legacyBehavior to="/shop">
+                      <Link legacyBehavior href="/shop">
                         <a className={currentRoute === "/shop" ? "active" : ""}>
                           Shop
                         </a>
                       </Link>
                     </li>
                     <li>
-                      <Link legacyBehavior to="/shop-details">
+                      <Link legacyBehavior href="/shop-details">
                         <a
                             className={
                               currentRoute === "/shop-details" ? "active" : ""
@@ -327,14 +326,14 @@ function Header1() {
                       </Link>
                     </li>
                     <li>
-                      <Link legacyBehavior to="/cart">
+                      <Link legacyBehavior href="/cart">
                         <a className={currentRoute === "/cart" ? "active" : ""}>
                           Cart
                         </a>
                       </Link>
                     </li>
                     <li>
-                      <Link legacyBehavior to="/check-out">
+                      <Link legacyBehavior href="/check-out">
                         <a
                             className={
                               currentRoute === "/check-out" ? "active" : ""
@@ -347,7 +346,7 @@ function Header1() {
                   </ul>
                 </li>
                 <li className="menu-item-has-children">
-                  <Link legacyBehavior to="#">
+                  <Link legacyBehavior href="#">
                     <a>Blog</a>
                   </Link>
                   <i
@@ -362,7 +361,7 @@ function Header1() {
                       }
                   >
                     <li>
-                      <Link legacyBehavior to="/blog-grid">
+                      <Link legacyBehavior href="/blog-grid">
                         <a
                             className={
                               currentRoute === "/blog-grid" ? "active" : ""
@@ -373,7 +372,7 @@ function Header1() {
                       </Link>
                     </li>
                     <li>
-                      <Link legacyBehavior to="/blog-grid-sidebar">
+                      <Link legacyBehavior href="/blog-grid-sidebar">
                         <a
                             className={
                               currentRoute === "/blog-grid-sidebar" ? "active" : ""
@@ -384,7 +383,7 @@ function Header1() {
                       </Link>
                     </li>
                     <li>
-                      <Link legacyBehavior to="/blog-standard">
+                      <Link legacyBehavior href="/blog-standard">
                         <a
                             className={
                               currentRoute === "/blog-standard" ? "active" : ""
@@ -395,7 +394,7 @@ function Header1() {
                       </Link>
                     </li>
                     <li>
-                      <Link legacyBehavior to="/blog-details">
+                      <Link legacyBehavior href="/blog-details">
                         <a
                             className={
                               currentRoute === "/blog-details" ? "active" : ""
@@ -408,7 +407,7 @@ function Header1() {
                   </ul>
                 </li>
                 <li className={currentRoute === "/contact" ? "active" : ""}>
-                  <Link legacyBehavior to="/contact">
+                  <Link legacyBehavior href="/contact">
                     <a>Contact</a>
                   </Link>
                 </li>
@@ -418,13 +417,13 @@ function Header1() {
                   <div className="hotline-info">
                     <span>Click To Call</span>
                     <h6>
-                      <a to="tel:+1(541)754-3010">+1 (541) 754-3010</a>
+                      <a href="tel:+1(541)754-3010">+1 (541) 754-3010</a>
                     </h6>
                   </div>
                 </div>
                 <ul className="social-link mb-5">
                   <li>
-                    <Link legacyBehavior to="/">
+                    <Link legacyBehavior href="/">
                       <svg
                           width={14}
                           height={13}
@@ -436,7 +435,7 @@ function Header1() {
                     </Link>
                   </li>
                   <li>
-                    <Link legacyBehavior to="/">
+                    <Link legacyBehavior href="/">
                       <a>
                         <svg
                             width={16}
@@ -450,7 +449,7 @@ function Header1() {
                     </Link>
                   </li>
                   <li>
-                    <Link legacyBehavior to="/">
+                    <Link legacyBehavior href="/">
                       <a>
                         <svg
                             width={15}
@@ -480,7 +479,7 @@ function Header1() {
             <div className="nav-right d-flex jsutify-content-end align-items-center">
               <ul>
                 <li className="search-btn">
-                  <Link legacyBehavior to="/">
+                  <Link legacyBehavior href="/">
                     <a>
                       <svg width={15} height={15} viewBox="0 0 15 15">
                         <path d="M13.8914 12.3212L11.3164 9.74312C11.1877 9.63999 11.0332 9.56265 10.8787 9.56265H10.4667C11.1619 8.6603 11.5997 7.52593 11.5997 6.26265C11.5997 3.32358 9.1792 0.900146 6.2437 0.900146C3.28245 0.900146 0.887695 3.32358 0.887695 6.26265C0.887695 9.22749 3.28245 11.6251 6.2437 11.6251C7.4797 11.6251 8.6127 11.2126 9.5397 10.4908V10.9291C9.5397 11.0837 9.5912 11.2384 9.71995 11.3673L12.2692 13.9197C12.5267 14.1775 12.9129 14.1775 13.1447 13.9197L13.8657 13.1978C14.1232 12.9658 14.1232 12.5791 13.8914 12.3212ZM6.2437 9.56265C4.41545 9.56265 2.9477 8.09312 2.9477 6.26265C2.9477 4.45796 4.41545 2.96265 6.2437 2.96265C8.0462 2.96265 9.5397 4.45796 9.5397 6.26265C9.5397 8.09312 8.0462 9.56265 6.2437 9.56265Z" />
@@ -497,7 +496,7 @@ function Header1() {
                   </form>
                 </li>
                 <li>
-                  <Link legacyBehavior to="/">
+                  <Link legacyBehavior href="/">
                     <a>
                       <svg
                           width={14}
@@ -511,7 +510,7 @@ function Header1() {
                   </Link>
                 </li>
                 <li>
-                  <Link legacyBehavior to="/">
+                  <Link legacyBehavior href="/">
                     <a>
                       <svg
                           width={16}
@@ -525,7 +524,7 @@ function Header1() {
                   </Link>
                 </li>
                 <li>
-                  <Link legacyBehavior to="/">
+                  <Link legacyBehavior href="/">
                     <a>
                       <svg
                           width={15}
