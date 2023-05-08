@@ -17,6 +17,7 @@ function Shop() {
   //Cập nhật lại size
   function handleSizeChange(event) {
     setSizePage(event.target.value);
+    setCurrentPage(0);
   }
 
   //Cập nhật lại số trang hiện tại
@@ -218,35 +219,6 @@ function Shop() {
               <div className="row pt-70">
                 <div className="col-lg-12 d-flex justify-content-center">
                   <div className="paginations-area">
-                    {/* <nav aria-label="Page navigation example">
-                      <ul className="pagination">
-                        <li className="page-item">
-                          <Link className="page-link" href="#">
-                            <i className="bi bi-arrow-left-short" />
-                          </Link>
-                        </li>
-                        <li className="page-item active">
-                          <Link className="page-link" href="#">
-                            01
-                          </Link>
-                        </li>
-                        <li className="page-item">
-                          <Link className="page-link" href="#">
-                            02
-                          </Link>
-                        </li>
-                        <li className="page-item">
-                          <Link className="page-link" href="#">
-                            03
-                          </Link>
-                        </li>
-                        <li className="page-item">
-                          <Link className="page-link" href="#">
-                            <i className="bi bi-arrow-right-short" />
-                          </Link>
-                        </li>
-                      </ul>
-                    </nav> */}
 
                     <nav aria-label="Page navigation example">
                       <ul className="pagination">
