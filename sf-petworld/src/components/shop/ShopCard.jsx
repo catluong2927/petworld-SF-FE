@@ -12,7 +12,7 @@ function discoutPrice(price, sale){
 
 function ShopCard(props) {
   console.log(props.sizePages);
-  const PRODUCT_API = process.env.REACT_APP_FETCH_API + `/products?size=${props.sizePages}`;
+  const PRODUCT_API = process.env.REACT_APP_FETCH_API + `/products?size=${props.sizePages}&page=${props.currentPage}`;
   const [products, setProducts] = useState([]);
 console.log(PRODUCT_API)
 
@@ -21,11 +21,11 @@ console.log(PRODUCT_API)
         .get(`${PRODUCT_API}`)
         .then(res => {
             setProducts(res.data.content)
-
+            props.setTotalPages(res.data.totalPages)
         })
         .catch(err => {console.log(err)
         })
-  }, [PRODUCT_API, props.sizePages]);
+  }, [PRODUCT_API, props]);
 
 
   return (
