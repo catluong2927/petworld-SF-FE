@@ -1,10 +1,23 @@
-import React from "react";
+import React, { useState } from "react";
+import { useParams } from "react-router-dom";
 import Breadcrumb from "../components/breadcrumb/Breadcrumb";
 import ShopCard from "../components/shop/ShopCard";
 import Layout from "../layout/Layout";
+import { useEffect } from "react";
+
 
 function Shop() {
   const [value, setValue] = React.useState(50);
+
+  const [sizePage, setSizePage] = useState();
+
+  const [pageNumber, setPageNumber] = useState(0);
+
+  
+  function handleChange(event){
+    setSizePage(event.target.value);
+  } 
+
   return (
     <Layout>
       <Breadcrumb pageName="Shop" pageTitle="Shop" />
@@ -154,12 +167,13 @@ function Shop() {
                         <select
                           className="defult-select-drowpown"
                           id="color-dropdown"
+                          onChange={handleChange}
                         >
-                          <option>12</option>
-                          <option>15</option>
-                          <option>18</option>
-                          <option>21</option>
-                          <option>25</option>
+                          <option name="9" value={"9"} >9</option>
+                          <option name="12" value={"12"} >12</option>
+                          <option name="15" value={"15"} >15</option>
+                          <option name="18" value={"18"} >18</option>
+                          <option name="21" value={"21"} >21</option>
                         </select>
                       </div>
                       <div className="single-select two">
@@ -178,7 +192,7 @@ function Shop() {
                 </div>
               </div>
               <div className="row g-4 justify-content-center">
-                <ShopCard />
+                <ShopCard sizePages={sizePage} />
               </div>
               <div className="row pt-70">
                 <div className="col-lg-12 d-flex justify-content-center">

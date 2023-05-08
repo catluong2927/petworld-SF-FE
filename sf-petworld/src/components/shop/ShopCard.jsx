@@ -1,24 +1,46 @@
 import {Link} from "react-router-dom";
-import React from "react";
-import petCollection from "../../data/petCollection.json";
-function ShopCard() {
+import React, { useState, useEffect } from "react";
+import axios from "axios";
+
+
+
+
+
+function discoutPrice(price, sale){
+  return price*(1 - (sale/100));
+}
+
+function ShopCard(props) {
+  console.log(props.sizePages);
+  const PRODUCT_API = process.env.REACT_APP_FETCH_API + `/products?size=${props.sizePages}`;
+  const [products, setProducts] = useState([]);
+console.log(PRODUCT_API)
+
+  useEffect(() => {
+    axios
+        .get(`${PRODUCT_API}`)
+        .then(res => {
+            setProducts(res.data.content)
+
+        })
+        .catch(err => {console.log(err)
+        })
+  }, [PRODUCT_API, props.sizePages]);
+
+
   return (
     <>
-      {petCollection.map((item) => {
+      {products.map((item) => {
         const {
-          id,
-          img,
-          title,
-          review,
-          offer_price,
-          regular_price,
-          tag,
-          tag_badge,
+          name, 
+          image,
+          price,
+          sale
         } = item;
         return (
-          <div key={id} className="col-lg-4 col-md-4 col-sm-6">
+          <div key={name} className="col-lg-4 col-md-4 col-sm-6">
             <div className="collection-card">
-              {tag == "" ? (
+              {/* {tag == "" ? (
                 ""
               ) : (
                 <div
@@ -28,10 +50,10 @@ function ShopCard() {
                 >
                   <span>{tag}</span>
                 </div>
-              )}
+              )} */}
               <div className="collection-img">
-                <img className="img-gluid" src={img} alt="" />
-                <div className="view-dt-btn">
+                <img className="img-gluid" style={{width:'200px', height:'200px'}} src={image} alt="" />
+                <div className="view-dt-btn">   
                   <div className="plus-icon">
                     <i className="bi bi-plus" />
                   </div>
@@ -58,12 +80,12 @@ function ShopCard() {
               <div className="collection-content text-center">
                 <h4>
                   <Link legacyBehavior to="/shop-details">
-                    <a>{title}</a>
+                    <a>{name}</a>
                   </Link>
                 </h4>
                 <div className="price">
-                  <h6>${offer_price}</h6>
-                  <del>${regular_price}</del>
+                  <h6>${discoutPrice(price, sale)}</h6>
+                  {sale !==  0 && <del>${price}</del>}
                 </div>
                 <div className="review">
                   <ul>
@@ -83,7 +105,7 @@ function ShopCard() {
                       <i className="bi bi-star-fill" />
                     </li>
                   </ul>
-                  <span>({review})</span>
+                  {/* <span>({review})</span> */}
                 </div>
               </div>
             </div>
