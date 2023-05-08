@@ -6,23 +6,14 @@ import '../../pages/test.css'
 
 const OtherServiceSlide = (props) => {
 
-    // ********Paging test************** //
-    const [currentPage, setCurrentPage] = useState(1);
-    const [pageSize, setPageSize] = useState(10);
-    const [data, setData] = useState([]);
-    const [totalCount, setTotalCount] = useState(0);
-
-    useEffect(() => {
-        const fetchPage = async () => {
-            const { data, totalCount } = await fetchData(currentPage, pageSize);
-            setData(data);
-            setTotalCount(totalCount);
-        };
-        fetchPage();
-    }, [currentPage, pageSize]);
-    const totalPages = Math.ceil(totalCount / pageSize);
-    //****************************//
-
+    const fetchData = async (page, pageSize) => {
+        const response = await fetch(`http://192.168.4.227:8080/api/service-packages/1`);
+        const data = await response.json();
+        const totalCount = response.headers.get('X-Total-Count');
+        console.log(data)
+        return data;
+    };
+    fetchData();
   const servicePackages = useRouteLoaderData('packages');
   return (
       <>
@@ -68,7 +59,7 @@ const OtherServiceSlide = (props) => {
                               <a>{element.name}</a>
                             </Link>
                           </h3>
-                            {element.products.map(service => (
+                            {element.services.map(service => (
                                 <p>{service.name}</p>
                             ))}
                         </div>
