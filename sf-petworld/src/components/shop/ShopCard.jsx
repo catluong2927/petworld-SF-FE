@@ -12,7 +12,7 @@ function discoutPrice(price, sale){
 
 function ShopCard(props) {
   console.log(props.sizePages);
-  const PRODUCT_API = process.env.REACT_APP_FETCH_API + `/products?size=${props.sizePages}`;
+  const PRODUCT_API = process.env.REACT_APP_FETCH_API + `/products?size=${props.sizePages}&page=${props.currentPage}`;
   const [products, setProducts] = useState([]);
 console.log(PRODUCT_API)
 
@@ -21,36 +21,34 @@ console.log(PRODUCT_API)
         .get(`${PRODUCT_API}`)
         .then(res => {
             setProducts(res.data.content)
-
+            props.setTotalPages(res.data.totalPages)
         })
         .catch(err => {console.log(err)
         })
-  }, [PRODUCT_API, props.sizePages]);
+  }, [PRODUCT_API, props]);
 
 
   return (
     <>
       {products.map((item) => {
         const {
+          productCode,
           name, 
           image,
           price,
-          sale
+          sale,
+          markDtoResponse
         } = item;
         return (
-          <div key={name} className="col-lg-4 col-md-4 col-sm-6">
+          <div key={productCode} className="col-lg-4 col-md-4 col-sm-6">
             <div className="collection-card">
-              {/* {tag == "" ? (
-                ""
-              ) : (
-                <div
-                  className={
-                    tag_badge === "" ? "offer-card" : `offer-card ${tag_badge}`
-                  }
+              {markDtoResponse.tag === "" ? ("") : (
+                <div 
+                  className= {markDtoResponse.tagBadge === "" ? "offer-card" : `offer-card ${markDtoResponse.tagBadge}`}
                 >
-                  <span>{tag}</span>
+                  <span>{markDtoResponse.tag}</span>
                 </div>
-              )} */}
+              )}
               <div className="collection-img">
                 <img className="img-gluid" style={{width:'200px', height:'200px'}} src={image} alt="" />
                 <div className="view-dt-btn">   
@@ -79,8 +77,8 @@ console.log(PRODUCT_API)
               </div>
               <div className="collection-content text-center">
                 <h4>
-                  <Link legacyBehavior to="/shop-details">
-                    <a>{name}</a>
+                  <Link legacyBehavior to={`/shop-details/${productCode}`} >
+                    {name}
                   </Link>
                 </h4>
                 <div className="price">

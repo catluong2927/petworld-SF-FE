@@ -1,22 +1,44 @@
 import React, { useState } from "react";
-import { useParams } from "react-router-dom";
+import { Link } from "react-router-dom";
 import Breadcrumb from "../components/breadcrumb/Breadcrumb";
 import ShopCard from "../components/shop/ShopCard";
 import Layout from "../layout/Layout";
-import { useEffect } from "react";
 
 
 function Shop() {
-  const [value, setValue] = React.useState(50);
 
-  const [sizePage, setSizePage] = useState();
+  const [sizePage, setSizePage] = useState(9);
 
-  const [pageNumber, setPageNumber] = useState(0);
+  const [currentPage, setCurrentPage] = useState(0);
 
-  
-  function handleChange(event){
+  const [totalPages, setTotalPages] = useState(0);
+
+
+  //Cập nhật lại size
+  function handleSizeChange(event) {
     setSizePage(event.target.value);
-  } 
+    setCurrentPage(0);
+  }
+
+  //Cập nhật lại số trang hiện tại
+  function changePageNumber(page) {
+    setCurrentPage(page);
+  };
+
+  //Phân trang
+  function contentPageNumber() {
+    let content = []
+    for (let i = 0; i < totalPages; i++) {
+      content.push(
+        <li className={`page-item ${currentPage === i ? 'active' : ''}`}>
+          <Link className="page-link" onClick={() => changePageNumber(i)}>
+            {i+1}
+          </Link>
+        </li>
+      )
+    }
+    return content;
+  }
 
   return (
     <Layout>
@@ -167,7 +189,7 @@ function Shop() {
                         <select
                           className="defult-select-drowpown"
                           id="color-dropdown"
-                          onChange={handleChange}
+                          onChange={handleSizeChange}
                         >
                           <option name="9" value={"9"} >9</option>
                           <option name="12" value={"12"} >12</option>
@@ -192,40 +214,28 @@ function Shop() {
                 </div>
               </div>
               <div className="row g-4 justify-content-center">
-                <ShopCard sizePages={sizePage} />
+                <ShopCard sizePages={sizePage} currentPage={currentPage} setTotalPages={setTotalPages} />
               </div>
               <div className="row pt-70">
                 <div className="col-lg-12 d-flex justify-content-center">
                   <div className="paginations-area">
+
                     <nav aria-label="Page navigation example">
                       <ul className="pagination">
-                        <li className="page-item">
-                          <a className="page-link" href="#">
+                        <li className={`page-item ${currentPage === 0 ? 'disabled' : ''}`}>
+                          <Link className="page-link" onClick={() => changePageNumber(currentPage - 1)}>
                             <i className="bi bi-arrow-left-short" />
-                          </a>
+                          </Link>
                         </li>
-                        <li className="page-item active">
-                          <a className="page-link" href="#">
-                            01
-                          </a>
-                        </li>
-                        <li className="page-item">
-                          <a className="page-link" href="#">
-                            02
-                          </a>
-                        </li>
-                        <li className="page-item">
-                          <a className="page-link" href="#">
-                            03
-                          </a>
-                        </li>
-                        <li className="page-item">
-                          <a className="page-link" href="#">
+                        {contentPageNumber()}
+                        <li className={`page-item ${currentPage === (totalPages - 1) ? 'disabled' : ''}`}>
+                          <Link className="page-link" onClick={() => changePageNumber(currentPage + 1)}>
                             <i className="bi bi-arrow-right-short" />
-                          </a>
+                          </Link>
                         </li>
                       </ul>
                     </nav>
+
                   </div>
                 </div>
               </div>
