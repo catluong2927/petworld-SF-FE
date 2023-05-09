@@ -1734,6 +1734,7 @@ header.style-1 .main-menu ul > li.menu-item-has-children::after {
 @media (max-width: 1500px) {
   header.style-1 .main-menu ul > li.menu-item-has-children::after {
     right: 5px;
+    top: 17px;
   }
 }
 @media (min-width: 992px) and (max-width: 1199px) {
@@ -12972,9 +12973,7 @@ select#duration:focus {
   margin-left: 170%;
 }
 #h1-homepage{
-  font-size: 2.2rem;!important;
-}
-.menu-list-navigation {
+  font-size: 2.2rem;
   color: #fff;
 }
 .h1-story-area {
@@ -12985,4 +12984,7 @@ select#duration:focus {
   margin-top: 5rem;
   width: 34rem;
   height: 28rem;
+}
+.menu-list-navigation{
+  color: #fff;
 }
