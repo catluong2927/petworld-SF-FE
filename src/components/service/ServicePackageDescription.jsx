@@ -1,12 +1,10 @@
 import React from "react";
-
-export const ServicePackageDescription = () => {
+export const ServicePackageDescription = (props) => {
     return (
         <div
             className="tab-content tab-content2"
             id="v-pills-tabContent2"
         >
-
             <div
                 className="tab-pane fade active show"
                 id="v-pills-home"
@@ -15,6 +13,7 @@ export const ServicePackageDescription = () => {
             >
                 <div className="description">
                     <p className="para-2 mb-3">
+                        {props.content} ///
                         Our pet care service provides various forms of care for
                         pets, including feeding, exercise, grooming, and overall
                         well-being. This type of service can be provided in the
