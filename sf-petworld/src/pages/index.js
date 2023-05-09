@@ -14,26 +14,25 @@ import Home1Service from "../components/service/Home1Service";
 import Home1Team from "../components/team/Home1Team";
 import Home1Testimonial from "../components/testimonial/Home1Testimonial";
 import VideoBanner1 from "../components/video/VideoBanner1";
-
 export default function Home() {
-  return (
-    <>
-      <Header1 />
-      <Banner1 />
-      <VideoBanner1 />
-      <Home1Service />
-      <Home1About />
-      <Home1feature />
-      <FeatureCounter />
-      <ChooseUs />
-      <Home1Partner />
-      <Home1PricePlan />
-      <Home1Testimonial />
-      <Home1Team />
-      <Home1Newslatter />
-      <Home1Blog />
-      <Home1Gallary />
-      <Footer1 />
-    </>
-  );
+    return (
+        <>
+            <Header1 />
+            <Banner1 />
+            <VideoBanner1 />
+            <Home1Service />
+            {/*<Home1About />*/}
+            {/*<Home1feature />*/}
+            <FeatureCounter />
+            {/*<ChooseUs />*/}
+            {/*<Home1Partner />*/}
+            {/*<Home1PricePlan />*/}
+            {/*<Home1Testimonial />*/}
+            {/*<Home1Team />*/}
+            {/*<Home1Newslatter />*/}
+            {/*<Home1Blog />*/}
+            {/*<Home1Gallary />*/}
+            <Footer1 />
+        </>
+    );
 }
