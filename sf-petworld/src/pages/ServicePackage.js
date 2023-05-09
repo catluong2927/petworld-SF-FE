@@ -92,11 +92,12 @@ export const ServicePackage = () => {
 export async function loaderPackages({request, params}) {
     const name = params.name;
 
-    const response = await fetch('https://6436d35a3e4d2b4a12dcb9a2.mockapi.io/api/v1/service-packages/'  );
+    const response = await fetch('http://192.168.4.227:8080/api/service-packages/'  );
     if (!response.ok) {
         throw json({message: "no result"}, {status: 500})
     } else {
         const resData = await response.json();
+        console.log(resData)
         return resData;
     }
 };

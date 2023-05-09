@@ -6,8 +6,19 @@ import '../../pages/test.css'
 
 const OtherServiceSlide = (props) => {
 
+<<<<<<< HEAD
+    const fetchData = async (page, pageSize) => {
+        const response = await fetch(`http://192.168.4.227:8080/api/service-packages/1`);
+        const data = await response.json();
+        const totalCount = response.headers.get('X-Total-Count');
+        console.log(data)
+        return data;
+    };
+    fetchData();
+=======
 
 
+>>>>>>> fa10c9d591fb149a0403f1589f4d619e0b2e31f9
   const servicePackages = useRouteLoaderData('packages');
   return (
       <>
@@ -53,7 +64,7 @@ const OtherServiceSlide = (props) => {
                               <a>{element.name}</a>
                             </Link>
                           </h3>
-                            {element.products.map(service => (
+                            {element.services.map(service => (
                                 <p>{service.name}</p>
                             ))}
                         </div>
