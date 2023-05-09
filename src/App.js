@@ -4,11 +4,15 @@ import ServiceDetails, {loader as serviceLoader} from "./pages/service-details";
 import Shop from "./pages/shop";
 import ShopDetail from "./pages/shop-details"
 import Home1Service from "./components/service/Home1Service";
+import Home from "./pages";
+import AboutPage from "./pages/about";
 
 
 
 const router = createBrowserRouter([
   {path:  '/',children:[
+      {index: true, element:<Home/>},
+      {path:'about', element:<AboutPage/>},
       {path: 'service-packages/search/:name',id:'packages', loader: packageLoader,  element: <ServicePackage/>},
       {path: 'service-packages/:packageId',id:'services', loader: serviceLoader,  element: <ServiceDetails/>},
       {path: 'shop', element: <Shop/>},
