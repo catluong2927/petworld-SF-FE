@@ -1,0 +1,121 @@
+[
+  {
+    "id": 1,
+    "img": "assets/images/bg/category/h3-collection-01.png",
+    "title": "Whiskas Cat Food Core Tuna",
+    "offer_price": "25.00",
+    "regular_price": "30.00",
+    "review": "30",
+    "tag": "offer"
+  },
+  {
+    "id": 2,
+    "img": "assets/images/bg/category/h3-collection-02.png",
+    "title": "Friskies Kitten Discoveries.",
+    "offer_price": "55.00",
+    "regular_price": "60.00",
+    "review": "33",
+    "tag": "hot",
+    "tag_badge": ""
+  },
+  {
+    "id": 3,
+    "img": "assets/images/bg/category/h3-collection-03.png",
+    "title": "Joules Cat Cotton House.",
+    "offer_price": "12.00",
+    "regular_price": "25.00",
+    "review": "10",
+    "tag": "Sold Out",
+    "tag_badge": "sold-out"
+  },
+  {
+    "id": 4,
+    "img": "assets/images/bg/category/h3-collection-04.png",
+    "title": "Natural Dog Fresh Food.",
+    "offer_price": "22.00",
+    "regular_price": "30.00",
+    "review": "30",
+    "tag": "",
+    "tag_badge": ""
+  },
+  {
+    "id": 5,
+    "img": "assets/images/bg/category/h3-collection-05.png",
+    "title": "Ferplast Cat Journey Bag.",
+    "offer_price": "15.00",
+    "regular_price": "35.00",
+    "review": "15",
+    "tag": "Sold Out",
+    "tag_badge": "sold-out"
+  },
+  {
+    "id": 6,
+    "img": "assets/images/bg/category/h3-collection-06.png",
+    "title": "Jungle Excellence Of Nature",
+    "offer_price": "25.00",
+    "regular_price": "30.00",
+    "review": "30",
+    "tag": "Hot Sale",
+    "tag_badge": "sale"
+  },
+  {
+    "id": 7,
+    "img": "assets/images/bg/category/h3-collection-07.png",
+    "title": "Rooibos Pet Food Supple",
+    "offer_price": "10.00",
+    "regular_price": "30.00",
+    "review": "15",
+    "tag": "Hot Sale",
+    "tag_badge": "sale"
+  },
+  {
+    "id": 8,
+    "img": "assets/images/bg/category/h3-collection-08.png",
+    "title": "Pedigree Natuar Dog Food",
+    "offer_price": "25.00",
+    "regular_price": "30.00",
+    "review": "3",
+    "tag": "Hot Sale",
+    "tag_badge": "sale"
+  },
+  {
+    "id": 9,
+    "img": "assets/images/bg/category/h3-collection-09.png",
+    "title": "Drools Nutrition Ocean Fish",
+    "offer_price": "25.00",
+    "regular_price": "30.00",
+    "review": "3",
+    "tag": "Hot Sale",
+    "tag_badge": "sale"
+  },
+  {
+    "id": 10,
+    "img": "assets/images/bg/category/h3-collection-10.png",
+    "title": "Cat Litter Formal Plan Fibre.",
+    "offer_price": "25.00",
+    "regular_price": "30.00",
+    "review": "3",
+    "tag": "Hot Sale",
+    "tag_badge": "sale"
+  },
+  {
+    "id": 11,
+    "img": "assets/images/bg/category/h3-collection-11.png",
+    "title": "Weruva Pates Slide Fortuni",
+    "offer_price": "25.00",
+    "regular_price": "30.00",
+    "review": "3",
+    "tag": "Hot Sale",
+    "tag_badge": "sale"
+  },
+  {
+    "id": 12,
+    "img": "assets/images/bg/category/h3-collection-12.png",
+    "title": "Dog Poops Cotton Bag.",
+    "offer_price": "25.00",
+    "regular_price": "30.00",
+    "review": "3",
+    "tag": "",
+    "tag_badge": ""
+  }
+]

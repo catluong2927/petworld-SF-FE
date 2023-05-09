@@ -1,0 +1,74 @@
+[
+  {
+    "id": 1,
+    "image": "assets/images/bg/team/team-001.png",
+    "designation": "Co-Founder",
+    "name": "Kash Preston"
+  },
+  {
+    "id": 2,
+    "image": "assets/images/bg/team/team-002.png",
+    "designation": "Kennel Assistant",
+    "name": "Scarlett Emily"
+  },
+  {
+    "id": 3,
+    "image": "assets/images/bg/team/team-003.png",
+    "designation": "Veterinary Assistant",
+    "name": "Jackson Mateo"
+  },
+  {
+    "id": 4,
+    "image": "assets/images/bg/team/team-004.png",
+    "designation": "Team Manager",
+    "name": "Luna Camila"
+  },
+  {
+    "id": 5,
+    "image": "assets/images/bg/team/team-005.png",
+    "designation": "Groomer Manager",
+    "name": "Madison Ellie"
+  },
+  {
+    "id": 6,
+    "image": "assets/images/bg/team/team-006.png",
+    "designation": "Dog Walker",
+    "name": "Elias Josiah"
+  },
+  {
+    "id": 7,
+    "image": "assets/images/bg/team/team-007.png",
+    "designation": "pet sitter",
+    "name": "Scarlett Emily"
+  },
+  {
+    "id": 8,
+    "image": "assets/images/bg/team/team-008.png",
+    "designation": "Cat Behaviorist",
+    "name": "Ezekiel Miles"
+  },
+  {
+    "id": 9,
+    "image": "assets/images/bg/team/team-009.png",
+    "designation": "Pet Trainer",
+    "name": "Cooper Waylon"
+  },
+  {
+    "id": 10,
+    "image": "assets/images/bg/team/team-0010.png",
+    "designation": "Veterinary Medicine",
+    "name": "Colton Roman"
+  },
+  {
+    "id": 11,
+    "image": "assets/images/bg/team/team-0011.png",
+    "designation": "Pet Trainer",
+    "name": "Daniel Michael"
+  },
+  {
+    "id": 12,
+    "image": "assets/images/bg/team/team-0012.png",
+    "designation": "Veterinary Medicine",
+    "name": "Julian Hudson"
+  }
+]

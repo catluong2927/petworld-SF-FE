@@ -1,0 +1,86 @@
+[
+  {
+    "id": 1,
+    "full_screen_img": "assets/images/bg/gallery/3col-big-img-01.png",
+    "small_img": "assets/images/bg/gallery/3col-gallery-01.png",
+    "category": "Grooming",
+    "categorySlug": "grooming"
+  },
+  {
+    "id": 2,
+    "full_screen_img": "assets/images/bg/gallery/3col-big-img-02.png",
+    "small_img": "assets/images/bg/gallery/3col-gallery-02.png",
+    "category": "Walking",
+    "categorySlug": "walking"
+  },
+  {
+    "id": 3,
+    "full_screen_img": "assets/images/bg/gallery/3col-big-img-03.png",
+    "small_img": "assets/images/bg/gallery/3col-gallery-03.png",
+    "category": "Day Care",
+    "categorySlug": "day Care"
+  },
+  {
+    "id": 4,
+    "full_screen_img": "assets/images/bg/gallery/3col-big-img-04.png",
+    "small_img": "assets/images/bg/gallery/3col-gallery-04.png",
+    "category": "Boarding",
+    "categorySlug": "boarding"
+  },
+  {
+    "id": 5,
+    "full_screen_img": "assets/images/bg/gallery/3col-big-img-05.png",
+    "small_img": "assets/images/bg/gallery/3col-gallery-05.png",
+    "category": "Veterinary",
+    "categorySlug": "veterinary"
+  },
+  {
+    "id": 6,
+    "full_screen_img": "assets/images/bg/gallery/3col-big-img-06.png",
+    "small_img": "assets/images/bg/gallery/3col-gallery-06.png",
+    "category": "Grooming",
+    "categorySlug": "grooming"
+  },
+  {
+    "id": 7,
+    "full_screen_img": "assets/images/bg/gallery/3col-big-img-07.png",
+    "small_img": "assets/images/bg/gallery/3col-gallery-07.png",
+    "category": "Walking",
+    "categorySlug": "walking"
+  },
+  {
+    "id": 8,
+    "full_screen_img": "assets/images/bg/gallery/3col-big-img-08.png",
+    "small_img": "assets/images/bg/gallery/3col-gallery-08.png",
+    "category": "Day Care",
+    "categorySlug": "day Care"
+  },
+  {
+    "id": 9,
+    "full_screen_img": "assets/images/bg/gallery/3col-big-img-09.png",
+    "small_img": "assets/images/bg/gallery/3col-gallery-09.png",
+    "category": "Boarding",
+    "categorySlug": "boarding"
+  },
+  {
+    "id": 10,
+    "full_screen_img": "assets/images/bg/gallery/3col-big-img-010.png",
+    "small_img": "assets/images/bg/gallery/3col-gallery-010.png",
+    "category": "Boarding",
+    "categorySlug": "boarding"
+  },
+  {
+    "id": 11,
+    "full_screen_img": "assets/images/bg/gallery/3col-big-img-011.png",
+    "small_img": "assets/images/bg/gallery/3col-gallery-011.png",
+    "category": "Boarding",
+    "categorySlug": "boarding"
+  },
+  {
+    "id": 12,
+    "full_screen_img": "assets/images/bg/gallery/3col-big-img-012.png",
+    "small_img": "assets/images/bg/gallery/3col-gallery-012.png",
+    "category": "Boarding",
+    "categorySlug": "boarding"
+  }
+]

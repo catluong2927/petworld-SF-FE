@@ -1,0 +1,96 @@
+.service-package{
+    margin: 50px 0;
+}
+.service-package-wrapper {
+    display: flex;
+}
+@media (min-width: 992px) and (max-width: 1199px){
+    .service-package-wrapper {
+        padding-top: 90px;
+    }
+}
+.service-package-sidebar {
+    margin: 7.1rem 0 1.25rem 1.25rem;
+    background: #fef5f0;
+    box-shadow: 0 0 30px rgba(0, 0, 0, 0.04);
+    border-radius: 5px;
+    padding: 25px 25px;
+    position: relative;
+}
+@media (min-width: 992px) {
+    .service-package-sidebar {
+        flex: 0 0 auto;
+        width: 20%;
+    }
+}
+
+/*header*/
+.service-package-check-box-item{
+    display: block;
+}
+.service-package-widget-title{
+    font-size: 1.375rem;
+    font-weight: 600;
+    color: var(--title-color1);
+    font-family: var(--font-dosis);
+    margin-bottom: 20px;
+}
+.service-package-sidebar .service-package-widget-title::after {
+    content: "";
+    opacity: 0.05;
+    background: var(--title-color1);
+    height: 1px;
+    width: 100%;
+    position: absolute;
+    left: 0;
+    top: 73px;
+}
+.service-package-checkbox-container {
+    padding-top: 28px;
+    padding-right: 0 ;
+}
+.service-package-checkbox-container input {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+    height: 0;
+    width: 0;
+}
+.service-package-checkbox-label{
+    display: block;
+    position: relative;
+    padding-left: 35px;
+    margin-bottom: 12px;
+    cursor: pointer;
+    font-size: 18px;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    font-weight: 400;
+    font-family: var(--font-cabin);
+    color: #767676;
+}
+
+.service-package-checkmark {
+    position: absolute;
+    top: 2px;
+    left: 0;
+    height: 20px;
+    width: 20px;
+    background-color: transparent;
+    border: 1px solid #767676;
+    border-radius: 3px;
+}
+.service-package-content {
+    max-width: 80%;
+}
+.service-package-content{
+    margin-left: 20px;
+}
+@media (min-width: 992px) {
+    .service-package-content {
+        flex: 0 0 auto;
+        width: 80%;
+    }
+}
