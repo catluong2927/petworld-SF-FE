@@ -164,7 +164,7 @@ function Header1() {
                       }
                   >
                     <li>
-                      <Link legacyBehavior to="/service-package/Day Care">
+                      <Link legacyBehavior to="/service-packages/search/Day Care">
                         <a
                             className={
                               currentRoute === "/service-details" ? "active" : ""
@@ -175,17 +175,17 @@ function Header1() {
                       </Link>
                     </li>
                     <li>
-                      <Link legacyBehavior to="/service-package/Sa Pa">
+                      <Link legacyBehavior to="/service-packages/search/Sa Pa">
                         <a>Sapa</a>
                       </Link>
                     </li>
                     <li>
-                      <Link legacyBehavior to="/service-package/Health Care">
+                      <Link legacyBehavior to="/service-packages/search/Health Care">
                         <a>Health Care</a>
                       </Link>
                     </li>
                     <li>
-                      <Link legacyBehavior to="/service-package/Day Care">
+                      <Link legacyBehavior to="/service-packages/search/Day Care">
                         <a>Veterinary</a>
                       </Link>
                     </li>
