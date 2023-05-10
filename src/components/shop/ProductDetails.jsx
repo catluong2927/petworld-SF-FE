@@ -1,9 +1,15 @@
-import {Link} from "react-router-dom";
-
+import { Link } from "react-router-dom";
 import React from "react";
 import ProductPriceCount from "./ProductPriceCount";
 
-function ProductDetails() {
+
+function ProductDetails(props) {
+  const product = props.productDetail;
+
+  function discoutPrice(price, sale){
+    return price*(1 - (sale/100));
+  }
+
   return (
     <>
       <div className="row g-lg-4 gy-5 mb-120">
@@ -17,7 +23,7 @@ function ProductDetails() {
             >
               <img
                 className="img-fluid"
-                src="assets/images/bg/shop-big-01.png"
+                src="../assets/images/bg/shop-big-01.png"
                 alt=""
               />
             </div>
@@ -29,7 +35,7 @@ function ProductDetails() {
             >
               <img
                 className="img-fluid"
-                src="assets/images/bg/shop-big-02.png"
+                src="../assets/images/bg/shop-big-02.png"
                 alt=""
               />
             </div>
@@ -41,7 +47,7 @@ function ProductDetails() {
             >
               <img
                 className="img-fluid"
-                src="assets/images/bg/shop-big-03.png"
+                src="../assets/images/bg/shop-big-03.png"
                 alt=""
               />
             </div>
@@ -53,7 +59,7 @@ function ProductDetails() {
             >
               <img
                 className="img-fluid"
-                src="assets/images/bg/shop-big-04.png"
+                src="../assets/images/bg/shop-big-04.png"
                 alt=""
               />
             </div>
@@ -65,7 +71,7 @@ function ProductDetails() {
             >
               <img
                 className="img-fluid"
-                src="assets/images/bg/shop-big-05.png"
+                src="../assets/images/bg/shop-big-05.png"
                 alt=""
               />
             </div>
@@ -86,7 +92,7 @@ function ProductDetails() {
               aria-controls="v-pills-img1"
               aria-selected="true"
             >
-              <img src="assets/images/bg/shop-sm-01.png" alt="" />
+              <img src="../assets/images/bg/shop-sm-01.png" alt="" />
             </button>
             <button
               className="nav-link"
@@ -98,7 +104,7 @@ function ProductDetails() {
               aria-controls="v-pills-img2"
               aria-selected="false"
             >
-              <img src="assets/images/bg/shop-sm-02.png" alt="" />
+              <img src="../assets/images/bg/shop-sm-02.png" alt="" />
             </button>
             <button
               className="nav-link"
@@ -110,7 +116,7 @@ function ProductDetails() {
               aria-controls="v-pills-img3"
               aria-selected="false"
             >
-              <img src="assets/images/bg/shop-sm-03.png" alt="" />
+              <img src="../assets/images/bg/shop-sm-03.png" alt="" />
             </button>
             <button
               className="nav-link"
@@ -122,7 +128,7 @@ function ProductDetails() {
               aria-controls="v-pills-img4"
               aria-selected="false"
             >
-              <img src="assets/images/bg/shop-sm-04.png" alt="" />
+              <img src="../assets/images/bg/shop-sm-04.png" alt="" />
             </button>
             <button
               className="nav-link"
@@ -134,13 +140,13 @@ function ProductDetails() {
               aria-controls="v-pills-img5"
               aria-selected="false"
             >
-              <img src="assets/images/bg/shop-sm-05.png" alt="" />
+              <img src="../assets/images/bg/shop-sm-05.png" alt="" />
             </button>
           </div>
         </div>
         <div className="col-lg-5">
           <div className="shop-details-content">
-            <h3>To Make Delicious Food Item.</h3>
+            <h3>{product.name}</h3>
             <ul className="shopuct-review2 d-flex flex-row align-items-center mb-25">
               <li>
                 <i className="bi bi-star-fill" />
@@ -164,20 +170,19 @@ function ProductDetails() {
               </li>
             </ul>
             <div className="model-number">
-              <span>SKU:9852410</span>
+              <span>{product.productCode}</span>
             </div>
             <div className="price-tag">
               <h4>
-                $50.00 <del>$80.00</del>
+                ${discoutPrice(product.price, product.sale)} {product.sale !==  0 && <del>${product.price}</del>}
               </h4>
             </div>
             <p>
-              Donec bibendum enim ut elit porta ullamcorper. Vestibulum Nai
-              wekemdini iaculis vitae nulla. Morbi mattis nec mi ac mollis.{" "}
+              {product.description} {" "}
             </p>
             <div className="shop-quantity d-flex align-items-center justify-content-start mb-20">
               <div className="quantity d-flex align-items-center">
-                <ProductPriceCount price={30} />
+                <ProductPriceCount price={product.price} />
               </div>
               <Link legacyBehavior to="/cart">
                 <a className="primary-btn3">Add to cart</a>
@@ -193,7 +198,7 @@ function ProductDetails() {
                 <li>
                   <a to="#">
                     <span>
-                      <img src="assets/images/icon/compare.svg" alt="" />
+                      <img src="../assets/images/icon/compare.svg" alt="" />
                     </span>{" "}
                     Compare
                   </a>
@@ -202,7 +207,7 @@ function ProductDetails() {
                   <a to="#">
                     <span>
                       <img
-                        src="assets/images/icon/Icon-favorites2.svg"
+                        src="../assets/images/icon/Icon-favorites2.svg"
                         alt=""
                       />
                     </span>{" "}
@@ -215,25 +220,25 @@ function ProductDetails() {
               <h6>Guaranted Safe Checkout</h6>
               <ul>
                 <li>
-                  <img src="assets/images/icon/visa2.svg" alt="" />
+                  <img src="../assets/images/icon/visa2.svg" alt="" />
                 </li>
                 <li>
-                  <img src="assets/images/icon/amex.svg" alt="" />
+                  <img src="../assets/images/icon/amex.svg" alt="" />
                 </li>
                 <li>
-                  <img src="assets/images/icon/discover.svg" alt="" />
+                  <img src="../assets/images/icon/discover.svg" alt="" />
                 </li>
                 <li>
-                  <img src="assets/images/icon/mastercard.svg" alt="" />
+                  <img src="../assets/images/icon/mastercard.svg" alt="" />
                 </li>
                 <li>
-                  <img src="assets/images/icon/stripe.svg" alt="" />
+                  <img src="../assets/images/icon/stripe.svg" alt="" />
                 </li>
                 <li>
-                  <img src="assets/images/icon/paypal.svg" alt="" />
+                  <img src="../assets/images/icon/paypal.svg" alt="" />
                 </li>
                 <li>
-                  <img src="assets/images/icon/pay.svg" alt="" />
+                  <img src="../assets/images/icon/pay.svg" alt="" />
                 </li>
               </ul>
             </div>

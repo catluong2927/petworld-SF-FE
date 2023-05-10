@@ -12,7 +12,7 @@ const router = createBrowserRouter([
       {path: 'service-packages/search/:name',id:'packages', loader: packageLoader,  element: <ServicePackage/>},
       {path: 'service-packages/:packageId',id:'services', loader: serviceLoader,  element: <ServiceDetails/>},
       {path: 'shop', element: <Shop/>},
-      {path: 'shop-details/:productCode', element: <ShopDetail/>},
+      {path: 'shop-details/:productId', element: <ShopDetail/>},
       {path: 'test',  element: <Home1Service/>},
 
     ]},

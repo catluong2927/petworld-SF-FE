@@ -2,10 +2,6 @@ import {Link} from "react-router-dom";
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 
-
-
-
-
 function discoutPrice(price, sale){
   return price*(1 - (sale/100));
 }
@@ -32,7 +28,7 @@ console.log(PRODUCT_API)
     <>
       {products.map((item) => {
         const {
-          productCode,
+          id,
           name, 
           image,
           price,
@@ -40,7 +36,7 @@ console.log(PRODUCT_API)
           markDtoResponse
         } = item;
         return (
-          <div key={productCode} className="col-lg-4 col-md-4 col-sm-6">
+          <div key={id} className="col-lg-4 col-md-4 col-sm-6">
             <div className="collection-card">
               {markDtoResponse.tag === "" ? ("") : (
                 <div 
@@ -77,7 +73,7 @@ console.log(PRODUCT_API)
               </div>
               <div className="collection-content text-center">
                 <h4>
-                  <Link legacyBehavior to={`/shop-details/${productCode}`} >
+                  <Link legacyBehavior to={`/shop-details/${id}`} >
                     {name}
                   </Link>
                 </h4>
