@@ -42,10 +42,10 @@ export const Footer1 = () => {
                   </div>
                   <div className="email-info">
                     <h6 className="mb-10">
-                      <a>168/170, Avenue 01, Mirpur</a>
+                      <p>168/170, Avenue 01, Mirpur</p>
                     </h6>
                     <h6>
-                      <a>DOHS, Bangladesh</a>
+                      <p>DOHS, Bangladesh</p>
                     </h6>
                   </div>
                 </div>
@@ -66,7 +66,7 @@ export const Footer1 = () => {
                     }
                 >
                   <Link to="/contact">
-                    <a
+                    <p
                         className={
                           currentRouter === "/index2"
                               ? "primary-btn2"
@@ -74,7 +74,7 @@ export const Footer1 = () => {
                         }
                     >
                       Book Now
-                    </a>
+                    </p>
                   </Link>
                 </div>
               </div>

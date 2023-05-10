@@ -1,4 +1,4 @@
-import {Await,  Link,  useRouteLoaderData} from 'react-router-dom'
+import {Await, Link, NavLink, useRouteLoaderData} from 'react-router-dom'
 import React, { useState, Suspense, useEffect} from "react";
 import {Audio} from 'react-loader-spinner';
 import '../../pages/test.css'
@@ -13,16 +13,6 @@ const OtherServiceSlide = (props) => {
     // const servicePackages = useRouteLoaderData('packages');
     return (
         <>
-            <Suspense fallback={<Audio
-                height="80"
-                width="80"
-                radius="9"
-                color="green"
-                ariaLabel="loading"
-                wrapperStyle
-                wrapperClass
-            />}>
-                <Await resolve={servicePackages}>
                     {
                         <>
                             <div className="row">
@@ -49,25 +39,23 @@ const OtherServiceSlide = (props) => {
                                         </div>
                                         <div className="content package-content">
                                             <h3>
-                                                <Link legacyBehavior to={`/service-packages/${element.id}`}>
+                                                <NavLink to={`/service-packages/${element.id}`}>
                                                     <a>{element.name}</a>
-                                                </Link>
+                                                </NavLink>
                                             </h3>
                                             <p>{element.description}</p>
                                         </div>
-                                        <Link legacyBehavior to={`/service-packages/${element.id}`}>
+                                        <Link  to={`/service-packages/${element.id}`}>
                                             <a className="more-btn">
                                                 More Details
                                                 <img src="/assets/images/icon/btn-arrow1.svg" alt="" />
                                             </a>
-                                        </Link>
+                                        </Link >
                                     </div>
                                 )}
                             </div>
                         </>
                     }
-                </Await>
-            </Suspense>
         </>
     );
 }

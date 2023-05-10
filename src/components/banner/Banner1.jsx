@@ -3,7 +3,7 @@ import React from "react";
 import Morphext from "../morphext/Morphext";
 
 function Banner1() {
-  const phrases = ["Cart .", "Dog .", "Cat ."];
+  const phrases = ["Dog .", "Cat ."];
   return (
     <div className="hero-style-1">
       <div className="container-fluid">
@@ -38,76 +38,6 @@ function Banner1() {
                     alt=""
                   />
                 </div>
-                {/*<div className="reservation-review">*/}
-                  {/*<div className="reservation-btn">*/}
-                  {/*  <Link legacyBehavior to="/contact">*/}
-                  {/*    <a className="primary-btn1">Make A Reservation</a>*/}
-                  {/*  </Link>*/}
-                  {/*</div>*/}
-                  {/*<div className="review-area">*/}
-                    {/*<ul>*/}
-                      {/*<li>*/}
-                      {/*  <div className="single-review">*/}
-                      {/*    <div className="icon">*/}
-                      {/*      <img*/}
-                      {/*        src="assets/images/icon/trustpilot001.svg"*/}
-                      {/*        alt=""*/}
-                      {/*      />*/}
-                      {/*      <span>reviews</span>*/}
-                      {/*    </div>*/}
-                      {/*    <div className="reviews">*/}
-                      {/*      <ul>*/}
-                      {/*        <li>*/}
-                      {/*          <i className="bi bi-star-fill" />*/}
-                      {/*        </li>*/}
-                      {/*        <li>*/}
-                      {/*          <i className="bi bi-star-fill" />*/}
-                      {/*        </li>*/}
-                      {/*        <li>*/}
-                      {/*          <i className="bi bi-star-fill" />*/}
-                      {/*        </li>*/}
-                      {/*        <li>*/}
-                      {/*          <i className="bi bi-star-fill" />*/}
-                      {/*        </li>*/}
-                      {/*        <li>*/}
-                      {/*          <i className="bi bi-star-fill" />*/}
-                      {/*        </li>*/}
-                      {/*      </ul>*/}
-                      {/*      <span>(200)</span>*/}
-                      {/*    </div>*/}
-                      {/*  </div>*/}
-                      {/*</li>*/}
-                      {/*<li>*/}
-                        {/*<div className="single-review">*/}
-                        {/*  <div className="icon">*/}
-                        {/*    <img src="assets/images/icon/google2.svg" alt="" />*/}
-                        {/*    <span>reviews</span>*/}
-                        {/*  </div>*/}
-                          {/*<div className="reviews">*/}
-                          {/*  <ul>*/}
-                          {/*    <li>*/}
-                          {/*      <i className="bi bi-star-fill" />*/}
-                          {/*    </li>*/}
-                          {/*    <li>*/}
-                          {/*      <i className="bi bi-star-fill" />*/}
-                          {/*    </li>*/}
-                          {/*    <li>*/}
-                          {/*      <i className="bi bi-star-fill" />*/}
-                          {/*    </li>*/}
-                          {/*    <li>*/}
-                          {/*      <i className="bi bi-star-fill" />*/}
-                          {/*    </li>*/}
-                          {/*    <li>*/}
-                          {/*      <i className="bi bi-star-fill" />*/}
-                          {/*    </li>*/}
-                          {/*  </ul>*/}
-                          {/*  <span>(300)</span>*/}
-                          {/*</div>*/}
-                        {/*</div>*/}
-                      {/*</li>*/}
-                    {/*</ul>*/}
-                  {/*</div>*/}
-                {/*</div>*/}
               </div>
             </div>
           </div>

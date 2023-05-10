@@ -19,7 +19,7 @@ function Breadcrumb({ pageName = "Page Name", pageTitle = "Page Title" }) {
               <nav aria-label="breadcrumb">
                 <ol className="breadcrumb">
                   <li className="breadcrumb-item">
-                    <Link legacyBehavior to="/">
+                    <Link  to="/">
                       Home
                     </Link>
                   </li>
@@ -46,11 +46,6 @@ function Breadcrumb({ pageName = "Page Name", pageTitle = "Page Title" }) {
                   alt=""
                 />
               </div>
-              {/* <img
-                className="img-fluid"
-                src="assets/images/bg/inner-banner-img.png"
-                alt=""
-              /> */}
             </div>
           </div>
         </div>

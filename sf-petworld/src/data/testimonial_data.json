@@ -1,0 +1,26 @@
+[
+  {
+    "id": 1,
+    "home1Image": "assets/images/bg/h1-testi1.png",
+    "authorName": "Sebastian Ethan",
+    "review": "I highly recommend Scooby to anyone in need of pet careservices. Whether it's for regular grooming or boarding,you can trust that your pets will be in good hands."
+  },
+  {
+    "id": 2,
+    "home1Image": "assets/images/bg/h1-testi2.png",
+    "authorName": "Anthony Dylan",
+    "review": "I highly recommend Scooby to anyone in need of pet careservices. Whether it's for regular grooming or boarding,you can trust that your pets will be in good hands."
+  },
+  {
+    "id": 3,
+    "home1Image": "assets/images/bg/h1-testi3.png",
+    "authorName": "Maverick Elias",
+    "review": "I highly recommend Scooby to anyone in need of pet careservices. Whether it's for regular grooming or boarding,you can trust that your pets will be in good hands."
+  },
+  {
+    "id": 4,
+    "home1Image": "assets/images/bg/h1-testi4.png",
+    "authorName": "Michael Mason",
+    "review": "I highly recommend Scooby to anyone in need of pet careservices. Whether it's for regular grooming or boarding,you can trust that your pets will be in good hands."
+  }
+]

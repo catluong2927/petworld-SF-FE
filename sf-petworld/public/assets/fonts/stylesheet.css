@@ -1,0 +1,78 @@
+@font-face {
+    font-family: 'Xfinity Brown';
+    src: url('XfinityBrown-BoldItalic.eot');
+    src: local('Xfinity Brown Bold Italic'), local('XfinityBrown-BoldItalic'),
+        url('XfinityBrown-BoldItalic.eot?#iefix') format('embedded-opentype'),
+        url('XfinityBrown-BoldItalic.woff2') format('woff2'),
+        url('XfinityBrown-BoldItalic.woff') format('woff'),
+        url('XfinityBrown-BoldItalic.ttf') format('truetype');
+    font-weight: bold;
+    font-style: italic;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Xfinity Brown';
+    src: url('XfinityBrown-LightItalic.eot');
+    src: local('Xfinity Brown Light Italic'), local('XfinityBrown-LightItalic'),
+        url('XfinityBrown-LightItalic.eot?#iefix') format('embedded-opentype'),
+        url('XfinityBrown-LightItalic.woff2') format('woff2'),
+        url('XfinityBrown-LightItalic.woff') format('woff'),
+        url('XfinityBrown-LightItalic.ttf') format('truetype');
+    font-weight: 300;
+    font-style: italic;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Xfinity Brown';
+    src: url('XfinityBrown-Bold.eot');
+    src: local('Xfinity Brown Bold'), local('XfinityBrown-Bold'),
+        url('XfinityBrown-Bold.eot?#iefix') format('embedded-opentype'),
+        url('XfinityBrown-Bold.woff2') format('woff2'),
+        url('XfinityBrown-Bold.woff') format('woff'),
+        url('XfinityBrown-Bold.ttf') format('truetype');
+    font-weight: bold;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Xfinity Brown';
+    src: url('XfinityBrown-Regular.eot');
+    src: local('Xfinity Brown'), local('XfinityBrown-Regular'),
+        url('XfinityBrown-Regular.eot?#iefix') format('embedded-opentype'),
+        url('XfinityBrown-Regular.woff2') format('woff2'),
+        url('XfinityBrown-Regular.woff') format('woff'),
+        url('XfinityBrown-Regular.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Xfinity Brown';
+    src: url('XfinityBrown-Light.eot');
+    src: local('Xfinity Brown Light'), local('XfinityBrown-Light'),
+        url('XfinityBrown-Light.eot?#iefix') format('embedded-opentype'),
+        url('XfinityBrown-Light.woff2') format('woff2'),
+        url('XfinityBrown-Light.woff') format('woff'),
+        url('XfinityBrown-Light.ttf') format('truetype');
+    font-weight: 300;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Xfinity Brown';
+    src: url('XfinityBrown-Italic.eot');
+    src: local('Xfinity Brown Italic'), local('XfinityBrown-Italic'),
+        url('XfinityBrown-Italic.eot?#iefix') format('embedded-opentype'),
+        url('XfinityBrown-Italic.woff2') format('woff2'),
+        url('XfinityBrown-Italic.woff') format('woff'),
+        url('XfinityBrown-Italic.ttf') format('truetype');
+    font-weight: normal;
+    font-style: italic;
+    font-display: swap;
+}
+

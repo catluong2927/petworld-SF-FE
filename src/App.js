@@ -12,12 +12,14 @@ import AboutPage from "./pages/about";
 const router = createBrowserRouter([
   {path:  '/',children:[
       {index: true, element:<Home/>},
-      {path:'about', element:<AboutPage/>},
-      {path: 'service-packages/search/:name',id:'packages', loader: packageLoader,  element: <ServicePackage/>},
-      {path: 'service-packages/:packageId',id:'services', loader: serviceLoader,  element: <ServiceDetails/>},
+          {path:'service-packages', children:[
+              {path: 'search/:name',id:'packages', loader: packageLoader,  element: <ServicePackage/>},
+              {path: ':packageId',id:'services', loader: serviceLoader,  element: <ServiceDetails/>},
+              ]},
       {path: 'shop', element: <Shop/>},
       {path: 'shop-details/:productCode', element: <ShopDetail/>},
       {path: 'test',  element: <Home1Service/>},
+      {path:'about', element:<AboutPage/>},
 
     ]},
     ]

@@ -20,7 +20,7 @@ function BreadcrumbService({ pageName = "Page Name", pageTitle = "Page Title" })
                             <nav aria-label="breadcrumb">
                                 <ol className="breadcrumb">
                                     <li className="breadcrumb-item">
-                                        <Link legacyBehavior to="/">
+                                        <Link  to="/">
                                             Home
                                         </Link>
                                     </li>

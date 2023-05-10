@@ -20,8 +20,8 @@ function ServiceNavigation(props) {
         const linkText = pageNumber.toString() // Định dạng số trang thành chuỗi, thêm số 0 phía trước nếu số trang có 1 chữ số
 
         pageLinks.push(
-            <SwiperSlide className='swiper-page-service-details'>
-                <li className={itemClass} key={pageNumber}>
+            <SwiperSlide className='swiper-page-service-details' key={pageNumber} >
+                <li className={itemClass} >
                     <a className='page-link' href={linkUrl}>
                         {linkText}
                     </a>
