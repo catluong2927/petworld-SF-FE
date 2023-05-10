@@ -1,4 +1,4 @@
-import {Await, json, Link, useParams, useRouteLoaderData} from "react-router-dom";
+import {Await, json, Link, NavLink, useParams, useRouteLoaderData} from "react-router-dom";
 import React, {Suspense, useEffect, useMemo, useReducer, useState} from "react";
 import DatePicker from "react-datepicker";
 import Breadcrumb from "../components/breadcrumb/Breadcrumb";
@@ -40,7 +40,6 @@ function ServiceDetails() {
     // const fetchData = async () => {
     //   const response = await fetch(`http://localhost:8080/api/service-packages/`+ id);
     //   const data = await response.json();
-    console.log(data)
     setServicePackage(data);
     setMainImage(data.image);
     setServices(data.services);
@@ -85,8 +84,6 @@ function ServiceDetails() {
   return (
       <Layout>
         <Breadcrumb pageName="Packages Details" pageTitle={servicePackage.name} />
-        <Suspense>
-          <Await resolve={data}>
             <div className="services-details-area pt-120 mb-120">
               <div className="container">
                 <div className="row g-lg-4 gy-5 mb-120">
@@ -179,9 +176,9 @@ function ServiceDetails() {
                                   <ItemCounter />
                                 </div>
                               </div>
-                              <Link legacyBehavior to="/cart">
-                                <a className="primary-btn3">Add to cart</a>
-                              </Link>
+                              <NavLink to="/cart">
+                                <p className="primary-btn3">Add to cart</p>
+                              </NavLink>
                             </div>
                             <div className="pyment-method">
                               <h6>Guaranted Safe Checkout</h6>
@@ -232,14 +229,12 @@ function ServiceDetails() {
                       >Review</button>
                     </div>
                     {description && <ServicePackageDescription content={servicePackage.description} />}
-                    {review && <ServiceReview/>}
+                    {review && <ServiceReview reviews ={servicePackage.reviews} />}
                     {process && <ServiceProcess process ={services} />}
                   </div>
                 </div>
               </div>
             </div>
-          </Await>
-        </Suspense>
       </Layout>
   );
 }

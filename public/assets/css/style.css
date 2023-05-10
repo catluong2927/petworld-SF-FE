@@ -1731,12 +1731,19 @@ header.style-1 .main-menu ul > li.menu-item-has-children::after {
   font-size: 13px;
   color: var(--white);
 }
+@media (max-width: 2100px) {
+  header.style-1 .main-menu ul > li.menu-item-has-children::after {
+    right: 5px;
+    top: 4px;
+  }
+}
 @media (max-width: 1500px) {
   header.style-1 .main-menu ul > li.menu-item-has-children::after {
     right: 5px;
-    top: 17px;
+    top: 4px;
   }
 }
+
 @media (min-width: 992px) and (max-width: 1199px) {
   header.style-1 .main-menu ul > li.menu-item-has-children::after {
     right: 0;
@@ -9197,7 +9204,7 @@ footer.style2 .social-area ul li:hover a i {
 }
 .services-details-area .tab-content2 .tab-pane .reviews-area .review-list-area .review-list > li .single-review .review-content .c-header {
   justify-content: space-between;
-  gap: 10px;
+  gap: 13.375rem;
 }
 @media (max-width: 576px) {
   .services-details-area .tab-content2 .tab-pane .reviews-area .review-list-area .review-list > li .single-review .review-content .c-header {
@@ -12328,6 +12335,7 @@ footer.style2 .social-area ul li:hover a i {
 .hero-style-1 .banner-content {
   max-width: 746px;
   width: 100%;
+  margin-top:-8rem;
 }
 @media (max-width: 1199px) {
   .hero-style-1 .banner-content {
@@ -12968,9 +12976,9 @@ select#duration:focus {
 }
 .logo-image-homepage {
   width: 19.5rem;
-  height: 21.25rem;
+  height: 24.25rem;
   margin-top: -3.75rem;
-  margin-left: 170%;
+  margin-left: 119%;
 }
 #h1-homepage{
   font-size: 2.2rem;
@@ -12987,4 +12995,8 @@ select#duration:focus {
 }
 .menu-list-navigation{
   color: #fff;
+}
+.menu-list-navigation-has-children {
+  color: #fff;
+  font-size: 16px;
 }

@@ -1,6 +1,10 @@
-import React from "react";
+import React, {useEffect, useState} from "react";
 
-export const ServiceReview = () => {
+export const ServiceReview = (props) => {
+    const  [reviews, setReviews] = useState([]);
+    useEffect(() => {
+        setReviews(props.reviews)
+    }, [reviews])
     return (
         <div
             className="tab-content tab-content2"
@@ -12,12 +16,13 @@ export const ServiceReview = () => {
                     <div className="row g-lg-4 gy-5">
                         <div className="col-lg-8">
                             <div className="number-of-review">
-                                <h3>Review (02) :</h3>
+                                <h3>Review ({reviews.length}) :</h3>
                             </div>
                             <div className="review-list-area">
                                 <ul className="review-list">
-                                    <li>
-                                        <div className="single-review d-flex justify-content-between flex-md-nowrap flex-wrap">
+                                    {reviews.map(review =>
+                                        <li key={review.key}>
+                                        <div className="single-review d-flex  flex-md-nowrap flex-wrap">
                                             <div className="review-image">
                                                 <img
                                                     src="/assets/images/bg/review-img-1.png"
@@ -30,7 +35,17 @@ export const ServiceReview = () => {
                                                         <h5 className="mb-0">
                                                             <a href="#">Rocky Mike ,</a>
                                                         </h5>
-                                                        <div className="c-date">06 july,2022</div>
+                                                        <div className="c-date">
+                                                            {new Date(review.date).toLocaleDateString('en-US', {
+                                                                day: 'numeric',
+                                                                month: 'long',
+                                                                year: 'numeric',
+                                                                hour: 'numeric',
+                                                                minute: 'numeric',
+                                                                hour12: true
+                                                            })}
+                                                        </div>
+
                                                     </div>
                                                     <div className="replay-btn">
                                                         <a href="#">
@@ -40,84 +55,20 @@ export const ServiceReview = () => {
                                                     </div>
                                                 </div>
                                                 <ul className="product-review">
-                                                    <li>
-                                                        <i className="bi bi-star-fill"/>
-                                                    </li>
-                                                    <li>
-                                                        <i className="bi bi-star-fill"/>
-                                                    </li>
-                                                    <li>
-                                                        <i className="bi bi-star-fill"/>
-                                                    </li>
-                                                    <li>
-                                                        <i className="bi bi-star-fill"/>
-                                                    </li>
-                                                    <li>
-                                                        <i className="bi bi-star-fill"/>
-                                                    </li>
+                                                    {Array(review.start).fill(0).map((star, index) => (
+                                                        <li key={index}>
+                                                            <i className="bi bi-star-fill" />
+                                                        </li>
+                                                    ))}
                                                 </ul>
                                                 <div className="c-body">
-                                                    <p>
-                                                        I must explain to you how all this
-                                                        mistaken idea of denouncing pleasure and
-                                                        praising pain was born and I will give you
-                                                        a complete account.
-                                                    </p>
+                                                    <p>{review.review}</p>
                                                 </div>
                                             </div>
                                         </div>
                                     </li>
-                                    <li>
-                                        <div className="single-review d-flex justify-content-between flex-md-nowrap flex-wrap">
-                                            <div className="review-image">
-                                                <img
-                                                    src="/assets/images/bg/review-img-3.png"
-                                                    alt="image"
-                                                />
-                                            </div>
-                                            <div className="review-content">
-                                                <div className="c-header d-flex align-items-center">
-                                                    <div className="review-meta">
-                                                        <h5 className="mb-0">
-                                                            <a href="#">Rony Jhon ,</a>
-                                                        </h5>
-                                                        <div className="c-date">07 july,2022</div>
-                                                    </div>
-                                                    <div className="replay-btn">
-                                                        <a href="#">
-                                                            <i className="bi bi-reply"/>
-                                                            Reply
-                                                        </a>
-                                                    </div>
-                                                </div>
-                                                <ul className="product-review">
-                                                    <li>
-                                                        <i className="bi bi-star-fill"/>
-                                                    </li>
-                                                    <li>
-                                                        <i className="bi bi-star-fill"/>
-                                                    </li>
-                                                    <li>
-                                                        <i className="bi bi-star-fill"/>
-                                                    </li>
-                                                    <li>
-                                                        <i className="bi bi-star-fill"/>
-                                                    </li>
-                                                    <li>
-                                                        <i className="bi bi-star-fill"/>
-                                                    </li>
-                                                </ul>
-                                                <div className="c-body">
-                                                    <p>
-                                                        I must explain to you how all this
-                                                        mistaken idea of denouncing pleasure and
-                                                        praising pain was born and I will give you
-                                                        a complete account.
-                                                    </p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </li>
+                                        )
+                                    }
                                 </ul>
                             </div>
                         </div>
