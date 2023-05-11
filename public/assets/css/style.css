@@ -1761,7 +1761,7 @@ header.style-1 .main-menu ul > li:hover > ul.sub-menu {
   transform: translateY(0);
 }
 
-header.style-1 .main-menu ul > li:hover > a {
+header.style-1 .main-menu ul > li:hover > p {
   background: var(--gradient-color);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -12999,4 +12999,25 @@ select#duration:focus {
 .menu-list-navigation-has-children {
   color: #fff;
   font-size: 16px;
+}
+.menu-item-children {
+  font-size: 15px;
+  color: #fff;
+}
+#menu-list--fix {
+  margin-top: 1rem;
+}
+#package-content-title {
+  font-size: 1.5rem;
+  color: #333;
+}
+#package-content-title:hover {
+  color:#ea4335 ;!important;
+}
+.certificate-image {
+  width: 34rem;
+  height: 28rem;
+  margin-top: 14rem;
+  margin-left: -2.75rem;
+  border-radius: 1rem;
 }

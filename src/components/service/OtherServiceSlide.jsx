@@ -7,14 +7,14 @@ const OtherServiceSlide = (props) => {
     useEffect(async () => {
         const response = await fetch(`http://localhost:8080/api/service-packages/search/Day Care`);
         const data = await response.json();
-        console.log(data)
         setServicePackages(data)
-    }, [])
+    }, []);
+
     // const servicePackages = useRouteLoaderData('packages');
     return (
         <>
                     {
-                        <>
+                        <div>
                             <div className="row">
                                 <div
                                     className="col-lg-12 d-flex flex-wrap align-items-center justify-content-sm-between justify-content-start gap-4 mb-60">
@@ -32,29 +32,29 @@ const OtherServiceSlide = (props) => {
                                 </div>
                             </div>
                             <div className="row home1-services-slider">
-                                {servicePackages.map(element =>
-                                    <div className="services-card1" key={element.id}>
+                                {servicePackages.map((element, index) =>
+                                    <div className="services-card1" key={index}>
                                         <div className="icon">
                                             <img src={element.image} alt="" className='package-image ' />
                                         </div>
                                         <div className="content package-content">
                                             <h3>
-                                                <NavLink to={`/service-packages/${element.id}`}>
-                                                    <a>{element.name}</a>
-                                                </NavLink>
+                                                <a href={`/service-packages/${element.id}`}>
+                                                    <p id='package-content-title'>{element.name}</p>
+                                                </a>
                                             </h3>
                                             <p>{element.description}</p>
                                         </div>
-                                        <Link  to={`/service-packages/${element.id}`}>
-                                            <a className="more-btn">
+                                        <a  href={`/service-packages/${element.id}`}>
+                                            <p className="more-btn">
                                                 More Details
                                                 <img src="/assets/images/icon/btn-arrow1.svg" alt="" />
-                                            </a>
-                                        </Link >
+                                            </p>
+                                        </a  >
                                     </div>
                                 )}
                             </div>
-                        </>
+                        </div>
                     }
         </>
     );
