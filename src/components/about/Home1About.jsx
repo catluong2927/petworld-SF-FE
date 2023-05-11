@@ -54,8 +54,8 @@ function Home1About() {
           <div className="col-lg-6 d-flex justify-content-lg-end justify-content-center">
             <div className="story-img">
               <img
-                className="img-fluid"
-                src="assets/images/bg/story-img1.png"
+                className="img-fluid petworld-office-image"
+                src="/assets/images/shop/1561_pet_store_1200.webp"
                 alt=""
               />
             </div>
