@@ -92,8 +92,8 @@ function Home1Service() {
                     </div>
                     <div className="content">
                       <h3>
-                        <Link legacyBehavior to="/service-details">
-                          <a>Daycare</a>
+                        <Link  to="/service-details">
+                          <p>Daycare</p>
                         </Link>
                       </h3>
                       <p>
@@ -101,11 +101,11 @@ function Home1Service() {
                         hac habitasse.
                       </p>
                     </div>
-                    <Link legacyBehavior to="/service-details">
-                      <a className="more-btn">
+                    <Link  to="/service-details">
+                      <p className="more-btn">
                         More Details
                         <img src="assets/images/icon/btn-arrow1.svg" alt="" />
-                      </a>
+                      </p>
                     </Link>
                   </div>
                 </SwiperSlide>
@@ -121,8 +121,8 @@ function Home1Service() {
                     </div>
                     <div className="content">
                       <h3>
-                        <Link legacyBehavior to="/service-details">
-                          <a> Grooming</a>
+                        <Link  to="/service-details">
+                          <p> Grooming</p>
                         </Link>
                       </h3>
                       <p>
@@ -130,11 +130,11 @@ function Home1Service() {
                         hac habitasse.
                       </p>
                     </div>
-                    <Link legacyBehavior to="/service-details">
-                      <a className="more-btn">
+                    <Link  to="/service-details">
+                      <p className="more-btn">
                         More Details
                         <img src="assets/images/icon/btn-arrow1.svg" alt="" />
-                      </a>
+                      </p>
                     </Link>
                   </div>
                 </SwiperSlide>
@@ -150,8 +150,8 @@ function Home1Service() {
                     </div>
                     <div className="content">
                       <h3>
-                        <Link legacyBehavior to="/service-details">
-                          <a> Boarding</a>
+                        <Link  to="/service-details">
+                          <p> Boarding</p>
                         </Link>
                       </h3>
                       <p>
@@ -159,11 +159,11 @@ function Home1Service() {
                         hac habitasse.
                       </p>
                     </div>
-                    <Link legacyBehavior to="/service-details">
-                      <a className="more-btn">
+                    <Link  to="/service-details">
+                      <p className="more-btn">
                         More Details
                         <img src="assets/images/icon/btn-arrow1.svg" alt="" />
-                      </a>
+                      </p>
                     </Link>
                   </div>
                 </SwiperSlide>
@@ -179,8 +179,8 @@ function Home1Service() {
                     </div>
                     <div className="content">
                       <h3>
-                        <Link legacyBehavior to="/service-details">
-                          <a>veterinary</a>
+                        <Link  to="/service-details">
+                          <p>veterinary</p>
                         </Link>
                       </h3>
                       <p>
@@ -188,11 +188,11 @@ function Home1Service() {
                         hac habitasse.
                       </p>
                     </div>
-                    <Link legacyBehavior to="/service-details">
-                      <a className="more-btn">
+                    <Link  to="/service-details">
+                      <p className="more-btn">
                         More Details
                         <img src="assets/images/icon/btn-arrow1.svg" alt="" />
-                      </a>
+                      </p>
                     </Link>
                   </div>
                 </SwiperSlide>

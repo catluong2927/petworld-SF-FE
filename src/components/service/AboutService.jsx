@@ -13,14 +13,18 @@ function AboutService() {
                   </div>
                   <img
                       className="img-fluid"
-                      src="assets/images/bg/h2-services-img.png"
-                      alt=""
+                      src="/assets/images/shop/dog-certificate-template-flat-vector-260nw-420958252.webp"
+                      alt="center certificate"
+                      className='certificate-image'
                   />
                 </div>
               </div>
               <div className="col-lg-7">
                 <div className="services-content">
-                  <img src="assets/images/icon/section-sl-no.svg" alt="" />
+                  <img
+                      src="assets/images/icon/section-sl-no.svg"
+                      alt=""
+                  />
                   <h2>we are providing pet care service for years.</h2>
                   <p>
                     Pellentesque maximus augue orci, quis congue purus iaculison
