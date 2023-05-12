@@ -7,10 +7,8 @@ function discoutPrice(price, sale){
 }
 
 function ShopCard(props) {
-  console.log(props.sizePages);
   const PRODUCT_API = process.env.REACT_APP_FETCH_API + `/products?size=${props.sizePages}&page=${props.currentPage}`;
   const [products, setProducts] = useState([]);
-console.log(PRODUCT_API)
 
   useEffect(() => {
     axios
@@ -51,7 +49,7 @@ console.log(PRODUCT_API)
                   <div className="plus-icon">
                     <i className="bi bi-plus" />
                   </div>
-                  <Link legacyBehavior to="/shop-details">
+                  <Link legacyBehavior to={`/shop-details/${id}`}>
                     <a>View Details</a>
                   </Link>
                 </div>

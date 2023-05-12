@@ -1,36 +1,34 @@
-import React, {useEffect, useState} from "react";
+import React, { useEffect } from "react";
 
 function SingleProductDescription(props) {
-  
+
   const product = props.productDescription;
-  const [firstRun, setFirstRun] = useState(true);
   const getElement = document.querySelector.bind(document);
   const getElements = document.querySelectorAll.bind(document);
 
   useEffect(() => {
     const navLinks = getElements('.nav-link');
     const tabPanes = getElements('.tab-pane');
-    
+
     navLinks.forEach((navLink, index) => {
       const pane = tabPanes[index];
       navLink.addEventListener('click', () => {
-        getElement('.tab-pane.fade.active.show').classList.remove('active', 'show');
-        getElement('.nav-link.active').classList.remove('active');
+        
+        const activeTabPane = getElement('.tab-pane.fade.active.show');
+        if (activeTabPane !== null) {
+          activeTabPane.classList.remove('active', 'show');
+        }
+
+        const activeNavLink = getElement('.nav-link.active');
+        if (activeNavLink) {
+          activeNavLink.classList.remove('active');
+        }
+
         navLink.classList.add('active');
         pane.classList.add('active', 'show');
       });
     });
-
-    // Set firstRun to false after the component has been mounted
-    setFirstRun(false);
-  }, [getElement,getElements]);
-
-  useEffect(() => {
-    if (!firstRun) {
-      getElement('.nav-link.active').classList.remove('active');
-      getElement('.tab-pane.fade.active.show').classList.remove('active', 'show');
-    }
-  }, [firstRun, getElement]);
+  }, [getElement, getElements]);
 
   return (
     <>
@@ -135,7 +133,7 @@ function SingleProductDescription(props) {
                     </tr>
                     <tr>
                       <td>Animale</td>
-                      <td> 
+                      <td>
                         {product.animal}
                       </td>
                     </tr>

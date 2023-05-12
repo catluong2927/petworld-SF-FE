@@ -1,5 +1,5 @@
 import { useParams } from "react-router-dom";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import axios from "axios";
 import Breadcrumb from "../components/breadcrumb/Breadcrumb";
 import OthersProduct from "../components/shop/OthersProduct";
@@ -7,9 +7,13 @@ import ProductDetails from "../components/shop/ProductDetails";
 import SingleProductDescription from "../components/shop/SingleProductDescription";
 
 import Layout from "../layout/Layout";
+import { Toast } from 'primereact/toast';
+import "primereact/resources/themes/lara-light-indigo/theme.css";
+import "primereact/resources/primereact.min.css";  
 
 function ShopDetails() {
   const { productId } = useParams();
+  const toast = useRef(null);
   const PRODUCT_DETAIL_API = process.env.REACT_APP_FETCH_API + `/products/${productId}`;
   const [product, setProduct] = useState({});
 
@@ -24,16 +28,21 @@ function ShopDetails() {
   }), [productId, PRODUCT_DETAIL_API])
 
   return (
-    <Layout>
-      <Breadcrumb pageName="Shop Details" pageTitle="Shop Details" />
-      <div className="shop-details-page pt-120 mb-120">
-        <div className="container">
-          <ProductDetails productDetail = {product}/>
-          <SingleProductDescription productDescription = {product}/>
-          <OthersProduct />
-        </div>
+    <>
+      <div className="card flex justify-content-center">
+        <Toast ref={toast} />
       </div>
-    </Layout>
+      <Layout>
+        <Breadcrumb pageName="Shop Details" pageTitle="Shop Details" />
+        <div className="shop-details-page pt-120 mb-120">
+          <div className="container">
+            <ProductDetails productDetail={product} productId={productId} toast={toast}/>
+            <SingleProductDescription productDescription={product}/>
+            <OthersProduct />
+          </div>
+        </div>
+      </Layout>
+    </>
   );
 }
 

@@ -1,15 +1,42 @@
 import { Link } from "react-router-dom";
-import React from "react";
+import React, { useEffect, useState, useRef } from "react";
 import ProductPriceCount from "./ProductPriceCount";
+import axios from "axios";
+
 
 
 function ProductDetails(props) {
   const product = props.productDetail;
+  const [productPriceCount, setProductPriceCount] = useState({})
+  const [productCart, setProductCart] = useState({})
+  const CART_API = process.env.REACT_APP_FETCH_API + `/cart/hieu@codegym.com`;
 
   function discoutPrice(price, sale){
     return price*(1 - (sale/100));
   }
 
+  useEffect(() => {
+    setProductCart({
+      ...productPriceCount,
+      'productId': props.productId
+    })
+  }, [productPriceCount, props.productId])
+
+  function handleAddToCart(e) {
+    e.preventDefault();
+    axios
+        .post(`${CART_API}`, productCart)
+        .then(res => {
+          console.log(res.data);
+          props.toast.current.show({severity:'success', summary: 'Success', detail:`Add ${product.name} successfully`, life: 3000});
+        })
+        .catch(err => {
+          props.toast.current.show({severity:'error', summary: 'Fail', detail:`Failed to add to cart `, life: 3000});
+          throw err;
+        });
+}
+  
+  
   return (
     <>
       <div className="row g-lg-4 gy-5 mb-120">
@@ -182,10 +209,13 @@ function ProductDetails(props) {
             </p>
             <div className="shop-quantity d-flex align-items-center justify-content-start mb-20">
               <div className="quantity d-flex align-items-center">
-                <ProductPriceCount price={product.price} />
+                <ProductPriceCount 
+                    price={product.sale !== 0 ? discoutPrice(product.price, product.sale) : product.price} 
+                    onSendCart={setProductPriceCount}
+                 />
               </div>
               <Link legacyBehavior to="/cart">
-                <a className="primary-btn3">Add to cart</a>
+                <button className="primary-btn3" onClick={handleAddToCart}>Add to cart</button>
               </Link>
             </div>
             <div className="buy-now-btn">

@@ -1,10 +1,32 @@
-import {Link} from "react-router-dom";
-import React from "react";
+import { Link } from "react-router-dom";
+import React, { useState, useEffect } from "react";
 import Breadcrumb from "../components/breadcrumb/Breadcrumb";
 import ItemCounter from "../components/shop/ProductCount";
 import Layout from "../layout/Layout";
+import axios from "axios";
 
 function CartPage() {
+  const [cartProducts, setCartProducts] = useState([]);
+  const [totalPrice, setTotalPrice] = useState(0);
+  const CART_API = process.env.REACT_APP_FETCH_API + `/cart/hieu@codegym.com`;
+
+  useEffect(() => {
+    axios
+      .get(`${CART_API}`)
+      .then(res => {
+        setCartProducts(res.data.cartDetailDtoResponses)
+      })
+      .catch(err => {
+        console.log(err)
+      })
+  }, [CART_API])
+
+  function discoutPrice(price, sale){
+    return price*(1 - (sale/100));
+  }
+
+  console.log(cartProducts)
+
   return (
     <Layout>
       <Breadcrumb pageName="Cart" pageTitle="Cart" />
@@ -26,7 +48,7 @@ function CartPage() {
                     </tr>
                   </thead>
                   <tbody>
-                    <tr>
+                    {/* <tr>
                       <td data-label="Delete">
                         <div className="delete-icon">
                           <i className="bi bi-x" />
@@ -36,7 +58,7 @@ function CartPage() {
                         <img src="assets/images/bg/cart-01.png" alt="" />
                       </td>
                       <td data-label="Food Name">
-                        <Link legacyBehavior to="/shop-details">
+                        <Link legacyBehavior to={`/shop-details/`}>
                           <a>Whiskas Cat Food Core Tuna</a>
                         </Link>
                       </td>
@@ -52,8 +74,9 @@ function CartPage() {
                         </div>
                       </td>
                       <td data-label="Subtotal">$25.006</td>
-                    </tr>
-                    <tr>
+                    </tr> */}
+
+                    {/* <tr>
                       <td data-label="Delete">
                         <div className="delete-icon">
                           <i className="bi bi-x" />
@@ -79,8 +102,9 @@ function CartPage() {
                         </div>
                       </td>
                       <td data-label="Subtotal">$39.00</td>
-                    </tr>
-                    <tr>
+                    </tr> */}
+
+                    {/* <tr>
                       <td data-label="Delete">
                         <div className="delete-icon">
                           <i className="bi bi-x" />
@@ -104,7 +128,42 @@ function CartPage() {
                         </div>
                       </td>
                       <td data-label="Subtotal">$18.00</td>
-                    </tr>
+                    </tr> */}
+
+                    {
+                      cartProducts.map((cartProduct) => (
+                        <tr key={cartProduct.productDtoResponse.id}>
+                          <td data-label="Delete">
+                            <div className="delete-icon">
+                              <i className="bi bi-x" />
+                            </div>
+                          </td>
+                          <td data-label="Image">
+                            <img src={cartProduct.productDtoResponse.image} alt="" />
+                          </td>
+                          <td data-label="Food Name">
+                            <Link legacyBehavior to={`/shop-details/${cartProduct.productDtoResponse.id}`}>
+                              <a>{cartProduct.productDtoResponse.name}</a>
+                            </Link>
+                          </td>
+                          <td data-label="Unite Price">
+                            {
+                              (cartProduct.productDtoResponse.sale === 0) ? <>${cartProduct.productDtoResponse.price}</> : <del>${cartProduct.productDtoResponse.price}</del>
+                            }
+                          </td>
+                          <td data-label="Discount Price">${discoutPrice(cartProduct.productDtoResponse.price, cartProduct.productDtoResponse.sale)}</td>
+                          <td data-label="Quantity">
+                            <div className="quantity d-flex align-items-center">
+                              <div className="quantity-nav nice-number d-flex align-items-center">
+                                <ItemCounter price={cartProduct.totalPrice} count={cartProduct.amount} getTotalPrice={setTotalPrice}/>
+                              </div>
+                            </div>
+                          </td>
+                          <td data-label="Subtotal">${totalPrice}</td>
+                        </tr>
+                      ))
+                    }
+
                   </tbody>
                 </table>
               </div>

@@ -6,6 +6,7 @@ import ShopDetail from "./pages/shop-details"
 import Home1Service from "./components/service/Home1Service";
 import Home from "./pages";
 import AboutPage from "./pages/about";
+import Cart from "./pages/cart";
 
 
 
@@ -18,8 +19,9 @@ const router = createBrowserRouter([
               ]},
       {path: 'shop', element: <Shop/>},
       {path: 'shop-details/:productId', element: <ShopDetail/>},
-      {path: 'test',  element: <Home1Service/>},
-      {path:'about', element:<AboutPage/>},
+      {path: 'test', element: <Home1Service/>},
+      {path: 'about', element: <AboutPage/>},
+      {path: 'cart', element: <Cart/>}
 
     ]},
     ]

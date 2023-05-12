@@ -1,6 +1,4 @@
-import { useReducer } from "react";
-
-const initialState = { count: 1 };
+import { useReducer , useEffect } from "react";
 
 function reducer(state, action) {
   switch (action.type) {
@@ -12,7 +10,9 @@ function reducer(state, action) {
       throw new Error();
   }
 }
-function ItemCounter({ price }) {
+function ItemCounter({ price, count , getTotalPrice }) {
+  const currentCount = ((count !== 1)? count : 1);
+  const initialState = { count: currentCount};
   const [state, dispatch] = useReducer(reducer, initialState);
 
   const increment = () => {
@@ -24,6 +24,12 @@ function ItemCounter({ price }) {
       dispatch({ type: "decrement" });
     }
   };
+
+  const totalPrice = state.count * price;
+
+  useEffect(() => {
+    getTotalPrice(totalPrice);
+  }, [totalPrice]);
 
   return (
     <>
