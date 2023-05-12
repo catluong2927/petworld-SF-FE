@@ -14,7 +14,6 @@ const router = createBrowserRouter([
       {path: 'shop', element: <Shop/>},
       {path: 'shop-details/:productCode', element: <ShopDetail/>},
       {path: 'test',  element: <Home1Service/>},
-
     ]},
     ]
 )
