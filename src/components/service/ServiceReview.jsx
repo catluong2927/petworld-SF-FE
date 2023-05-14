@@ -1,10 +1,7 @@
 import React, {useEffect, useState} from "react";
 
 export const ServiceReview = (props) => {
-    const  [reviews, setReviews] = useState([]);
-    useEffect(() => {
-        setReviews(props.reviews)
-    }, [reviews])
+    const reviews = props.reviews;
     return (
         <div
             className="tab-content tab-content2"
@@ -16,7 +13,7 @@ export const ServiceReview = (props) => {
                     <div className="row g-lg-4 gy-5">
                         <div className="col-lg-8">
                             <div className="number-of-review">
-                                <h3>Review ({reviews.length}) :</h3>
+                                <h3>Review ({props.reviews.length}) :</h3>
                             </div>
                             <div className="review-list-area">
                                 <ul className="review-list">
@@ -33,7 +30,7 @@ export const ServiceReview = (props) => {
                                                 <div className="c-header d-flex align-items-center">
                                                     <div className="review-meta">
                                                         <h5 className="mb-0">
-                                                            <a href="#">Rocky Mike ,</a>
+                                                            <a href="#">{review.userDtoResponse.username}</a>
                                                         </h5>
                                                         <div className="c-date">
                                                             {new Date(review.date).toLocaleDateString('en-US', {
@@ -55,7 +52,7 @@ export const ServiceReview = (props) => {
                                                     </div>
                                                 </div>
                                                 <ul className="product-review">
-                                                    {Array(review.start).fill(0).map((star, index) => (
+                                                    {Array(review.star).fill(0).map((star, index) => (
                                                         <li key={index}>
                                                             <i className="bi bi-star-fill" />
                                                         </li>
