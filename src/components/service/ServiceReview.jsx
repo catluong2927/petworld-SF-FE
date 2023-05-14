@@ -44,12 +44,6 @@ export const ServiceReview = (props) => {
                                                         </div>
 
                                                     </div>
-                                                    <div className="replay-btn">
-                                                        <a href="#">
-                                                            <i className="bi bi-reply"/>
-                                                            Reply
-                                                        </a>
-                                                    </div>
                                                 </div>
                                                 <ul className="product-review">
                                                     {Array(review.star).fill(0).map((star, index) => (
