@@ -82,6 +82,18 @@
     border: 1px solid #767676;
     border-radius: 3px;
 }
+.service-package-checkmark--checked{
+    position: absolute;
+    left: 7px;
+    top: 4px;
+    width: 5px;
+    height: 10px;
+    border: solid black;
+    border-width: 0 2px 2px 0;
+    transform: rotate(45deg);
+}
+
+
 .service-package-content {
     max-width: 80%;
 }
