@@ -7,6 +7,7 @@ import Home1Service from "./components/service/Home1Service";
 import Home from "./pages";
 import AboutPage from "./pages/about";
 import Cart from "./pages/cart";
+import LoginPage from "./pages/login"
 
 
 
@@ -21,7 +22,8 @@ const router = createBrowserRouter([
       {path: 'shop-details/:productId', element: <ShopDetail/>},
       {path: 'test', element: <Home1Service/>},
       {path: 'about', element: <AboutPage/>},
-      {path: 'cart', element: <Cart/>}
+      {path: 'cart', element: <Cart/>},
+      {path: 'login', element: <LoginPage/>}
 
     ]},
     ]

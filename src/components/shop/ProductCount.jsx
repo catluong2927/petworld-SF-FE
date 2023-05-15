@@ -1,4 +1,4 @@
-import { useReducer , useEffect } from "react";
+import { useReducer } from "react";
 
 function reducer(state, action) {
   switch (action.type) {
@@ -10,7 +10,7 @@ function reducer(state, action) {
       throw new Error();
   }
 }
-function ItemCounter({ price, count , onCountChange }) {
+function ItemCounter({ count , onCountChange }) {
   const currentCount = ((count !== 1)? count : 1);
   const initialState = { count: currentCount};
   const [state, dispatch] = useReducer(reducer, initialState);

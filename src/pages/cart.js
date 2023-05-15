@@ -7,7 +7,6 @@ import axios from "axios";
 
 import { ConfirmDialog } from 'primereact/confirmdialog';
 import { Toast } from 'primereact/toast';
-import { Button } from 'primereact/button';
 
 function CartPage() {
   const [cartProducts, setCartProducts] = useState([]);
@@ -19,11 +18,18 @@ function CartPage() {
   const toast = useRef(null);
   const [selectedProductId, setSelectedProductId] = useState(null);
 
+  //Handle price
+  const [subtotal, setSubtotal] = useState({});
+
   useEffect(() => {
     axios
       .get(`${CART_API}`)
       .then(res => {
-        setCartProducts(res.data.cartDetailDtoResponses)
+        setCartProducts(res.data.cartDetailDtoResponses);
+        res.data.cartDetailDtoResponses.forEach((cartProduct) => {
+          subtotal[cartProduct.productDtoResponse.id] = cartProduct.totalPrice;
+        });
+        setSubtotal(subtotal);
       })
       .catch(err => {
         console.log(err)
@@ -59,18 +65,31 @@ function CartPage() {
     setVisible(true)
   }
 
+
   /*Total Price */
-  const [subtotal, setSubtotal] = useState({});
+  function handlePrice(productId) {
+    let temporaryPrice = null;
+    cartProducts.forEach(cartProduct => {
+      if (cartProduct.productDtoResponse.id === productId) {
+        if (cartProduct.productDtoResponse.sale !== 0) {
+          temporaryPrice = discoutPrice(cartProduct.productDtoResponse.price, cartProduct.productDtoResponse.sale);
+        } else {
+          temporaryPrice = cartProduct.productDtoResponse.price;
+        }
+      }
+    });
+    return temporaryPrice;
+  }
 
   const handleCountChange = (productId, newCount) => {
-    setSubtotal(prevState => (
+    let newSubTotal = handlePrice(productId) * newCount;
+    setSubtotal(subtotal => (
       {
-        ...prevState,
-        [productId]: cartProducts.find(product => product.productDtoResponse.id === productId).totalPrice * newCount
+        ...subtotal,
+        [productId]: newSubTotal
       }
     ));
   };
-  console.log(subtotal)
 
   return (
     <>
@@ -125,14 +144,15 @@ function CartPage() {
                                 <div className="quantity d-flex align-items-center">
                                   <div className="quantity-nav nice-number d-flex align-items-center">
                                     <ItemCounter
-                                      price={cartProduct.totalPrice}
+                                      // price={cartProduct.totalPrice}
                                       count={cartProduct.amount}
                                       onCountChange={(newCount) => handleCountChange(cartProduct.productDtoResponse.id, newCount)}
                                     />
                                   </div>
                                 </div>
                               </td>
-                              <td data-label="Subtotal">${Object.keys(subtotal).length === 0 ? cartProduct.totalPrice : subtotal[cartProduct.productDtoResponse.id]}</td>
+                              <td data-label="Subtotal">${subtotal[cartProduct.productDtoResponse.id]}</td>
+                              {/* <td data-label="Subtotal">${Object.keys(subtotal).length !== 0 ? subtotal[cartProduct.productDtoResponse.id] : cartProduct.totalPrice}</td> */}
                             </tr>
                           )
                         })
