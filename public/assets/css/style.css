@@ -1358,13 +1358,18 @@ header.style-1 {
   position: relative;
   width: 100%;
   z-index: 99;
-  padding: 0px 7%;
+  padding: 0 7%;
   display: flex;
   justify-content: space-between;
   align-items: center;
   background-color: var(--title-color1);
   height: 75px;
 }
+
+p.menu-list-navigation {
+  margin-bottom: 0;
+}
+
 @media (min-width: 1400px) and (max-width: 1599px) {
   header.style-1 {
     padding: 0px 2%;
