@@ -54,7 +54,6 @@ function SignUpPage() {
                 }
             )
     }
-
     return (
         <>
             <div className="card flex justify-content-center gap-2">
@@ -162,18 +161,15 @@ function SignUpPage() {
                                                     <div className="col-md-12">
                                                         <div
                                                             className="form-agreement form-inner d-flex justify-content-between flex-wrap">
-                                                            <div className="form-group">
-                                                                <input type="checkbox" id="html" value="customer"/>
-                                                                <label htmlFor="html1">
-                                                                    Customer
-                                                                </label>
+                                                            <div className="form-group" >
+                                                                <input defaultChecked="checked" type="checkbox" id="customer" value="customer" />
+                                                                <label htmlFor="customer">Customer</label>
                                                             </div>
-                                                            <div className="form-group">
-                                                                <input type="checkbox" id="html" value="Owner"/>
-                                                                <label htmlFor="html2">
-                                                                    Owner
-                                                                </label>
+                                                            <div className="form-group" >
+                                                                <input  type="checkbox" id="owner" value="owner"/>
+                                                                <label htmlFor="owner">Owner</label>
                                                             </div>
+
                                                         </div>
                                                     </div>
                                                 </div>
