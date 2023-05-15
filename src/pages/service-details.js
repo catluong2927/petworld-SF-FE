@@ -90,6 +90,15 @@ function ServiceDetails() {
         }
     )
   })
+
+  /// Duration option
+  const [selectedDuration, setSelectedDuration] = useState("full-day");
+  const handleDurationChange = (event) => {
+    setSelectedDuration(event.target.value);
+  };
+  /// Price Handler
+  const  price = (selectedDuration === 'full-day')? servicePackage.maxPice: servicePackage.minPrice;
+
   return (
       <Layout>
         <Breadcrumb pageName="Packages Details" pageTitle={servicePackage.name} />
@@ -144,7 +153,7 @@ function ServiceDetails() {
                       <div className="banner-title">
                         <h2>{servicePackage.name}</h2>
                         <div className="currency">
-                          <h5>${servicePackage.minPrice}</h5>
+                          <h5>${price}</h5>
                         </div>
                       </div>
                       <div className="service-area">
@@ -155,6 +164,8 @@ function ServiceDetails() {
                                 <label>Duration</label>
                                 <select
                                     id="duration"
+                                    value={selectedDuration}
+                                    onChange={handleDurationChange}
                                     style={{
                                       width: "100%",
                                       padding: "10px",
@@ -162,9 +173,8 @@ function ServiceDetails() {
                                       border: "1px solid #ddd",
                                     }}
                                 >
-                                  <option>Choose an option</option>
-                                  <option>Full Day (over 5 hrs)</option>
-                                  <option>Half Day (under 5 hrs)</option>
+                                  <option value="full-day">Full Day (over 5 hrs)</option>
+                                  <option value="half-day">Half Day (under 5 hrs)</option>
                                 </select>
                               </div>
                             </div>

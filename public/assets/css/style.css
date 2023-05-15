@@ -4037,6 +4037,9 @@ a.ui-button:active,
   overflow: hidden;
   max-width: 18.75rem;
   max-height: 25rem;
+  min-width: 17rem;
+  min-height: 21rem;
+  text-align:center;
 }
 .services-card1 .services-card-vec {
   position: absolute;
@@ -4058,12 +4061,12 @@ a.ui-button:active,
   text-transform: capitalize;
   transition: all 0.4s ease-in-out;
 }
-.services-card1 .content h3 > a:hover {
-  background: var(--gradient-color);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-}
+/*.services-card1 .content h3 > a:hover {*/
+/*  background: var(--gradient-color);*/
+/*  -webkit-background-clip: text;*/
+/*  -webkit-text-fill-color: transparent;*/
+/*  background-clip: text;*/
+/*}*/
 .services-card1 .content p {
   font-size: 1rem;
   font-weight: 400;
@@ -4090,6 +4093,9 @@ a.ui-button:active,
 }
 .services-card1 .more-btn img {
   transition: 0.35s;
+  position: absolute;
+  bottom: 1rem;
+  left: 14.5rem;
 }
 .services-card1.two {
   background: #f4fbf2;
@@ -13008,11 +13014,14 @@ select#duration:focus {
   margin-top: 1rem;
 }
 #package-content-title {
-  font-size: 1.5rem;
-  color: #333;
+  font-size: 1.375rem;
+  font-weight: 700;
+  color: var(--title-color2);
+  font-family: var(--font-dosis);
+  transition: 0.35s
 }
-#package-content-title:hover {
-  color:#ea4335 ;!important;
+.package-content #package-content-title:hover {
+  color:var(--primary-color3);
 }
 .certificate-image {
   width: 34rem;
@@ -13021,3 +13030,22 @@ select#duration:focus {
   margin-left: -2.75rem;
   border-radius: 1rem;
 }
+.package-price {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--primary-color3);
+  font-family: var(--font-cabin);
+  position: absolute;
+  left: 6.875rem;
+  bottom: 0.5625rem;
+}
+.package-image{
+  width: 12.4rem;
+  height: 9.625rem;
+  border-radius: 0.3rem;
+}
+.services-card1{
+  border: 2px solid #f2f2f2;
+  margin: 0 1.25rem 1.25rem 1.25rem;
+}
+

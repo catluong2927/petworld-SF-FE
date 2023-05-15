@@ -16,7 +16,7 @@ const fetchData = async (packageName,pageSize, currentPage) => {
 };
 export const ServicePackage = () => {
     const  packageName = useParams();
-
+    const [isSortedByPrice, setIsSortedByPrice] = useState(false);
     const [currentPage, setCurrentPage] = useState(0);
     const pageSize = 9;
     const [data, setData] = useState([]);
@@ -33,6 +33,9 @@ export const ServicePackage = () => {
     const getCurrentPageHandler = (currentPage) => {
         setCurrentPage(currentPage)
     }
+    const sortByPriceHandler = () => {
+        setIsSortedByPrice(!isSortedByPrice);
+    }
     return (
         <Layout>
             <BreadcrumbService/>
@@ -42,11 +45,11 @@ export const ServicePackage = () => {
                         <div className="service-package-check-box-item">
                             <h5 className="service-package-widget-title">Order By</h5>
                             <div className="service-package-checkbox-container">
-                                <label className="service-package-checkbox-label">
+                                <label className="service-package-checkbox-label" >
                                     Price
-                                    <input type="checkbox" defaultChecked="checked" />
+                                    <input type="button" onClick={sortByPriceHandler} />
                                     <span className="service-package-checkmark" />
-                                    {<p className="service-package-checkmark--checked"></p>}
+                                    {isSortedByPrice && <p className="service-package-checkmark--checked"></p>}
                                 </label>
                                 <label className="service-package-checkbox-label">
                                     Option 2
@@ -88,15 +91,3 @@ export const ServicePackage = () => {
         </Layout>
     )
 }
-export async function loaderPackages({request, params}) {
-    const name = params.name;
-    const URL = 'http://localhost:8080/api/service-packages/';
-    const URL_FAKE = 'https://6436d35a3e4d2b4a12dcb9a2.mockapi.io/api/v1/service-packages/8';
-    const response = await fetch( URL_FAKE);
-    if (!response.ok) {
-        throw json({message: "no result"}, {status: 500})
-    } else {
-        const resData = await response.json();
-        return resData;
-    }
-};

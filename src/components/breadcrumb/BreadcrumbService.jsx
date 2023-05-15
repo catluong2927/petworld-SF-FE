@@ -1,8 +1,8 @@
-import {Link, useRouteLoaderData} from "react-router-dom";
+import {Link, useParams, } from "react-router-dom";
 import React from "react";
 
 function BreadcrumbService({ pageName = "Page Name", pageTitle = "Page Title" }) {
-    const servicePackages = useRouteLoaderData('packages');
+    const packages = useParams();
     return (
         <div className="inner-page-banner">
             <div className="breadcrumb-vec-btm">
@@ -16,7 +16,7 @@ function BreadcrumbService({ pageName = "Page Name", pageTitle = "Page Title" })
                 <div className="row justify-content-center align-items-center text-center">
                     <div className="col-lg-6 align-items-center">
                         <div className="banner-content">
-                            <h1>{servicePackages.name}</h1>
+                            <h1>{packages.name}</h1>
                             <nav aria-label="breadcrumb">
                                 <ol className="breadcrumb">
                                     <li className="breadcrumb-item">
