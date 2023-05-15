@@ -17,8 +17,7 @@ const router = createBrowserRouter([
               {path: ':packageId',id:'services', loader: serviceLoader,  element: <ServiceDetails/>},
               ]},
       {path: 'shop', element: <Shop/>},
-      // {path: 'shop-details/:productCode', element: <ShopDetail/>},
-      {path: 'shop-details/:productName', element: <ShopDetail />},
+      {path: 'shop-details/:id', element: <ShopDetail/>},
 
 
       {path: 'test',  element: <Home1Service/>},

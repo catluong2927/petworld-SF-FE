@@ -1,19 +1,19 @@
 
-import React, { useReducer } from "react";
+import React, { useReducer , useState , useEffect } from "react";
 import {useLocation} from "react-router-dom";
-const initialState = { count: 1 };
+const initialState = { amount: 1 };
 
 function reducer(state, action) {
   switch (action.type) {
     case "increment":
-      return { count: state.count + 1 };
+      return { amount: state.amount + 1 };
     case "decrement":
-      return { count: state.count - 1 };
+      return { amount: state.amount - 1 };
     default:
       throw new Error();
   }
 }
-function ProductPriceCount({ price }) {
+function ProductPriceCount(props) {
   const [state, dispatch] = useReducer(reducer, initialState);
   const location = useLocation();
   const currentRoute = location.pathname;
@@ -22,10 +22,17 @@ function ProductPriceCount({ price }) {
   };
 
   const decrement = () => {
-    if (state.count > 1) {
+    if (state.amount > 1) {
       dispatch({ type: "decrement" });
     }
   };
+
+  const totalPrice = state.amount * props.price;
+
+  useEffect(() => {
+    props.onSendCart({ 'amount' : state.amount, 'totalPrice': totalPrice});
+  }, [state.amount, totalPrice]);
+
   return (
     <div className="product-total d-flex align-items-center">
       <div className="quantity">
@@ -42,7 +49,7 @@ function ProductPriceCount({ price }) {
                 fontSize: "16px",
               }}
             >
-              {state.count}
+              {state.amount}
             </span>
             <button onClick={increment} type="button">
               <i className="bi bi-plus"></i>
@@ -66,7 +73,8 @@ function ProductPriceCount({ price }) {
               fontWeight: "500",
             }}
           >
-            ${state.count * price}
+            ${totalPrice}
+            {/* ${state.amount * props.price} */}
           </span>
         </strong>
       )}
