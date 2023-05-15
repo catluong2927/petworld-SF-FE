@@ -5,9 +5,10 @@ import '../../pages/test.css'
 const OtherServiceSlide = (props) => {
     const [servicePackages, setServicePackages] = useState([]);
     useEffect(async () => {
-        const response = await fetch(`http://localhost:8080/api/service-packages/search/Day Care`);
+        const response = await fetch(`http://localhost:8080/api/packages/search/Package 1`);
         const data = await response.json();
-        setServicePackages(data)
+        setServicePackages(data.content)
+        console.log(data.content)
     }, []);
 
     // const servicePackages = useRouteLoaderData('packages');
