@@ -4,14 +4,10 @@ import {Audio} from 'react-loader-spinner';
 import '../../pages/test.css'
 const OtherServiceSlide = (props) => {
     const [servicePackages, setServicePackages] = useState([]);
-    useEffect(async () => {
-        const response = await fetch(`http://localhost:8080/api/packages/search/Package 1`);
-        const data = await response.json();
-        setServicePackages(data.content)
-        console.log(data.content)
-    }, []);
 
-    // const servicePackages = useRouteLoaderData('packages');
+    useEffect(() => {
+        setServicePackages(props.servicePackages);
+    });
     return (
         <>
                     {
