@@ -131,7 +131,7 @@ function Shop() {
                     </div>
                   </div>
                 </div>
-                <div className="shop-widget">
+                {/* <div className="shop-widget">
                   <div className="check-box-item">
                     <h5 className="shop-widget-title">Health Consideration</h5>
                     <div className="checkbox-container">
@@ -162,8 +162,8 @@ function Shop() {
                       </label>
                     </div>
                   </div>
-                </div>
-                <div className="shop-widget">
+                </div> */}
+                {/* <div className="shop-widget">
                   <div className="check-box-item">
                     <h5 className="shop-widget-title">Flavor</h5>
                     <div className="checkbox-container">
@@ -194,7 +194,7 @@ function Shop() {
                       </label>
                     </div>
                   </div>
-                </div>
+                </div> */}
               </div>
             </div>
             <div className="col-lg-9">
@@ -217,7 +217,7 @@ function Shop() {
                           <option name="21" value={"21"} >21</option>
                         </select>
                       </div>
-                      <div className="single-select two">
+                      {/* <div className="single-select two">
                         <select
                           style={{ outline: "none" }}
                           className="defult-select-drowpown"
@@ -227,7 +227,7 @@ function Shop() {
                           <option>Grid</option>
                           <option>Closed</option>
                         </select>
-                      </div>
+                      </div> */}
                     </div>
                   </div>
                 </div>

@@ -49,7 +49,7 @@ function ShopCard(props) {
                   <div className="plus-icon">
                     <i className="bi bi-plus" />
                   </div>
-                  <Link legacyBehavior to="/shop-details">
+                  <Link legacyBehavior to="/shop-details/:productName">
                     <a>View Details</a>
                   </Link>
                 </div>
