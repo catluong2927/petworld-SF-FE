@@ -7,13 +7,22 @@ import axios from "axios";
 
 function ProductDetails(props) {
   const product = props.productDetail;
-  const [imageList, setImageList] = useState([]);
+  let {imageDetailList, image} = props.productDetail;
+  const [mainImage, setMainImage] = useState("")
+
+
   const [productPriceCount, setProductPriceCount] = useState({})
   const [productCart, setProductCart] = useState({})
   const CART_API = process.env.REACT_APP_FETCH_API + `/cart/hieu@codegym.com`;
-  console.log(props);
   function discoutPrice(price, sale){
     return price*(1 - (sale/100));
+  }
+
+  if (typeof imageDetailList === "undefined") {
+    imageDetailList = [];
+  }
+  const mainImageHandler = (props) => {
+    setMainImage(props)
   }
 
   useEffect(() => {
@@ -21,8 +30,8 @@ function ProductDetails(props) {
       ...productPriceCount,
       'productId': props.productId
     })
-  }, [productPriceCount, props.productId])
-  //  setImageList(product.imageDetailList) 
+    setMainImage(product.image)
+  }, [productPriceCount, props.productId, imageDetailList])
 
   function handleAddToCart(e) {
     e.preventDefault();
@@ -51,56 +60,8 @@ function ProductDetails(props) {
               aria-labelledby="v-pills-img1-tab"
             >
               <img
-                className="img-fluid"
-                src="../assets/images/bg/shop-big-01.png"
-                alt=""
-              />
-            </div>
-            <div
-              className="tab-pane fade"
-              id="v-pills-img2"
-              role="tabpanel"
-              aria-labelledby="v-pills-img2-tab"
-            >
-              <img
-                className="img-fluid"
-                src="../assets/images/bg/shop-big-02.png"
-                alt=""
-              />
-            </div>
-            <div
-              className="tab-pane fade"
-              id="v-pills-img3"
-              role="tabpanel"
-              aria-labelledby="v-pills-img3-tab"
-            >
-              <img
-                className="img-fluid"
-                src="../assets/images/bg/shop-big-03.png"
-                alt=""
-              />
-            </div>
-            <div
-              className="tab-pane fade"
-              id="v-pills-img4"
-              role="tabpanel"
-              aria-labelledby="v-pills-img4-tab"
-            >
-              <img
-                className="img-fluid"
-                src="../assets/images/bg/shop-big-04.png"
-                alt=""
-              />
-            </div>
-            <div
-              className="tab-pane fade"
-              id="v-pills-img5"
-              role="tabpanel"
-              aria-labelledby="v-pills-img5-tab"
-            >
-              <img
-                className="img-fluid"
-                src="../assets/images/bg/shop-big-05.png"
+                className="img-fluid product-image"
+                src={mainImage} 
                 alt=""
               />
             </div>
@@ -111,77 +72,20 @@ function ProductDetails(props) {
             role="tablist"
             aria-orientation="vertical"
           >
-            {/* <button
-              className="nav-link active"
-              id="v-pills-img1-tab"
-              data-bs-toggle="pill"
-              data-bs-target="#v-pills-img1"
-              type="button"
-              role="tab"
-              aria-controls="v-pills-img1"
-              aria-selected="true"
-            >
-              <img src="../assets/images/bg/shop-sm-01.png" alt="" />
-            </button>
-            <button
-              className="nav-link"
-              id="v-pills-img2-tab"
-              data-bs-toggle="pill"
-              data-bs-target="#v-pills-img2"
-              type="button"
-              role="tab"
-              aria-controls="v-pills-img2"
-              aria-selected="false"
-            >
-              <img src="../assets/images/bg/shop-sm-02.png" alt="" />
-            </button>
-            <button
-              className="nav-link"
-              id="v-pills-img3-tab"
-              data-bs-toggle="pill"
-              data-bs-target="#v-pills-img3"
-              type="button"
-              role="tab"
-              aria-controls="v-pills-img3"
-              aria-selected="false"
-            >
-              <img src="../assets/images/bg/shop-sm-03.png" alt="" />
-            </button>
-            <button
-              className="nav-link"
-              id="v-pills-img4-tab"
-              data-bs-toggle="pill"
-              data-bs-target="#v-pills-img4"
-              type="button"
-              role="tab"
-              aria-controls="v-pills-img4"
-              aria-selected="false"
-            >
-              <img src="../assets/images/bg/shop-sm-04.png" alt="" />
-            </button>
-            <button
-              className="nav-link"
-              id="v-pills-img5-tab"
-              data-bs-toggle="pill"
-              data-bs-target="#v-pills-img5"
-              type="button"
-              role="tab"
-              aria-controls="v-pills-img5"
-              aria-selected="false"
-            >
-              <img src="../assets/images/bg/shop-sm-05.png" alt="" />
-            </button> */}
-            {imageList.map((item) => (
-                <button
+          
+            {imageDetailList.map((item, index) => (
+                <button key={index}
                 className="nav-link"
-                id="v-pills-img5-tab"
-                data-bs-toggle="pill"
-                data-bs-target="#v-pills-img5"
-                type="button"
-                role="tab"
-                aria-controls="v-pills-img5"
-                aria-selected="false">
-                <img src="{item.url}" alt="" />
+                // id={`v-pills-img1-tab`}
+                // data-bs-toggle="pill"
+                // data-bs-target={`#v-pills-img1`}
+                // type="button"
+                // role="tab"
+                // aria-controls={`v-pills-img1`}
+                // aria-selected="false"
+                onClick={mainImageHandler.bind(null, item.url)}
+                >
+                <img src={item.url} alt="" className="product-detail-image" />
               </button>
             ))}
             

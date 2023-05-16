@@ -13021,3 +13021,13 @@ select#duration:focus {
   margin-left: -2.75rem;
   border-radius: 1rem;
 }
+
+/* ADD NEW FOR PRODUCT DETAILS  */
+.product-detail-image {
+  width: 100px;
+  height: 100px;
+}
+.product-image {
+    width: 42rem;
+    height: 30rem;
+}
