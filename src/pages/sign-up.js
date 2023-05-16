@@ -175,12 +175,12 @@ function SignUpPage() {
                                                         }`}>
                                                             <label>Password *</label>
                                                             <input
-                                                            type="password"
-                                                            name="password"
-                                                            id="password"
-                                                            placeholder="Enter Your Password"
-                                                            value={form.password || ""}
-                                                            onChange={handleChangeSignup}
+                                                                type="password"
+                                                                name="password"
+                                                                id="password"
+                                                                placeholder="Enter Your Password"
+                                                                value={form.password || ""}
+                                                                onChange={handleChangeSignup}
                                                             />
                                                             <p className="error">{errors.password}</p>
                                                             <i className="bi bi-eye-slash" id="togglePassword"/>
@@ -206,7 +206,6 @@ function SignUpPage() {
                                                     <div className="col-md-12">
                                                         <div
                                                             className="form-agreement form-inner d-flex justify-content-between flex-wrap">
-<<<<<<< HEAD
                                                             <div className="form-group" onClick={checkBoxCusHandler}>
                                                                 <input defaultChecked="checked" type="checkbox" id="customer" value="customer" />
                                                                 <p className="sign-up-checkbox" >{isCheckedCus && <p className="sign-up-checkbox--checked" ></p>}</p>
@@ -215,21 +214,19 @@ function SignUpPage() {
                                                             <div className="form-group" onClick={checkBoxHandOwnHandler}>
                                                                 <input  type="checkbox" id="owner" value="owner"/>
                                                                 <p className="sign-up-checkbox" >{isCheckedOwn && <p className="sign-up-checkbox--checked" ></p>}</p>
-=======
-                                                            <div className="form-group" >
-                                                                <input defaultChecked="checked" type="checkbox" id="customer" value="customer" />
-                                                                <label htmlFor="customer">Customer</label>
+                                                                <div className="form-group" >
+                                                                    <input defaultChecked="checked" type="checkbox" id="customer" value="customer" />
+                                                                    <label htmlFor="customer">Customer</label>
+                                                                </div>
+                                                                <div className="form-group" >
+                                                                    <input  type="checkbox" id="owner" value="owner"/>
+                                                                    <label htmlFor="owner">Owner</label>
+                                                                </div>
                                                             </div>
-                                                            <div className="form-group" >
-                                                                <input  type="checkbox" id="owner" value="owner"/>
->>>>>>> d7be61656beccf898ff9c9290d77a015a9c81a58
-                                                                <label htmlFor="owner">Owner</label>
-                                                            </div>
-
                                                         </div>
+                                                        <button className="account-btn" type="submit">Create Account</button>
                                                     </div>
                                                 </div>
-                                                <button className="account-btn" type="submit">Create Account</button>
                                             </form>
                                         )}
                                     </Formik>
