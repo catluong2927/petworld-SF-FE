@@ -54,7 +54,7 @@ function ShopCard(props) {
                     <a>View Details</a>
                   </Link>
                 </div>
-                <ul className="cart-icon-list">
+                {/* <ul className="cart-icon-list">
                   <li>
                     <a to="#">
                       <img src="assets/images/icon/Icon-cart3.svg" alt="" />
@@ -68,7 +68,7 @@ function ShopCard(props) {
                       />
                     </a>
                   </li>
-                </ul>
+                </ul> */}
               </div>
               <div className="collection-content text-center">
                 <h4>

@@ -7,10 +7,11 @@ import axios from "axios";
 
 function ProductDetails(props) {
   const product = props.productDetail;
+  const [imageList, setImageList] = useState([]);
   const [productPriceCount, setProductPriceCount] = useState({})
   const [productCart, setProductCart] = useState({})
   const CART_API = process.env.REACT_APP_FETCH_API + `/cart/hieu@codegym.com`;
-
+  console.log(props);
   function discoutPrice(price, sale){
     return price*(1 - (sale/100));
   }
@@ -21,6 +22,7 @@ function ProductDetails(props) {
       'productId': props.productId
     })
   }, [productPriceCount, props.productId])
+  //  setImageList(product.imageDetailList) 
 
   function handleAddToCart(e) {
     e.preventDefault();
@@ -109,7 +111,7 @@ function ProductDetails(props) {
             role="tablist"
             aria-orientation="vertical"
           >
-            <button
+            {/* <button
               className="nav-link active"
               id="v-pills-img1-tab"
               data-bs-toggle="pill"
@@ -168,7 +170,23 @@ function ProductDetails(props) {
               aria-selected="false"
             >
               <img src="../assets/images/bg/shop-sm-05.png" alt="" />
-            </button>
+            </button> */}
+            {imageList.map((item) => (
+                <button
+                className="nav-link"
+                id="v-pills-img5-tab"
+                data-bs-toggle="pill"
+                data-bs-target="#v-pills-img5"
+                type="button"
+                role="tab"
+                aria-controls="v-pills-img5"
+                aria-selected="false">
+                <img src="{item.url}" alt="" />
+              </button>
+            ))}
+            
+
+
           </div>
         </div>
         <div className="col-lg-5">
