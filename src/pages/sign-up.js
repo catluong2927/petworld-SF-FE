@@ -1,4 +1,4 @@
-import {json, Link} from "react-router-dom";
+import {Link} from "react-router-dom";
 import React, {useRef, useState} from "react";
 import Breadcrumb from "../components/breadcrumb/Breadcrumb";
 import Layout from "../layout/Layout";
@@ -10,47 +10,54 @@ import {Formik} from "formik";
 import axios from "axios";
 
 function SignUpPage() {
+    const headers = {
+        'Content-Type': 'application/json',
+        'Authorization': 'JWT fefege...'
+    }
+    const [isInputBlurred, setIsInputBlurred] = useState(true);
     const toast = useRef(null);
     const LOGIN_API = process.env.REACT_APP_FETCH_API;
     const [isCheckedCus, setIsCheckedCus] = useState(true);
     const [isCheckedOwn, setIsCheckedOwn] = useState(false);
     const [form, setForm] = useState({});
-    const [messErorr,setMessErorr] = useState({})
+    const [messErorr, setMessErorr] = useState({})
     const REGEX = {
         email: /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/,
-        password: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/,
-        username: /^(?=.{8,20}$)(?![_.])(?!.*[_.]{2})[a-zA-Z0-9._]+(?<![_.])$/,
+        password: /^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=])(?=\S+$).{8,}$/,
+        username: /^(?=.{8,20}$)(?![_.])(?!.*[_.]{2})[a-zA-Z0-9._]+(?<![_.])$/
     };
 
-    const  checkBoxCusHandler = () => {
+    const checkBoxCusHandler = () => {
         setIsCheckedCus(!isCheckedCus)
     }
-    const  checkBoxHandOwnHandler = () => {
+    const checkBoxHandOwnHandler = () => {
         setIsCheckedOwn(!isCheckedOwn)
     }
     let roles = [];
     if (isCheckedCus) {
         const customer = {
-            "id":2,
-            "name":"ROLE_CUSTOMER",
-            "desc":"Khách hàng"
+            "id": 2,
+            "name": "ROLE_CUSTOMER",
+            "desc": "Khách hàng"
         }
         roles.push(customer);
     }
     if (isCheckedOwn) {
         const owner = {
-            "id":3,
-            "name":"ROLE_OWNER",
-            "desc":"Trung tâm dịch vụ"
+            "id": 3,
+            "name": "ROLE_OWNER",
+            "desc": "Trung tâm dịch vụ"
         }
         roles.push(owner);
     }
+
     function handleChangeSignup(event) {
         setForm({
             ...form,
             [event.target.name]: event.target.value
         });
     }
+
     function handleValidateSignup() {
         const errors = {};
         if (!form.email) {
@@ -61,43 +68,70 @@ function SignUpPage() {
         }
         if (!form.password) {
             errors.password = "Required";
+        } else if (!REGEX.password.test(form.password)) {
+            errors.password = "have at least 8 characters, have uppercase letters, lowercase letters, special characters";
+            console.log("code");
         }
         if (!form.username) {
             errors.username = "Required";
+        } else if (!REGEX.username.test(form.username)) {
+            errors.username = "be at least 8 to 20 characters, without periods. _ at the beginning of the middle name and at the end of the name";
+            console.log("code");
         }
         if (!form.confirmPassword) {
             errors.confirmPassword = "Required";
+        } else if (form.password !== form.confirmPassword) {
+            errors.confirmPassword = "password does not match";
         }
+        console.log(messErorr);
         return errors;
     }
 
+    // function handleBlurSignup(e) {
+    //     if (e.target.name === "username") {
+    //         setIsInputBlurred(false)
+    //         setMessErorr((prevState) => ({ ...prevState, userName: null }));
+    //     }
+    //     if (e.target.name === "email") {
+    //         setMessErorr((prevState) => ({ ...prevState, email: null }));
+    //     }
+    // }
+
+
     function handleSubmit() {
-        const data ={
+        const data = {
             userName: form.username,
             fullName: form.fullName,
             email: form.email,
-            password:form.password,
+            password: form.password,
             roles
         }
         axios
-            .post(`${LOGIN_API}/users`, data)
+            .post(`${LOGIN_API}/users`, data, {
+                headers: headers
+            })
             .then((res) => {
-                console.log(res)
+                console.log(res.data)
                 if (res.data === '') {
-                    toast.current.show({severity: 'success', summary: 'Success', detail: 'registration successful', life: 3000})
-                    setTimeout(() => { window.location.href = "/"; }, 6000)
-                } else {
-                    setMessErorr(res.data.userName);
-                    toast.current.show(
-                        {severity: 'error', summary: 'Error', detail: 'registration fail', life: 3150})
+                    toast.current.show({
+                        severity: 'success',
+                        summary: 'Success',
+                        detail: 'registration successful',
+                        life: 1500
+                    })
+                    setTimeout(() => {
+                        window.location.href = "/";
+                    }, 3000);
                 }
             })
             .catch(err => {
-                console.log(err.message + "abca");
+                setMessErorr(err.response.data);
                 toast.current.show(
                     {severity: 'error', summary: 'Error', detail: 'registration fail', life: 3150})
             });
     }
+
+    console.log(messErorr);
 
     return (
         <>
@@ -133,15 +167,20 @@ function SignUpPage() {
                                             <form className="w-100" onSubmit={handleSubmit}>
                                                 <div className="row">
                                                     <div className="col-md-6">
-                                                        <div className={`form-inner${errors.username ? "custom-input-error" : ""}`}>
+                                                        <div
+                                                            className={`form-inner${errors.username ? "custom-input-error" : ""}`}>
                                                             <label>User Name *</label>
                                                             <input type="text"
                                                                    placeholder="Enter Your User Name"
                                                                    name="username"
                                                                    value={form.username || ""}
                                                                    onChange={handleChangeSignup}
+                                                                   // onBlur={isInputBlurred ? handleBlurSignup : null}
+
                                                             />
                                                             <p className="error">{errors.username}</p>
+                                                            {messErorr.userName &&
+                                                                <p className="error">{messErorr.userName}</p>}
                                                         </div>
                                                     </div>
                                                     <div className="col-md-6">
@@ -152,6 +191,7 @@ function SignUpPage() {
                                                                    name="fullName"
                                                                    value={form.fullName || ""}
                                                                    onChange={handleChangeSignup}
+
                                                             />
                                                         </div>
                                                     </div>
@@ -165,8 +205,11 @@ function SignUpPage() {
                                                                    name="email"
                                                                    value={form.email || ""}
                                                                    onChange={handleChangeSignup}
+                                                                   // onBlur={isInputBlurred ? handleBlurSignup : null}
                                                             />
                                                             <p className="error">{errors.email}</p>
+                                                            {messErorr.email &&
+                                                                <p className="error">{messErorr.email}</p>}
                                                         </div>
                                                     </div>
                                                     <div className="col-md-12">
@@ -183,12 +226,12 @@ function SignUpPage() {
                                                                 onChange={handleChangeSignup}
                                                             />
                                                             <p className="error">{errors.password}</p>
-                                                            <i className="bi bi-eye-slash" id="togglePassword"/>
+                                                            {/*<i className="bi bi-eye-slash" id="togglePassword"/>*/}
                                                         </div>
                                                     </div>
                                                     <div className="col-md-12">
                                                         <div className={`form-inner ${
-                                                            errors.confirmpassword ? "custom-input-error" : ""
+                                                            errors.confirmPassword ? "custom-input-error" : ""
                                                         }`}>
                                                             <label>Confirm Password *</label>
                                                             <input
@@ -199,64 +242,38 @@ function SignUpPage() {
                                                                 value={form.confirmPassword || ""}
                                                                 onChange={handleChangeSignup}
                                                             />
-                                                            <p className="error">{errors.confirmpassword}</p>
-                                                            <i className="bi bi-eye-slash" id="togglePassword2"/>
+                                                            <p className="error">{errors.confirmPassword}</p>
+                                                            {/*<i className="bi bi-eye-slash" id="togglePassword2"/>*/}
                                                         </div>
                                                     </div>
                                                     <div className="col-md-12">
                                                         <div
                                                             className="form-agreement form-inner d-flex justify-content-between flex-wrap">
                                                             <div className="form-group" onClick={checkBoxCusHandler}>
-                                                                <input defaultChecked="checked" type="checkbox" id="customer" value="customer" />
-                                                                <p className="sign-up-checkbox" >{isCheckedCus && <p className="sign-up-checkbox--checked" ></p>}</p>
+                                                                <input defaultChecked="checked" type="checkbox"
+                                                                       id="customer" value="customer"/>
+                                                                <p className="sign-up-checkbox">{isCheckedCus &&
+                                                                    <p className="sign-up-checkbox--checked"></p>}</p>
                                                                 <label htmlFor="customer">Customer</label>
                                                             </div>
-                                                            <div className="form-group" onClick={checkBoxHandOwnHandler}>
-                                                                <input  type="checkbox" id="owner" value="owner"/>
-                                                                <p className="sign-up-checkbox" >{isCheckedOwn && <p className="sign-up-checkbox--checked" ></p>}</p>
-                                                                <div className="form-group" >
-                                                                    <input defaultChecked="checked" type="checkbox" id="customer" value="customer" />
-                                                                    <label htmlFor="customer">Customer</label>
-                                                                </div>
-                                                                <div className="form-group" >
-                                                                    <input  type="checkbox" id="owner" value="owner"/>
+                                                            <div className="form-group"
+                                                                 onClick={checkBoxHandOwnHandler}>
+                                                                <input type="checkbox" id="owner" value="owner"/>
+                                                                <p className="sign-up-checkbox">{isCheckedOwn &&
+                                                                    <p className="sign-up-checkbox--checked"></p>}</p>
+                                                                <div className="form-group">
+                                                                    <input type="checkbox" id="owner" value="owner"/>
                                                                     <label htmlFor="owner">Owner</label>
                                                                 </div>
                                                             </div>
                                                         </div>
-                                                        <button className="account-btn" type="submit">Create Account</button>
+                                                        <button className="account-btn" type="submit">Create Account
+                                                        </button>
                                                     </div>
                                                 </div>
                                             </form>
                                         )}
                                     </Formik>
-                                    {/*<div className="alternate-signup-box">*/}
-                                    {/*  <h6>or signup WITH</h6>*/}
-                                    {/*  <div className="btn-group gap-4">*/}
-                                    {/*    <a*/}
-                                    {/*        href="#"*/}
-                                    {/*        className="eg-btn google-btn d-flex align-items-center"*/}
-                                    {/*    >*/}
-                                    {/*      <i className="bx bxl-google" />*/}
-                                    {/*      <span>signup whit google</span>*/}
-                                    {/*    </a>*/}
-                                    {/*    <a*/}
-                                    {/*        href="#"*/}
-                                    {/*        className="eg-btn facebook-btn d-flex align-items-center"*/}
-                                    {/*    >*/}
-                                    {/*      <i className="bx bxl-facebook" />*/}
-                                    {/*      signup whit facebook*/}
-                                    {/*    </a>*/}
-                                    {/*  </div>*/}
-                                    {/*</div>*/}
-                                    {/*<div className="form-poicy-area">*/}
-                                    {/*  <p>*/}
-                                    {/*    By clicking the "signup" button, you create a Cobiro*/}
-                                    {/*    account, and you agree to Cobiro's{" "}*/}
-                                    {/*    <a href="#">Terms &amp; Conditions</a> &amp;{" "}*/}
-                                    {/*    <a href="#">Privacy Policy.</a>*/}
-                                    {/*  </p>*/}
-                                    {/*</div>*/}
                                 </div>
                             </div>
                         </div>
@@ -266,5 +283,6 @@ function SignUpPage() {
         </>
     );
 }
+
 
 export default SignUpPage;
