@@ -34,7 +34,7 @@ const OtherServiceSlide = (props) => {
                                         <div className="content package-content">
                                             <h3 >
                                                 <a href={`/service-packages/${element.id}`} >
-                                                    <p id='package-content-title'>{element.name}</p>
+                                                    <p id='package-content-title'>{element.centerName}</p>
                                                 </a>
                                             </h3>
                                             <p>{element.description}</p>

@@ -1,7 +1,27 @@
-import React, {useEffect, useState} from "react";
+import React, {useEffect, useRef,} from "react";
+import {sendRequest} from "../../pages/ServicePackage";
+
 
 export const ServiceReview = (props) => {
-    const reviews = props.reviews;
+    const  reviews = props.reviews;
+    const emailRef = useRef();
+    const starRef = useRef();
+    const messageRef = useRef();
+    const submitReviewHandler = (event) => {
+        const email = emailRef.current.value;
+        const star = starRef.current.value;
+        const review = messageRef.current.value;
+        const date = new Date().toLocaleDateString();
+        const newReview = {
+            email,
+            star,
+            review,
+            date,
+            userDtoRequest: {email}
+        };
+        console.log(newReview)
+    };
+    // sendRequest()
     return (
         <div
             className="tab-content tab-content2"
@@ -68,23 +88,15 @@ export const ServiceReview = (props) => {
                                 <div className="number-of-review">
                                     <h3>Leave A Reply</h3>
                                 </div>
-                                <form>
+                                <form onSubmit={submitReviewHandler}>
                                     <div className="row">
                                         <div className="col-lg-12">
                                             <div className="form-inner mb-20">
                                                 <input
-                                                    type="text"
-                                                    placeholder="Name*"
-                                                    required
-                                                />
-                                            </div>
-                                        </div>
-                                        <div className="col-lg-12">
-                                            <div className="form-inner mb-20">
-                                                <input
                                                     type="email"
-                                                    placeholder="Email*"
+                                                    placeholder="Your Email*"
                                                     required
+                                                    ref={emailRef}
                                                 />
                                             </div>
                                         </div>
@@ -93,6 +105,7 @@ export const ServiceReview = (props) => {
                                       <textarea
                                           placeholder="Message..."
                                           defaultValue={""}
+                                          ref={messageRef}
                                       />
                                             </div>
                                         </div>
@@ -105,7 +118,8 @@ export const ServiceReview = (props) => {
                                                             type="radio"
                                                             id="star5"
                                                             name="rate"
-                                                            defaultValue={5}
+                                                            value={5}
+                                                            ref={starRef}
                                                         />
                                                         <label htmlFor="star5" title="text">
                                                             5 stars
@@ -114,7 +128,8 @@ export const ServiceReview = (props) => {
                                                             type="radio"
                                                             id="star4"
                                                             name="rate"
-                                                            defaultValue={4}
+                                                            value={4}
+                                                            ref={starRef}
                                                         />
                                                         <label htmlFor="star4" title="text">
                                                             4 stars
@@ -123,7 +138,8 @@ export const ServiceReview = (props) => {
                                                             type="radio"
                                                             id="star3"
                                                             name="rate"
-                                                            defaultValue={3}
+                                                            value={3}
+                                                            ref={starRef}
                                                         />
                                                         <label htmlFor="star3" title="text">
                                                             3 stars
@@ -132,7 +148,8 @@ export const ServiceReview = (props) => {
                                                             type="radio"
                                                             id="star2"
                                                             name="rate"
-                                                            defaultValue={2}
+                                                            value={2}
+                                                            ref={starRef}
                                                         />
                                                         <label htmlFor="star2" title="text">
                                                             2 stars
@@ -141,7 +158,8 @@ export const ServiceReview = (props) => {
                                                             type="radio"
                                                             id="star1"
                                                             name="rate"
-                                                            defaultValue={1}
+                                                            value={1}
+                                                            ref={starRef}
                                                         />
                                                         <label htmlFor="star1" title="text">
                                                             1 star
@@ -171,3 +189,6 @@ export const ServiceReview = (props) => {
 
     )
 }
+
+
+

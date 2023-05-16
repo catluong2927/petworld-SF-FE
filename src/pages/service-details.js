@@ -10,6 +10,7 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import {ServiceReview} from "../components/service/ServiceReview";
 import {ServiceProcess} from "../components/service/ServiceProcess";
 import {ServicePackageDescription} from "../components/service/ServicePackageDescription";
+import {sendRequest} from "./ServicePackage";
 SwiperCore.use([Navigation, Pagination, Autoplay, EffectFade]);
 const  initialState = {description: true, review: false, process: false};
 const infoReducer = (state, action) => {
@@ -52,12 +53,11 @@ function ServiceDetails() {
     // };
     // fetchData();
   }, [data]);
-
+  const URL = 'api/package-reviews/package/' + packageId.packageId;
   useEffect(async () => {
     const response = await fetch(`http://localhost:8080/api/package-reviews/package/`+ packageId.packageId);
     const data = await response.json();
     setReviews(data.content);
-    console.log(data.content)
   }, []);
 
   const onChangeImageHandler = props => {
@@ -97,8 +97,7 @@ function ServiceDetails() {
     setSelectedDuration(event.target.value);
   };
   /// Price Handler
-  const  price = (selectedDuration === 'full-day')? servicePackage.maxPice: servicePackage.minPrice;
-
+  const  price = (selectedDuration === 'full-day')? servicePackage.maxPrice: servicePackage.minPrice;
   return (
       <Layout>
         <Breadcrumb pageName="Packages Details" pageTitle={servicePackage.name} />
