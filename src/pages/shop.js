@@ -3,15 +3,29 @@ import { Link } from "react-router-dom";
 import Breadcrumb from "../components/breadcrumb/Breadcrumb";
 import ShopCard from "../components/shop/ShopCard";
 import Layout from "../layout/Layout";
+import { useEffect } from "react";
+import axios from "axios";
 
 
 function Shop() {
 
   const [sizePage, setSizePage] = useState(9);
-
   const [currentPage, setCurrentPage] = useState(0);
-
   const [totalPages, setTotalPages] = useState(0);
+  const [category, setCategory] = useState([]);
+  const [checkedCategory, setCheckedCategory] = useState([]);
+
+
+  const CATEGORY_API = process.env.REACT_APP_FETCH_API + `/categorys`;
+  useEffect(() => {
+    axios
+    .get(`${CATEGORY_API}`)
+    .then(res => {
+        setCategory(res.data.content)
+    })
+    .catch(err => {console.log(err)
+    })
+  }, []);
 
 
   //Cập nhật lại size
@@ -25,6 +39,21 @@ function Shop() {
     setCurrentPage(page);
   };
 
+ 
+  const checkbokHandler = (event) => {
+    var updatedList = [...checkedCategory];
+    if (event.target.checked) {
+      updatedList = [...checkedCategory, event.target.value];
+    } else {
+      updatedList.splice(checkedCategory.indexOf(event.target.value), 1);
+      setCurrentPage(0);
+    }
+    setCheckedCategory(updatedList);
+  };
+
+
+
+  console.log(checkedCategory)
   //Phân trang
   function contentPageNumber() {
     let content = []
@@ -41,6 +70,7 @@ function Shop() {
   }
 
   return (
+    <>
     <Layout>
       <Breadcrumb pageName="Shop" pageTitle="Shop" />
       <div className="shop-page pt-120 mb-120">
@@ -52,31 +82,20 @@ function Shop() {
                   <div className="check-box-item">
                     <h5 className="shop-widget-title">Category</h5>
                     <div className="checkbox-container">
-                      <label className="containerss">
-                        Food Toppers
-                        <input type="checkbox" defaultChecked="checked" />
-                        <span className="checkmark" />
+
+                    {category.map((item) => (
+                      <label className="containerss" key={item.name}>
+                        {item.name}
+                        <input
+                          type="checkbox"
+                          id={item.id}
+                          value={item.id}
+                          onChange={checkbokHandler} 
+                        />
+                        <span className="checkmark"/>
                       </label>
-                      <label className="containerss">
-                        Milk Replacers
-                        <input type="checkbox" />
-                        <span className="checkmark" />
-                      </label>
-                      <label className="containerss">
-                        Canned Food
-                        <input type="checkbox" />
-                        <span className="checkmark" />
-                      </label>
-                      <label className="containerss">
-                        Veterinary Authorized Diets
-                        <input type="checkbox" />
-                        <span className="checkmark" />
-                      </label>
-                      <label className="containerss">
-                        Bones &amp; Rawhide
-                        <input type="checkbox" />
-                        <span className="checkmark" />
-                      </label>
+                    ))}
+
                     </div>
                   </div>
                 </div>
@@ -214,7 +233,7 @@ function Shop() {
                 </div>
               </div>
               <div className="row g-4 justify-content-center">
-                <ShopCard sizePages={sizePage} currentPage={currentPage} setTotalPages={setTotalPages} />
+                <ShopCard sizePages={sizePage} currentPage={currentPage} setTotalPages={setTotalPages} checkedCategory={checkedCategory}/>
               </div>
               <div className="row pt-70">
                 <div className="col-lg-12 d-flex justify-content-center">
@@ -235,7 +254,6 @@ function Shop() {
                         </li>
                       </ul>
                     </nav>
-
                   </div>
                 </div>
               </div>
@@ -244,7 +262,8 @@ function Shop() {
         </div>
       </div>
     </Layout>
+    </>
   );
-}
+                    }
 
 export default Shop;

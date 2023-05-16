@@ -99,10 +99,6 @@ function SignUpPage() {
             });
     }
 
-
-
-
-
     return (
         <>
             <div className="card flex justify-content-center gap-2">
@@ -210,6 +206,7 @@ function SignUpPage() {
                                                     <div className="col-md-12">
                                                         <div
                                                             className="form-agreement form-inner d-flex justify-content-between flex-wrap">
+<<<<<<< HEAD
                                                             <div className="form-group" onClick={checkBoxCusHandler}>
                                                                 <input defaultChecked="checked" type="checkbox" id="customer" value="customer" />
                                                                 <p className="sign-up-checkbox" >{isCheckedCus && <p className="sign-up-checkbox--checked" ></p>}</p>
@@ -218,8 +215,17 @@ function SignUpPage() {
                                                             <div className="form-group" onClick={checkBoxHandOwnHandler}>
                                                                 <input  type="checkbox" id="owner" value="owner"/>
                                                                 <p className="sign-up-checkbox" >{isCheckedOwn && <p className="sign-up-checkbox--checked" ></p>}</p>
+=======
+                                                            <div className="form-group" >
+                                                                <input defaultChecked="checked" type="checkbox" id="customer" value="customer" />
+                                                                <label htmlFor="customer">Customer</label>
+                                                            </div>
+                                                            <div className="form-group" >
+                                                                <input  type="checkbox" id="owner" value="owner"/>
+>>>>>>> d7be61656beccf898ff9c9290d77a015a9c81a58
                                                                 <label htmlFor="owner">Owner</label>
                                                             </div>
+
                                                         </div>
                                                     </div>
                                                 </div>

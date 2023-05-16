@@ -3,18 +3,13 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 
 
-
-
-
 function discoutPrice(price, sale){
   return price*(1 - (sale/100));
 }
 
 function ShopCard(props) {
-  console.log(props.sizePages);
-  const PRODUCT_API = process.env.REACT_APP_FETCH_API + `/products?size=${props.sizePages}&page=${props.currentPage}`;
+  const PRODUCT_API = process.env.REACT_APP_FETCH_API + `/products?size=${props.sizePages}&page=${props.currentPage}&categoryIds=${props.checkedCategory}`;
   const [products, setProducts] = useState([]);
-console.log(PRODUCT_API)
 
   useEffect(() => {
     axios
@@ -26,7 +21,6 @@ console.log(PRODUCT_API)
         .catch(err => {console.log(err)
         })
   }, [PRODUCT_API, props]);
-
 
   return (
     <>
