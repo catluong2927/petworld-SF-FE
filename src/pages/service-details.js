@@ -35,6 +35,8 @@ function ServiceDetails() {
   const [services, setServices] = useState([]);
   const [startDate, setStartDate] = useState(new Date());
   const [images, setImages] = useState([]);
+  const [reviews, setReviews] = useState([]);
+  const  packageId = useParams();
   const  data = useRouteLoaderData('services');
   useEffect(() => {
     // const fetchData = async () => {
@@ -42,15 +44,22 @@ function ServiceDetails() {
     //   const data = await response.json();
     setServicePackage(data);
     setMainImage(data.image);
-    setServices(data.services);
-    const serviceImages = data.services.flatMap(service => service.serviceImages)
+    setServices(data.serviceDtoResponses);
+    const serviceImages = data.serviceDtoResponses.flatMap(service => service.serviceImages)
     setImages(serviceImages);
     const img = {id: 100, url:data.image }
     setImages(prevState => [...prevState, img]);
-    console.log("running.....");
     // };
     // fetchData();
   }, [data]);
+
+  useEffect(async () => {
+    const response = await fetch(`http://localhost:8080/api/package-reviews/package/`+ packageId.packageId);
+    const data = await response.json();
+    setReviews(data.content);
+    console.log(data.content)
+  }, []);
+
   const onChangeImageHandler = props => {
     setMainImage(props);
   }
@@ -135,7 +144,7 @@ function ServiceDetails() {
                       <div className="banner-title">
                         <h2>{servicePackage.name}</h2>
                         <div className="currency">
-                          <h5>${servicePackage.minPrice} - ${servicePackage.maxPrice}</h5>
+                          <h5>${servicePackage.minPrice}</h5>
                         </div>
                       </div>
                       <div className="service-area">
@@ -229,7 +238,7 @@ function ServiceDetails() {
                       >Review</button>
                     </div>
                     {description && <ServicePackageDescription content={servicePackage.description} />}
-                    {review && <ServiceReview reviews ={servicePackage.reviews} />}
+                    {review && <ServiceReview reviews ={reviews} />}
                     {process && <ServiceProcess process ={services} />}
                   </div>
                 </div>
@@ -241,7 +250,7 @@ function ServiceDetails() {
 export default ServiceDetails;
 export async function loader({request, params}) {
   const id = params.packageId;
-  const  URL = 'http://localhost:8080/api/service-packages/' ;
+  const  URL = 'http://localhost:8080/api/packages/' ;
   const URL_FAKE = 'https://6436d35a3e4d2b4a12dcb9a2.mockapi.io/api/v1/service-packages/';
   const response = await fetch(URL+ id );
   if (!response.ok) {

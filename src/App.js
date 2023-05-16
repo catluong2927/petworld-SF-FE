@@ -6,6 +6,8 @@ import ShopDetail from "./pages/shop-details"
 import Home1Service from "./components/service/Home1Service";
 import Home from "./pages";
 import AboutPage from "./pages/about";
+import LoginPage from "./pages/login";
+import SignUpPage from "./pages/sign-up";
 
 
 
@@ -20,6 +22,8 @@ const router = createBrowserRouter([
       {path: 'shop-details/:id', element: <ShopDetail/>},
       {path: 'test',  element: <Home1Service/>},
       {path:'about', element:<AboutPage/>},
+      {path:'login', element:<LoginPage/>},
+      {path:'sign-up', element:<SignUpPage/>},
     ]},
     ]
 )
