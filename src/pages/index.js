@@ -22,7 +22,7 @@ export default function Home() {
             <VideoBanner1 />
             <Home1Service />
             {/*<Home1About />*/}
-            {/*<Home1feature />*/}
+            <Home1feature />
             <FeatureCounter />
             {/*<ChooseUs />*/}
             {/*<Home1Partner />*/}

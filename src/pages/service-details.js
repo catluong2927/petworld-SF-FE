@@ -10,6 +10,7 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import {ServiceReview} from "../components/service/ServiceReview";
 import {ServiceProcess} from "../components/service/ServiceProcess";
 import {ServicePackageDescription} from "../components/service/ServicePackageDescription";
+import {sendRequest} from "./ServicePackage";
 SwiperCore.use([Navigation, Pagination, Autoplay, EffectFade]);
 const  initialState = {description: true, review: false, process: false};
 const infoReducer = (state, action) => {
@@ -35,6 +36,8 @@ function ServiceDetails() {
   const [services, setServices] = useState([]);
   const [startDate, setStartDate] = useState(new Date());
   const [images, setImages] = useState([]);
+  const [reviews, setReviews] = useState([]);
+  const  packageId = useParams();
   const  data = useRouteLoaderData('services');
   useEffect(() => {
     // const fetchData = async () => {
@@ -42,15 +45,21 @@ function ServiceDetails() {
     //   const data = await response.json();
     setServicePackage(data);
     setMainImage(data.image);
-    setServices(data.services);
-    const serviceImages = data.services.flatMap(service => service.serviceImages)
+    setServices(data.serviceDtoResponses);
+    const serviceImages = data.serviceDtoResponses.flatMap(service => service.serviceImages)
     setImages(serviceImages);
     const img = {id: 100, url:data.image }
     setImages(prevState => [...prevState, img]);
-    console.log("running.....");
     // };
     // fetchData();
   }, [data]);
+  const URL = 'api/package-reviews/package/' + packageId.packageId;
+  useEffect(async () => {
+    const response = await fetch(`http://localhost:8080/api/package-reviews/package/`+ packageId.packageId);
+    const data = await response.json();
+    setReviews(data.content);
+  }, []);
+
   const onChangeImageHandler = props => {
     setMainImage(props);
   }
@@ -81,6 +90,14 @@ function ServiceDetails() {
         }
     )
   })
+
+  /// Duration option
+  const [selectedDuration, setSelectedDuration] = useState("full-day");
+  const handleDurationChange = (event) => {
+    setSelectedDuration(event.target.value);
+  };
+  /// Price Handler
+  const  price = (selectedDuration === 'full-day')? servicePackage.maxPrice: servicePackage.minPrice;
   return (
       <Layout>
         <Breadcrumb pageName="Packages Details" pageTitle={servicePackage.name} />
@@ -135,7 +152,7 @@ function ServiceDetails() {
                       <div className="banner-title">
                         <h2>{servicePackage.name}</h2>
                         <div className="currency">
-                          <h5>${servicePackage.minPrice} - ${servicePackage.maxPrice}</h5>
+                          <h5>${price}</h5>
                         </div>
                       </div>
                       <div className="service-area">
@@ -146,6 +163,8 @@ function ServiceDetails() {
                                 <label>Duration</label>
                                 <select
                                     id="duration"
+                                    value={selectedDuration}
+                                    onChange={handleDurationChange}
                                     style={{
                                       width: "100%",
                                       padding: "10px",
@@ -153,9 +172,8 @@ function ServiceDetails() {
                                       border: "1px solid #ddd",
                                     }}
                                 >
-                                  <option>Choose an option</option>
-                                  <option>Full Day (over 5 hrs)</option>
-                                  <option>Half Day (under 5 hrs)</option>
+                                  <option value="full-day">Full Day (over 5 hrs)</option>
+                                  <option value="half-day">Half Day (under 5 hrs)</option>
                                 </select>
                               </div>
                             </div>
@@ -229,7 +247,7 @@ function ServiceDetails() {
                       >Review</button>
                     </div>
                     {description && <ServicePackageDescription content={servicePackage.description} />}
-                    {review && <ServiceReview reviews ={servicePackage.reviews} />}
+                    {review && <ServiceReview reviews ={reviews} />}
                     {process && <ServiceProcess process ={services} />}
                   </div>
                 </div>
@@ -241,7 +259,7 @@ function ServiceDetails() {
 export default ServiceDetails;
 export async function loader({request, params}) {
   const id = params.packageId;
-  const  URL = 'http://localhost:8080/api/service-packages/' ;
+  const  URL = 'http://localhost:8080/api/packages/' ;
   const URL_FAKE = 'https://6436d35a3e4d2b4a12dcb9a2.mockapi.io/api/v1/service-packages/';
   const response = await fetch(URL+ id );
   if (!response.ok) {

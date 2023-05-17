@@ -2,12 +2,14 @@ import {Link} from "react-router-dom";
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 
+
 function discoutPrice(price, sale){
   return price*(1 - (sale/100));
 }
 
 function ShopCard(props) {
-  const PRODUCT_API = process.env.REACT_APP_FETCH_API + `/products?size=${props.sizePages}&page=${props.currentPage}`;
+
+  const PRODUCT_API = process.env.REACT_APP_FETCH_API + `/products?size=${props.sizePages}&page=${props.currentPage}&categoryIds=${props.checkedCategory}`;
   const [products, setProducts] = useState([]);
 
   useEffect(() => {
@@ -20,7 +22,6 @@ function ShopCard(props) {
         .catch(err => {console.log(err)
         })
   }, [PRODUCT_API, props]);
-
 
   return (
     <>
@@ -53,7 +54,7 @@ function ShopCard(props) {
                     <a>View Details</a>
                   </Link>
                 </div>
-                <ul className="cart-icon-list">
+                {/* <ul className="cart-icon-list">
                   <li>
                     <a to="#">
                       <img src="assets/images/icon/Icon-cart3.svg" alt="" />
@@ -67,7 +68,7 @@ function ShopCard(props) {
                       />
                     </a>
                   </li>
-                </ul>
+                </ul> */}
               </div>
               <div className="collection-content text-center">
                 <h4>
