@@ -5,7 +5,6 @@ import Breadcrumb from "../components/breadcrumb/Breadcrumb";
 import OthersProduct from "../components/shop/OthersProduct";
 import ProductDetails from "../components/shop/ProductDetails";
 import SingleProductDescription from "../components/shop/SingleProductDescription";
-
 import Layout from "../layout/Layout";
 import { Toast } from 'primereact/toast';
 import "primereact/resources/themes/lara-light-indigo/theme.css";
