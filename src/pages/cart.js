@@ -8,18 +8,35 @@ import axios from "axios";
 import { ConfirmDialog } from 'primereact/confirmdialog';
 import { Toast } from 'primereact/toast';
 
+// import TextField from '@mui/material/TextField';
+// import Autocomplete from '@mui/material/Autocomplete';
+
+import moment from 'moment';
+
 function CartPage() {
   const [cartProducts, setCartProducts] = useState([]);
+
+  //API
   const CART_API = process.env.REACT_APP_FETCH_API + `/cart/hieu@codegym.com`;
   const DELETE_PRODUCT_CART_API = process.env.REACT_APP_FETCH_API + `/cart`;
+  const GET_COUPON_CODE_API = process.env.REACT_APP_FETCH_API + `/couponcode`
 
   //Confirm delete
   const [visible, setVisible] = useState(false);
   const toast = useRef(null);
   const [selectedProductId, setSelectedProductId] = useState(null);
 
-  //Handle price
+  //Handle subtotal
   const [subtotal, setSubtotal] = useState({});
+
+  //Cart total
+  const [cartTotals, setCartTotals] = useState(0);
+
+  //Coupon Code
+  const [couponCodeList, setCouponCodeList] = useState([])
+  const [couponCode, setCouponCode] = useState({})
+  const [discoutCode, setDiscoutCode] = useState('')
+
 
   useEffect(() => {
     axios
@@ -30,11 +47,18 @@ function CartPage() {
           subtotal[cartProduct.productDtoResponse.id] = cartProduct.totalPrice;
         });
         setSubtotal(subtotal);
+        sumCartTotal();
+        console.log(cartTotals);
       })
       .catch(err => {
         console.log(err)
       })
   }, [CART_API])
+
+  function sumCartTotal() {
+    let sumWithInitial = Object.values(subtotal).reduce((accumulator, currentValue) => accumulator + currentValue, 0);
+    setCartTotals(sumWithInitial);
+  }
 
   function discoutPrice(price, sale) {
     return price * (1 - (sale / 100));
@@ -91,6 +115,40 @@ function CartPage() {
     ));
   };
 
+  //Cart Totals
+  useEffect(() => {
+    sumCartTotal();
+  }, [subtotal])
+
+  //Coupon Code
+  useEffect(() => {
+    const currentTime = moment().format("YYYY-MM-DD");
+    axios
+      .get(`${GET_COUPON_CODE_API}?currentDate=${currentTime}&cartTotals=${cartTotals}`)
+      .then(res => {
+        setCouponCodeList(res.data)
+      })
+      .catch(err => {
+        console.log(err)
+      })
+  }, [cartTotals])
+
+  // function handleChangeValue(e, newInputValue) {
+  //   setCouponCode(newInputValue);
+  // }
+  function handleDiscoutCodeChange(e) {
+    setDiscoutCode(e.target.value);
+  }
+
+  function handleCouponCodeClick(discoutCode) {
+    setCouponCode(
+      couponCodeList.find(element => element.code === discoutCode) || {}
+    );
+  }
+
+  console.log(discoutCode)
+  console.log(couponCode)
+
   return (
     <>
       <Toast ref={toast} />
@@ -144,7 +202,6 @@ function CartPage() {
                                 <div className="quantity d-flex align-items-center">
                                   <div className="quantity-nav nice-number d-flex align-items-center">
                                     <ItemCounter
-                                      // price={cartProduct.totalPrice}
                                       count={cartProduct.amount}
                                       onCountChange={(newCount) => handleCountChange(cartProduct.productDtoResponse.id, newCount)}
                                     />
@@ -152,7 +209,6 @@ function CartPage() {
                                 </div>
                               </td>
                               <td data-label="Subtotal">${subtotal[cartProduct.productDtoResponse.id]}</td>
-                              {/* <td data-label="Subtotal">${Object.keys(subtotal).length !== 0 ? subtotal[cartProduct.productDtoResponse.id] : cartProduct.totalPrice}</td> */}
                             </tr>
                           )
                         })
@@ -180,9 +236,27 @@ function CartPage() {
                   <div className="cart-coupon-input">
                     <h5 className="coupon-title">Coupon Code</h5>
                     <form className="coupon-input d-flex align-items-center">
-                      <input type="text" placeholder="Coupon Code" />
-                      <button type="submit">Apply Code</button>
+                      <input 
+                        type="text" 
+                        id="code" 
+                        name="code" 
+                        value={discoutCode} 
+                        onChange={handleDiscoutCodeChange}
+                        placeholder="Coupon Code" 
+                      />
+
+                      <button type="button" onClick={() => handleCouponCodeClick(discoutCode)}>Apply Code</button>
                     </form>
+                    <div>
+                      <p>Mã giảm giá</p>
+                      <ul>
+                        {couponCodeList &&
+                          couponCodeList.map((item, index) => (
+                            <li key={index}>{item.code}</li>
+                          ))
+                        }
+                      </ul>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -192,7 +266,7 @@ function CartPage() {
                     <tr>
                       <th>Cart Totals</th>
                       <th />
-                      <th>$128.70</th>
+                      <th>${cartTotals}</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -201,9 +275,10 @@ function CartPage() {
                       <td>
                         <ul className="cost-list text-start">
                           <li>Shipping Fee</li>
-                          <li>Total ( tax excl.)</li>
+                          {/* <li>Total ( tax excl.)</li>
                           <li>Total ( tax incl.)</li>
-                          <li>Taxes</li>
+                          <li>Taxes</li> */}
+                          <li>{couponCode.code || ""}</li>
                           <li>
                             Shipping Enter your address to view shipping options.{" "}
                             <br /> <a to="#">Calculate shipping</a>
@@ -213,11 +288,12 @@ function CartPage() {
                       <td>
                         <ul className="single-cost text-center">
                           <li>Fee</li>
-                          <li>$15</li>
+                          {/* <li>$15</li>
                           <li></li>
                           <li>$15</li>
                           <li>$15</li>
-                          <li>$5</li>
+                          <li>$5</li> */}
+                          {couponCode.code && <li>{couponCode.discount}%</li>}
                         </ul>
                       </td>
                     </tr>
