@@ -893,7 +893,7 @@ html .ui-button.ui-state-disabled:active:hover {
 }
 
 /*=======================================
- 4. Buttons 
+ 4. Buttons
 =======================================*/
 .btn-lg {
   padding: 8px 50px;
@@ -1073,7 +1073,7 @@ html .ui-button.ui-state-disabled:active:hover {
 }
 
 /*=======================================
- 7. Top Bar 
+ 7. Top Bar
 =======================================*/
 .top-bar {
   padding: 7px 0;
@@ -1396,7 +1396,7 @@ header.style-1.sticky {
   left: 0;
   z-index: 10;
   -webkit-animation: smooth-header 0.65s linear;
-          animation: smooth-header 0.65s linear;
+  animation: smooth-header 0.65s linear;
 }
 @-webkit-keyframes smooth-header {
   0% {
@@ -1963,7 +1963,7 @@ header.style-2.sticky {
   left: 0;
   z-index: 10;
   -webkit-animation: smooth-header 0.65s linear;
-          animation: smooth-header 0.65s linear;
+  animation: smooth-header 0.65s linear;
 }
 @keyframes smooth-header {
   0% {
@@ -2465,7 +2465,7 @@ header.style-3.sticky {
   left: 0;
   z-index: 10;
   -webkit-animation: smooth-header 0.65s linear;
-          animation: smooth-header 0.65s linear;
+  animation: smooth-header 0.65s linear;
 }
 @keyframes smooth-header {
   0% {
@@ -3731,7 +3731,7 @@ header.style-3 .main-menu ul li.menu-item-has-children > i {
 }
 .hero2 .swiper-slide-active h6 {
   -webkit-animation: fadeInDown 1.9s;
-          animation: fadeInDown 1.9s;
+  animation: fadeInDown 1.9s;
 }
 
 .hero3 {
@@ -3927,7 +3927,7 @@ header.style-3 .main-menu ul li.menu-item-has-children > i {
 }
 .hero3 .swiper-slide-active h6 {
   -webkit-animation: fadeInDown 1.7s;
-          animation: fadeInDown 1.7s;
+  animation: fadeInDown 1.7s;
 }
 
 .ui-timepicker-container {
@@ -5026,7 +5026,7 @@ a.ui-button:active,
   transition: 0.35s;
   min-height: 200px;
   -o-object-fit: cover;
-     object-fit: cover;
+  object-fit: cover;
 }
 @media (max-width: 576px) {
   .h1-testimonial-area .testimonial-card .testimonial-img img {
@@ -10439,7 +10439,7 @@ footer.style2 .social-area ul li:hover a i {
 }
 @media (max-width: 576px) {
   .contact-pages .hotline,
-.contact-pages .location {
+  .contact-pages .location {
     padding: 60px 25px 45px;
   }
 }
@@ -10471,7 +10471,7 @@ footer.style2 .social-area ul li:hover a i {
 }
 @media (max-width: 576px) {
   .contact-pages .hotline .icon,
-.contact-pages .location .icon {
+  .contact-pages .location .icon {
     margin-right: 20px;
   }
 }
@@ -10652,9 +10652,9 @@ footer.style2 .social-area ul li:hover a i {
   text-align: left !important;
   transition: all 0.2s ease-in-out;
   -webkit-user-select: none;
-     -moz-user-select: none;
-      -ms-user-select: none;
-          user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
   white-space: nowrap;
   width: 100%;
   border-radius: 0px;
@@ -12057,7 +12057,7 @@ footer.style2 .social-area ul li:hover a i {
 }
 .checkout-section .added-product-summary .added-products .single-product .product-img img {
   -o-object-fit: cover;
-     object-fit: cover;
+  object-fit: cover;
   min-width: 90px;
   height: 100px;
 }
@@ -12300,27 +12300,27 @@ footer.style2 .social-area ul li:hover a i {
 =======================================*/
 .swiper-slide-active span {
   -webkit-animation: fadeInDown 1.7s;
-          animation: fadeInDown 1.7s;
+  animation: fadeInDown 1.7s;
 }
 
 .swiper-slide-active h1 {
   -webkit-animation: fadeInDown 1.7s;
-          animation: fadeInDown 1.7s;
+  animation: fadeInDown 1.7s;
 }
 
 .swiper-slide-active h2 {
   -webkit-animation: fadeInDown 1.7s;
-          animation: fadeInDown 1.7s;
+  animation: fadeInDown 1.7s;
 }
 
 .swiper-slide-active h4 {
   -webkit-animation: fadeInDown 1.7s;
-          animation: fadeInDown 1.7s;
+  animation: fadeInDown 1.7s;
 }
 
 .swiper-slide-active p {
   -webkit-animation: fadeInUp 1.7s;
-          animation: fadeInUp 1.7s;
+  animation: fadeInUp 1.7s;
 }
 
 .hero-style-1 {
@@ -12558,7 +12558,7 @@ footer.style2 .social-area ul li:hover a i {
   border-left: 20px solid #fff;
   border-right: 20px solid #fff;
   -o-object-fit: initial;
-     object-fit: initial;
+  object-fit: initial;
   height: 700px;
 }
 @media (max-width: 991px) {
@@ -12839,29 +12839,29 @@ footer.style2 .social-area ul li:hover a i {
   display: none;
   cursor: pointer;
 }
-.form-wrapper input[type=checkbox] + label:before {
-  content: "";
-  background-color: var(--title-color1);
-  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05), inset 0px -15px 10px -12px rgba(0, 0, 0, 0.05);
-  padding: 8px;
-  display: inline-block;
-  position: relative;
-  vertical-align: middle;
-  cursor: pointer;
-  margin-right: 5px;
-}
-.form-wrapper input[type=checkbox]:checked + label:after {
-  content: "";
-  display: block;
-  position: absolute;
-  top: 7px;
-  left: 6px;
-  width: 4px;
-  height: 10px;
-  border: 1px solid #fff;
-  border-width: 0 2px 2px 0;
-  transform: rotate(45deg);
-}
+/*.form-wrapper input[type=checkbox] + label:before {*/
+/*  content: "";*/
+/*  background-color: var(--title-color1);*/
+/*  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05), inset 0px -15px 10px -12px rgba(0, 0, 0, 0.05);*/
+/*  padding: 8px;*/
+/*  display: inline-block;*/
+/*  position: relative;*/
+/*  vertical-align: middle;*/
+/*  cursor: pointer;*/
+/*  margin-right: 5px;*/
+/*}*/
+/*.form-wrapper input[type=checkbox]:checked + label:after {*/
+/*  content: "";*/
+/*  display: block;*/
+/*  position: absolute;*/
+/*  top: 7px;*/
+/*  left: 6px;*/
+/*  width: 4px;*/
+/*  height: 10px;*/
+/*  border: 1px solid #fff;*/
+/*  border-width: 0 2px 2px 0;*/
+/*  transform: rotate(45deg);*/
+/*}*/
 .form-wrapper button.form--btn {
   outline: none;
   border: none;
@@ -13020,4 +13020,35 @@ select#duration:focus {
   margin-top: 14rem;
   margin-left: -2.75rem;
   border-radius: 1rem;
+}
+.sign-up-checkbox {
+  background-color: var(--title-color1);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05), inset 0px -15px 10px -12px rgba(0, 0, 0, 0.05);
+  padding: 8px;
+  display: inline-block;
+  position: relative;
+  vertical-align: middle;
+  cursor: pointer;
+  margin-right: 5px;
+}
+.sign-up-checkbox {
+  background-color: var(--title-color1);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05), inset 0px -15px 10px -12px rgba(0, 0, 0, 0.05);
+  padding: 8px;
+  display: inline-block;
+  position: relative;
+  vertical-align: middle;
+  cursor: pointer;
+  margin-right: 5px;
+}
+.sign-up-checkbox--checked {
+  display: block;
+  position: absolute;
+  top: 1px;
+  left: 6px;
+  width: 4px;
+  height: 10px;
+  border: 1px solid #fff;
+  border-width: 0 2px 2px 0;
+  transform: rotate(45deg);
 }
