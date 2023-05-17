@@ -1,10 +1,8 @@
 import { useReducer } from "react";
 
-const initialState = { count: 1 };
-
 function reducer(state, action) {
   switch (action.type) {
-    case "increment":
+    case "increment": 
       return { count: state.count + 1 };
     case "decrement":
       return { count: state.count - 1 };
@@ -12,16 +10,20 @@ function reducer(state, action) {
       throw new Error();
   }
 }
-function ItemCounter({ price }) {
+function ItemCounter({ count , onCountChange }) {
+  const currentCount = ((count !== 1)? count : 1);
+  const initialState = { count: currentCount};
   const [state, dispatch] = useReducer(reducer, initialState);
 
   const increment = () => {
     dispatch({ type: "increment" });
+    onCountChange(state.count + 1);
   };
 
   const decrement = () => {
     if (state.count > 1) {
       dispatch({ type: "decrement" });
+      onCountChange(state.count - 1);
     }
   };
 

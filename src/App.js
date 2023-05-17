@@ -1,5 +1,5 @@
 import {createBrowserRouter,  RouterProvider} from "react-router-dom";
-import {ServicePackage} from "./pages/ServicePackage";
+import {ServicePackage, loaderPackages as packageLoader} from "./pages/ServicePackage";
 import ServiceDetails, {loader as serviceLoader} from "./pages/service-details";
 import Shop from "./pages/shop";
 import ShopDetail from "./pages/shop-details"
@@ -15,11 +15,11 @@ const router = createBrowserRouter([
   {path:  '/',children:[
       {index: true, element:<Home/>},
           {path:'service-packages', children:[
-              {path: 'search/:name',id:'packages', element: <ServicePackage/>},
-              {path: ':packageId',id:'services', loader: serviceLoader,  element: <ServiceDetails/>},
-              ]},
+          {path: 'search/:name',id:'packages',  element: <ServicePackage/>},
+          {path: ':packageId',id:'services', loader: serviceLoader,  element: <ServiceDetails/>},                                                     
+          ]},
       {path: 'shop', element: <Shop/>},
-      {path: 'shop-details/:productCode', element: <ShopDetail/>},
+      {path: 'shop-details/:id', element: <ShopDetail/>},
       {path: 'test',  element: <Home1Service/>},
       {path:'about', element:<AboutPage/>},
       {path:'login', element:<LoginPage/>},

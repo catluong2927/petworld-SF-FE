@@ -13030,6 +13030,17 @@ select#duration:focus {
   margin-left: -2.75rem;
   border-radius: 1rem;
 }
+
+/* ADD NEW FOR PRODUCT DETAILS  */
+.product-detail-image {
+  width: 100px;
+  height: 100px;
+}
+.product-image {
+    width: 42rem;
+    height: 30rem;
+}
+                                                                                  
 .package-price {
   font-size: 1.25rem;
   font-weight: 700;
@@ -13080,3 +13091,4 @@ select#duration:focus {
   transform: rotate(45deg);
 }
 
+>>>>>>> 0bb956678b1aa569dd9894f471fd5384a4dceb6c
