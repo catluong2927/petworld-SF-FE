@@ -53,6 +53,7 @@ function LoginPage() {
             )
     }
 
+
     return (
         <>
             <div className="card flex justify-content-center gap-2">

@@ -15,8 +15,8 @@ const router = createBrowserRouter([
   {path:  '/',children:[
       {index: true, element:<Home/>},
           {path:'service-packages', children:[
-          {path: 'search/:name',id:'packages', loader: packageLoader,  element: <ServicePackage/>},
-          {path: ':packageId',id:'services', loader: serviceLoader,  element: <ServiceDetails/>},
+          {path: 'search/:name',id:'packages',  element: <ServicePackage/>},
+          {path: ':packageId',id:'services', loader: serviceLoader,  element: <ServiceDetails/>},                                                     
           ]},
       {path: 'shop', element: <Shop/>},
       {path: 'shop-details/:id', element: <ShopDetail/>},
