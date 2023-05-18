@@ -1,99 +1,42 @@
-import { Link } from "react-router-dom";
-import React, { useState, useEffect, useRef } from "react";
+import {Link, redirect} from "react-router-dom";
+import React, {useEffect, useState} from "react";
 import Breadcrumb from "../components/breadcrumb/Breadcrumb";
 import ItemCounter from "../components/shop/ProductCount";
 import Layout from "../layout/Layout";
-import axios from "axios";
-
-import { ConfirmDialog } from 'primereact/confirmdialog';
-import { Toast } from 'primereact/toast';
+import { sentRequest} from "./ServicePackage";
 
 function CartPage() {
-  const [cartProducts, setCartProducts] = useState([]);
-  const CART_API = process.env.REACT_APP_FETCH_API + `/cart/hieu@codegym.com`;
-  const DELETE_PRODUCT_CART_API = process.env.REACT_APP_FETCH_API + `/cart`;
+    const [data, setData] = useState([]);
+    const ULR = "cart/luong@codegym.com"
 
-  //Confirm delete
-  const [visible, setVisible] = useState(false);
-  const toast = useRef(null);
-  const [selectedProductId, setSelectedProductId] = useState(null);
+    useEffect(()=> {
+       const carts = sentRequest(ULR, "GET"  )
+      carts.then(data => {
+      setData(data)
+      }).then(
+          console.log("Error occurred")
+      )
+    }, [])
 
-  //Handle price
-  const [subtotal, setSubtotal] = useState({});
 
-  useEffect(() => {
-    axios
-      .get(`${CART_API}`)
-      .then(res => {
-        setCartProducts(res.data.cartDetailDtoResponses);
-        res.data.cartDetailDtoResponses.forEach((cartProduct) => {
-          subtotal[cartProduct.productDtoResponse.id] = cartProduct.totalPrice;
-        });
-        setSubtotal(subtotal);
-      })
-      .catch(err => {
-        console.log(err)
-      })
-  }, [CART_API])
+  const deleteInCartHandler = async ( props) => {
 
-  function discoutPrice(price, sale) {
-    return price * (1 - (sale / 100));
-  }
-
-  /*Delete product in cart*/
-  const accept = (productId) => {
-    if (productId) {
-      axios
-        .delete(`${DELETE_PRODUCT_CART_API}/${productId}/hieu@codegym.com`)
-        .then(res => {
-          window.location.href = "/cart"
-          toast.current.show({ severity: 'info', summary: 'Confirmed', detail: 'You have accepted', life: 3000 });
-        })
-        .catch(err => {
-          throw err;
-        });
+    const body = {
+      userEmail: "luong@codegym.com",
+      ...props
+    };
+    try {
+      const url = 'cart/';
+      const result = await sentRequest(url, 'DELETE', body);
+      props.toast.current.show({severity:'success', summary: 'Success', detail:`Add successfully`, life: 3000});
+      return redirect('/cart')
+    } catch (error) {
+      props.toast.current.show({severity:'error', summary: 'Fail', detail:`Failed to add to cart `, life: 3000});
     }
-  };
-
-  const reject = () => {
-    toast.current.show({ severity: 'warn', summary: 'Rejected', detail: 'You have rejected', life: 3000 });
-    setSelectedProductId(null);
-  };
-
-  function handleSelectedProductId(productId) {
-    setSelectedProductId(productId);
-    setVisible(true)
-  }
-
-
-  /*Total Price */
-  function handlePrice(productId) {
-    let temporaryPrice = null;
-    cartProducts.forEach(cartProduct => {
-      if (cartProduct.productDtoResponse.id === productId) {
-        if (cartProduct.productDtoResponse.sale !== 0) {
-          temporaryPrice = discoutPrice(cartProduct.productDtoResponse.price, cartProduct.productDtoResponse.sale);
-        } else {
-          temporaryPrice = cartProduct.productDtoResponse.price;
-        }
-      }
-    });
-    return temporaryPrice;
-  }
-
-  const handleCountChange = (productId, newCount) => {
-    let newSubTotal = handlePrice(productId) * newCount;
-    setSubtotal(subtotal => (
-      {
-        ...subtotal,
-        [productId]: newSubTotal
-      }
-    ));
   };
 
   return (
     <>
-      <Toast ref={toast} />
       <Layout>
         <Breadcrumb pageName="Cart" pageTitle="Cart" />
         <div className="cart-section pt-120 pb-120">
@@ -103,77 +46,67 @@ function CartPage() {
                 <div className="table-wrapper">
                   <table className="eg-table table cart-table">
                     <thead>
-                      <tr>
-                        <th>Delete</th>
-                        <th>Image</th>
-                        <th>Food Name</th>
-                        <th>Unite Price</th>
-                        <th>Discount Price</th>
-                        <th>Quantity</th>
-                        <th>Subtotal</th>
-                      </tr>
+                    <tr>
+                      <th>Delete</th>
+                      <th>Image</th>
+                      <th>Name</th>
+                      <th>Unite Price</th>
+                      <th>Discount Price</th>
+                      <th>Quantity</th>
+                      <th>Subtotal</th>
+                    </tr>
                     </thead>
                     <tbody>
-                      {
-                        cartProducts.map((cartProduct) => {
-
-                          return (
-                            <tr key={cartProduct.productDtoResponse.id}>
-                              <td data-label="Delete">
-                                <div className="delete-icon">
-                                  <i className="bi bi-x" onClick={() => handleSelectedProductId(cartProduct.productDtoResponse.id)} />
-                                </div>
-                              </td>
-                              <td data-label="Image">
-                                <img src={cartProduct.productDtoResponse.image} alt="" />
-                              </td>
-                              <td data-label="Food Name">
-                                <Link legacyBehavior to={`/shop-details/${cartProduct.productDtoResponse.id}`}>
-                                  <span>{cartProduct.productDtoResponse.name}</span>
-                                </Link>
-                              </td>
-                              <td data-label="Unite Price">
-                                {
-                                  (cartProduct.productDtoResponse.sale === 0) ? <>${cartProduct.productDtoResponse.price}</> : <del>${cartProduct.productDtoResponse.price}</del>
-                                }
-                              </td>
-                              <td data-label="Discount Price">
-                                ${discoutPrice(cartProduct.productDtoResponse.price, cartProduct.productDtoResponse.sale)}
-                              </td>
-                              <td data-label="Quantity">
-                                <div className="quantity d-flex align-items-center">
-                                  <div className="quantity-nav nice-number d-flex align-items-center">
-                                    <ItemCounter
-                                      // price={cartProduct.totalPrice}
-                                      count={cartProduct.amount}
-                                      onCountChange={(newCount) => handleCountChange(cartProduct.productDtoResponse.id, newCount)}
-                                    />
-                                  </div>
-                                </div>
-                              </td>
-                              <td data-label="Subtotal">${subtotal[cartProduct.productDtoResponse.id]}</td>
-                              {/* <td data-label="Subtotal">${Object.keys(subtotal).length !== 0 ? subtotal[cartProduct.productDtoResponse.id] : cartProduct.totalPrice}</td> */}
-                            </tr>
-                          )
-                        })
-                      }
-
-                      {selectedProductId && (
-                        <ConfirmDialog
-                          visible={visible}
-                          onHide={() => setVisible(false)}
-                          message="Do you want to delete this product?"
-                          header="Delete Confirmation"
-                          icon="pi pi-exclamation-triangle"
-                          acceptClassName='p-button-danger'
-                          accept={() => accept(selectedProductId)}
-                          reject={reject} />
-                      )}
+                    { data.map(item =>
+                    <tr key={item.id}>
+                      <td data-label="Delete">
+                        <div className="delete-icon"
+                             onClick={deleteInCartHandler.bind(null, {type: item.type,
+                               amount: item.amount, typeId: item.typeId, totalPrice: item.totalPrice
+                             })}
+                        >
+                          <i className="bi bi-x" />
+                        </div>
+                      </td>
+                      <td data-label="Image">
+                        <img src={item.image} alt="" />
+                      </td>
+                      <td data-label="Food Name">
+                        <Link legacyBehavior href="/shop-details">
+                          <a>{item.name}</a>
+                        </Link>
+                      </td>
+                      <td data-label="Unite Price">
+                        <del>${item.originalPrice}</del>
+                      </td>
+                      <td data-label="Discount Price">${
+                        item.price? item.price: item.minPrice
+                      }</td>
+                      <td data-label="Quantity">
+                        <div className="quantity d-flex align-items-center">
+                          <div className="quantity-nav nice-number d-flex align-items-center">
+                            <ItemCounter
+                                amount={item.amount}
+                                typeId={item.typeId}
+                                totalPrice={item.totalPrice}
+                                type={item.type} />
+                          </div>
+                        </div>
+                      </td>
+                      <td data-label="Subtotal">${item.price ? (item.price * item.amount): (item.minPrice * item.amount)}</td>
+                    </tr>
+                    )
+                    }
                     </tbody>
                   </table>
                 </div>
               </div>
             </div>
+
+
+
+
+
             <div className="row g-4">
               <div className="col-lg-4">
                 <div className="coupon-area">
