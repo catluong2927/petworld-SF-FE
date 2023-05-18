@@ -8,13 +8,14 @@ import "primereact/resources/themes/lara-light-indigo/theme.css";
 import "primereact/resources/primereact.min.css";
 import {Formik} from "formik";
 import {loginUser} from "../redux/apiRequest";
-import {useDispatch} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
+
 
 
 function LoginPage() {
+    const response = useSelector((state)=>state.auth.login?.currentUser);
     const toast = useRef(null);
     const [form, setForm] = useState({});
-    // const [token, setToken] = useState('')
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const REGEX = {
@@ -44,10 +45,10 @@ function LoginPage() {
     }
 
     const handleSubmit = async (e) => {
-        loginUser(form, dispatch, navigate,toast)
+        await loginUser(form, dispatch, navigate, toast)
     }
 
-    // console.log(token);
+    console.log(response);
 
     return (
         <>

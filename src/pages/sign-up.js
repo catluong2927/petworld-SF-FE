@@ -1,5 +1,5 @@
 import {Link, useNavigate} from "react-router-dom";
-import React, {useEffect, useRef, useState} from "react";
+import React, {useRef, useState} from "react";
 import Breadcrumb from "../components/breadcrumb/Breadcrumb";
 import Layout from "../layout/Layout";
 import "./sign-up.css";
@@ -8,29 +8,25 @@ import "primereact/resources/themes/lara-light-indigo/theme.css";
 import "primereact/resources/primereact.min.css";
 import {Formik} from "formik";
 
-// import {signUpUser} from "../redux/apiRequest";
+import {signUpUser} from "../redux/apiRequest";
 import {useDispatch, useSelector} from "react-redux";
-import {selectRegisterError, signUpUser} from "../redux/authSlice";
+
 
 function SignUpPage() {
+    const registerError = useSelector((state) => state.auth.register?.data);
     const dispatch = useDispatch();
     const navigate = useNavigate();
-    const registerError = useSelector(selectRegisterError);
     const toast = useRef(null);
     const [isCheckedCus, setIsCheckedCus] = useState(true);
     const [isCheckedOwn, setIsCheckedOwn] = useState(false);
     const [form, setForm] = useState({});
     const [messErorr, setMessErorr] = useState({})
+
     const REGEX = {
         email: /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/,
         password: /^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=])(?=\S+$).{8,}$/,
         username: /^(?=.{8,20}$)(?![_.])(?!.*[_.]{2})[a-zA-Z0-9._]+(?<![_.])$/
     };
-
-    useEffect(() => {
-        console.log("registerError: " + registerError);
-        console.log("registerError: " + registerError);
-    }, [])
 
     const checkBoxCusHandler = () => {
         setIsCheckedCus(!isCheckedCus)
@@ -88,7 +84,6 @@ function SignUpPage() {
         } else if (form.password !== form.confirmPassword) {
             errors.confirmPassword = "password does not match";
         }
-        console.log(messErorr);
         return errors;
     }
 
@@ -112,10 +107,9 @@ function SignUpPage() {
             roles
         }
         await signUpUser(data, dispatch, navigate, toast);
-        console.log("registerError: " + registerError);
-        console.log("registerError: " + registerError);
-        // setMessErorr(signupFailMsg);
+        setMessErorr(registerError)
     }
+
 
 
 
