@@ -1,11 +1,10 @@
 import Layout from "../layout/Layout";
 import OtherServiceSlide from "../components/service/OtherServiceSlide";
 import './ServicePackage.css';
-import {json, useParams} from "react-router-dom";
+import {json, redirect, useParams} from "react-router-dom";
 import React, {useEffect, useState} from "react";
 import BreadcrumbService from "../components/breadcrumb/BreadcrumbService";
 import ServiceNavigation from "../components/service/ServiceNavigation";
-import {wait} from "@testing-library/user-event/dist/utils";
 
 const fetchData = async (packageName,pageSize, currentPage, sortedField="") => {
     const URL = `http://localhost:8080/api/packages/search/${packageName}?size=${pageSize}&page=${currentPage}&sort=${sortedField}`;
@@ -34,17 +33,7 @@ export const ServicePackage = () => {
         };
         fetchPage();
     }, [currentPage, pageSize, isSortedByPrice]);
-    useEffect(() => {
-        async function fetchData() {
-            try {
-                const data = await sendRequest("packages/1", "GET");
-                console.log(data + 'data'); // Handle the response data
-            } catch (error) {
-                console.log(error + "error"); // Handle the error
-            }
-        }
-        fetchData();
-    })
+
     const getCurrentPageHandler = (currentPage) => {
         setCurrentPage(currentPage)
     }
@@ -107,26 +96,36 @@ export const ServicePackage = () => {
     )
 }
 
-export const sendRequest = async (url, method = "GET", data = null, headers = {}) => {
-    const apiUrl = process.env.REACT_APP_API_URL || "";
-    const api = 'http://localhost:8080/api'
 
-    const requestOptions = {
-        method,
-        headers: {
-            "Content-Type": "application/json",
-            ...headers,
-        },
-        body: data ? JSON.stringify(data) : undefined,
-    };
+export const sentRequest = async (url, method = 'GET', data = null) =>{
+    const CART_API = process.env.REACT_APP_FETCH_API;
+    console.log(data)
+    try {
+        const options = {
+            method,
+            headers: {
+                'Content-Type': 'application/json',
+            },
+        };
 
-    const response = await fetch(`${api}/${url}`, requestOptions);
-    const responseData = await response.json();
-    console.log(responseData + "Midi")
+        if (data) {
+            options.body = JSON.stringify(data);
+            const responsePost = await fetch(`${CART_API}/${url}`, options);
+            return redirect("/cart")
+        }
 
-    if (!response.ok) {
-        const errorMessage = responseData?.error?.message || "An error occurred";
-        throw new Error(errorMessage);
+        const response = await fetch(`${CART_API}/${url}`, options);
+
+        if (!response.ok) {
+            throw new Error('Request failed');
+        }
+
+        const responseData = await response.json();
+        return responseData;
+    } catch (error) {
+        // Handle error here
+        console.error('Error:', error.message);
+        // You can choose to throw an error or return a default value
+        throw error;
     }
-    return responseData;
-};
+}

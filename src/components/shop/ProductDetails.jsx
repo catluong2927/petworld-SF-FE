@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import React, { useEffect, useState, useRef } from "react";
 import ProductPriceCount from "./ProductPriceCount";
 import axios from "axios";
+import {sentRequest} from "../../pages/ServicePackage";
 
 
 
@@ -13,7 +14,6 @@ function ProductDetails(props) {
 
   const [productPriceCount, setProductPriceCount] = useState({})
   const [productCart, setProductCart] = useState({})
-  const CART_API = process.env.REACT_APP_FETCH_API + `/cart/hieu@codegym.com`;
   function discoutPrice(price, sale){
     return price*(1 - (sale/100));
   }
@@ -33,21 +33,27 @@ function ProductDetails(props) {
     setMainImage(product.image)
   }, [productPriceCount, props.productId, imageDetailList])
 
-  function handleAddToCart(e) {
-    e.preventDefault();
-    axios
-        .post(`${CART_API}`, productCart)
-        .then(res => {
-          console.log(res.data);
-          props.toast.current.show({severity:'success', summary: 'Success', detail:`Add ${product.name} successfully`, life: 3000});
-        })
-        .catch(err => {
-          props.toast.current.show({severity:'error', summary: 'Fail', detail:`Failed to add to cart `, life: 3000});
-          throw err;
-        });
-}
-  
-  
+
+
+  const body = {
+    userEmail: "luong@codegym.com",
+    type: 1,
+    typeId: product.id,
+    ...productPriceCount
+
+  };
+  const handlePostData = async (event) => {
+    event.preventDefault();
+    try {
+      const url = 'cart/';
+      const result = await sentRequest(url, 'POST', body);
+      console.log('Result:', result);
+      props.toast.current.show({severity:'success', summary: 'Success', detail:`Add ${product.name} successfully`, life: 3000});
+    } catch (error) {
+      props.toast.current.show({severity:'error', summary: 'Fail', detail:`Failed to add to cart `, life: 3000});
+      console.error('Error:', error.message);
+    }
+  };
   return (
     <>
       <div className="row g-lg-4 gy-5 mb-120">
@@ -137,7 +143,7 @@ function ProductDetails(props) {
                  />
               </div>
               <Link legacyBehavior to="/cart">
-                <button className="primary-btn3" onClick={handleAddToCart}>Add to cart</button>
+                <button className="primary-btn3" onClick={handlePostData}>Add to cart</button>
               </Link>
             </div>
             <div className="buy-now-btn">

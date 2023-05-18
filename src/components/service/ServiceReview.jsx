@@ -1,9 +1,26 @@
-import React, {useEffect, useRef,} from "react";
-import {sendRequest} from "../../pages/ServicePackage";
+import React, {useEffect, useRef, useState,} from "react";
+import {sendRequest, sentRequest} from "../../pages/ServicePackage";
+import {useParams} from "react-router-dom";
 
 
-export const ServiceReview = (props) => {
-    const  reviews = props.reviews;
+export const ServiceReview = () => {
+    const [reviews, setReviews] = useState([]);
+    const  packageId = useParams();
+
+    const REVIEW_URL = 'package-reviews/package/' + packageId.packageId;
+    useEffect(async () => {
+        const testData = sentRequest(REVIEW_URL,)
+        testData.then ( data =>
+            setReviews(data.content)
+        )
+    }, []);
+
+
+
+
+
+
+
     const emailRef = useRef();
     const starRef = useRef();
     const messageRef = useRef();
@@ -33,7 +50,7 @@ export const ServiceReview = (props) => {
                     <div className="row g-lg-4 gy-5">
                         <div className="col-lg-8">
                             <div className="number-of-review">
-                                <h3>Review ({props.reviews.length}) :</h3>
+                                <h3>Review ({reviews.length}) :</h3>
                             </div>
                             <div className="review-list-area">
                                 <ul className="review-list">
