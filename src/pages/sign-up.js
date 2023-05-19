@@ -1,5 +1,5 @@
 import {Link, useNavigate} from "react-router-dom";
-import React, {useRef, useState} from "react";
+import React, {useEffect, useRef, useState} from "react";
 import Breadcrumb from "../components/breadcrumb/Breadcrumb";
 import Layout from "../layout/Layout";
 import "./sign-up.css";
@@ -21,6 +21,7 @@ function SignUpPage() {
     const [isCheckedOwn, setIsCheckedOwn] = useState(false);
     const [form, setForm] = useState({});
     const [messErorr, setMessErorr] = useState({})
+
 
     const REGEX = {
         email: /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/,
@@ -98,7 +99,7 @@ function SignUpPage() {
     // }
 
 
-    const handleSubmit = async (e) => {
+    const handleSubmit = async () => {
         const data = {
             userName: form.username,
             fullName: form.fullName,
@@ -107,10 +108,12 @@ function SignUpPage() {
             roles
         }
         await signUpUser(data, dispatch, navigate, toast);
-        setMessErorr(registerError)
+        // setMessErorr(registerError)
     }
 
-
+    useEffect(()=>{
+        setMessErorr(registerError)
+    },[registerError])
 
 
     return (
