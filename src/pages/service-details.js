@@ -107,7 +107,7 @@ function ServiceDetails(props) {
   const addToCartHandler = async (event) => {
     event.preventDefault();
     try {
-      const url = 'cart/';
+      const url = 'cart';
       const result = await sentRequest(url, 'POST', body);
       console.log('Result:', result);
       props.toast.current.show({severity:'success', summary: 'Success', detail:`Add successfully`, life: 3000});

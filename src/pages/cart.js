@@ -7,14 +7,16 @@ import { sentRequest} from "./ServicePackage";
 
 function CartPage() {
     const [data, setData] = useState([]);
-    const ULR = "cart/luong@codegym.com"
+    const ULR = "cart/luong@codegym.com";
+    let price;
+    let totalPrice;
 
     useEffect(()=> {
        const carts = sentRequest(ULR, "GET"  )
       carts.then(data => {
       setData(data)
       }).then(
-          console.log("Error occurred")
+
       )
     }, [])
 
@@ -26,8 +28,8 @@ function CartPage() {
       ...props
     };
     try {
-      const url = 'cart/';
-      const result = await sentRequest(url, 'DELETE', body);
+      const url = 'cart';
+      const result = await sentRequest(url, 'PUT', body);
       props.toast.current.show({severity:'success', summary: 'Success', detail:`Add successfully`, life: 3000});
       return redirect('/cart')
     } catch (error) {
@@ -80,9 +82,9 @@ function CartPage() {
                         <del>${item.originalPrice}</del>
                       </td>
                       <td data-label="Discount Price">${
-                        item.price? item.price: item.minPrice
+                         item.price? item.price: item.minPrice
                       }</td>
-                      <td data-label="Quantity">
+                      <td data-label="Quantity" >
                         <div className="quantity d-flex align-items-center">
                           <div className="quantity-nav nice-number d-flex align-items-center">
                             <ItemCounter
@@ -96,6 +98,7 @@ function CartPage() {
                       <td data-label="Subtotal">${item.price ? (item.price * item.amount): (item.minPrice * item.amount)}</td>
                     </tr>
                     )
+
                     }
                     </tbody>
                   </table>
@@ -110,13 +113,6 @@ function CartPage() {
             <div className="row g-4">
               <div className="col-lg-4">
                 <div className="coupon-area">
-                  <div className="cart-coupon-input">
-                    <h5 className="coupon-title">Coupon Code</h5>
-                    <form className="coupon-input d-flex align-items-center">
-                      <input type="text" placeholder="Coupon Code" />
-                      <button type="submit">Apply Code</button>
-                    </form>
-                  </div>
                 </div>
               </div>
               <div className="col-lg-8">
@@ -125,41 +121,9 @@ function CartPage() {
                     <tr>
                       <th>Cart Totals</th>
                       <th />
-                      <th>$128.70</th>
+                      <th>${}</th>
                     </tr>
                   </thead>
-                  <tbody>
-                    <tr>
-                      <td>Shipping</td>
-                      <td>
-                        <ul className="cost-list text-start">
-                          <li>Shipping Fee</li>
-                          <li>Total ( tax excl.)</li>
-                          <li>Total ( tax incl.)</li>
-                          <li>Taxes</li>
-                          <li>
-                            Shipping Enter your address to view shipping options.{" "}
-                            <br /> <a to="#">Calculate shipping</a>
-                          </li>
-                        </ul>
-                      </td>
-                      <td>
-                        <ul className="single-cost text-center">
-                          <li>Fee</li>
-                          <li>$15</li>
-                          <li></li>
-                          <li>$15</li>
-                          <li>$15</li>
-                          <li>$5</li>
-                        </ul>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td>Subtotal</td>
-                      <td />
-                      <td>$162.70</td>
-                    </tr>
-                  </tbody>
                 </table>
                 <ul className="cart-btn-group">
                   <li>

@@ -9,6 +9,9 @@ import AboutPage from "./pages/about";
 import LoginPage from "./pages/login";
 import SignUpPage from "./pages/sign-up";
 import CartPage from "./pages/cart";
+import ChecOutPage from "./pages/check-out";
+import Test from "./pages/Test";
+import TestPage from "./pages/TestItemCount";
 
 
 
@@ -26,6 +29,8 @@ const router = createBrowserRouter([
       {path:'login', element:<LoginPage/>},
       {path:'sign-up', element:<SignUpPage/>},
       {path:'cart', element:<CartPage/>},
+      {path:'check-out', element:<ChecOutPage/>},
+      {path:'c', element:<TestPage/>},
     ]},
     ]
 )

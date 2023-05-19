@@ -1,12 +1,12 @@
-import React from "react";
+import React, { useState} from "react";
 import Breadcrumb from "../components/breadcrumb/Breadcrumb";
 import BillingDetails from "../components/shop/BillingDetails";
 import OrderSummary from "../components/shop/OrderSummary";
-import Payment from "../components/shop/Payment";
-import ShipingAddress from "../components/shop/ShipingAddress";
 import Layout from "../layout/Layout";
 
-function checOutPage() {
+function ChecOutPage() {
+  const [items, setItems] = useState([]);
+
   return (
     <Layout>
       <Breadcrumb pageName="Check Out" pageTitle="Check Out" />
@@ -14,12 +14,10 @@ function checOutPage() {
         <div className="container">
           <div className="row g-4">
             <div className="col-lg-7">
-              <BillingDetails />
-              <ShipingAddress />
+              <BillingDetails onGetData={items} />
             </div>
             <aside className="col-lg-5">
-              <OrderSummary />
-              <Payment />
+              <OrderSummary onSendData={setItems} />
             </aside>
           </div>
         </div>
@@ -28,4 +26,4 @@ function checOutPage() {
   );
 }
 
-export default checOutPage;
+export default ChecOutPage;

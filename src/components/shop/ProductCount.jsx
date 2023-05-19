@@ -38,8 +38,8 @@ function ItemCounter(props) {
 
   const deleteInCartHandler = async () => {
     try {
-      const url = 'cart/';
-      const result = await sentRequest(url, 'DELETE', body);
+      const url = 'cart';
+      const result = await sentRequest(url, 'PUT', body);
 
       return redirect('/cart')
     } catch (error) {
@@ -52,7 +52,7 @@ function ItemCounter(props) {
     event.preventDefault();
 
     try {
-      const url = 'cart/';
+      const url = 'cart';
       const result = await sentRequest(url, 'POST', body);
       console.log('Result:', result);
       props.toast.current.show({severity:'success', summary: 'Success', detail:`Add successfully`, life: 3000});

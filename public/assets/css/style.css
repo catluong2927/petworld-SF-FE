@@ -12064,8 +12064,8 @@ footer.style2 .social-area ul li:hover a i {
 .checkout-section .added-product-summary .added-products .single-product .product-img img {
   -o-object-fit: cover;
   object-fit: cover;
-  min-width: 90px;
-  height: 100px;
+  max-width: 90px;
+  height: 90px;
 }
 .checkout-section .added-product-summary .added-products .single-product .product-info .product-title {
   font-size: 1.25rem;
@@ -13091,4 +13091,3 @@ select#duration:focus {
   transform: rotate(45deg);
 }
 
->>>>>>> 0bb956678b1aa569dd9894f471fd5384a4dceb6c

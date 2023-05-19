@@ -1,7 +1,6 @@
 import { Link } from "react-router-dom";
 import React, { useEffect, useState, useRef } from "react";
 import ProductPriceCount from "./ProductPriceCount";
-import axios from "axios";
 import {sentRequest} from "../../pages/ServicePackage";
 
 
@@ -45,7 +44,7 @@ function ProductDetails(props) {
   const handlePostData = async (event) => {
     event.preventDefault();
     try {
-      const url = 'cart/';
+      const url = 'cart';
       const result = await sentRequest(url, 'POST', body);
       console.log('Result:', result);
       props.toast.current.show({severity:'success', summary: 'Success', detail:`Add ${product.name} successfully`, life: 3000});
