@@ -1556,7 +1556,7 @@ header.style-1 .nav-right .mobile-menu-btn i {
   font-size: 25px;
 }
 @media (max-width: 991px) {
-    content: "";
+  content: "";
 
   header.style-1 .nav-right ul li a::after {
     position: absolute;
@@ -13065,16 +13065,6 @@ select#duration:focus {
   height: 33px;
   border-radius: 19px;
 }
-.user-avatar:hover ~ .info {
-  display: block;
-}
-.info{
-  position: fixed;
-  display: none;
-  right: 0px;
-  width: 10rem;
-  background: #001D23;
-}
 .header-infor {
   display: grid;
   grid-column: 1fr 1fr;
@@ -13109,4 +13099,44 @@ select#duration:focus {
 .infor-link:hover{
   color: var(--primary-color3);
 }
+.infor-linkusername{
+  font-size: 0.8rem;
+  font-weight: 400;
+  color: #fff;
+  font-family: var(--font-cabin);
+  line-height: 30px;
+  margin-left: 12px;
+  margin-bottom:-6px;
+  margin-top:2px;
+}
+.info{
+  position: absolute;
+  display: none;
+  right: 0px;
+  width: 10rem;
+  background: #001D23;
+  margin: 0 !important;
+
+}
+.info li {
+  display:block;
+}
+header.style-1 .nav-right ul li:hover .info{
+  display: block;
+}
+.inforuserul{
+  display: flex !important;
+  flex-direction: column;
+  flex-wrap: wrap;
+  position: relative;
+  margin-left:-54px !important;
+  margin-top:-19px !important;
+  margin-bottom:-19px !important;
+}
+.inforuserul{
+  margin-left: -54px !important;
+  margin-bottom: 5px !important;
+}
+
+
 
