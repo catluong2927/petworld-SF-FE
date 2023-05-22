@@ -1,10 +1,6 @@
-import {Await, Link, NavLink, useRouteLoaderData} from 'react-router-dom'
-import React, {useState, Suspense, useEffect} from "react";
-import {Audio} from 'react-loader-spinner';
-
+import React, { useState, useEffect} from "react";
 const OtherServiceSlide = (props) => {
     const [servicePackages, setServicePackages] = useState([]);
-
     useEffect(() => {
         setServicePackages(props.servicePackages);
     });
@@ -32,22 +28,25 @@ const OtherServiceSlide = (props) => {
                         {servicePackages.map((element, index) =>
                             <div className="services-card1" key={index}>
                                 <div className="icon">
-                                    <img src={element.image} alt="" className='package-image '/>
+                                    <img src={element.image} alt="" className='package-image ' />
                                 </div>
                                 <div className="content package-content">
-                                    <h3>
-                                        <a href={`/service-packages/${element.id}`}>
-                                            <p id='package-content-title'>{element.name}</p>
+                                    <h3 >
+                                        <a href={`/service-packages/${element.id}`} >
+                                            <p id='package-content-title'>{element.centerName}</p>
                                         </a>
                                     </h3>
                                     <p>{element.description}</p>
                                 </div>
-                                <a href={`/service-packages/${element.id}`}>
+                                <div >
+                                    <h6 className="package-price">{`$ ${element.minPrice}`}</h6>
+                                    <del></del>
+                                </div>
+                                <a  href={`/service-packages/${element.id}`}>
                                     <p className="more-btn">
-                                        More Details
-                                        <img src="/assets/images/icon/btn-arrow1.svg" alt=""/>
+                                        <img src="/assets/images/icon/btn-arrow1.svg" alt="" />
                                     </p>
-                                </a>
+                                </a  >
                             </div>
                         )}
                     </div>

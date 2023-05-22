@@ -133,70 +133,6 @@ function Shop() {
                     </div>
                   </div>
                 </div>
-                <div className="shop-widget">
-                  <div className="check-box-item">
-                    <h5 className="shop-widget-title">Health Consideration</h5>
-                    <div className="checkbox-container">
-                      <label className="containerss">
-                        Brain Development
-                        <input type="checkbox" defaultChecked="checked" />
-                        <span className="checkmark" />
-                      </label>
-                      <label className="containerss">
-                        Bladder
-                        <input type="checkbox" />
-                        <span className="checkmark" />
-                      </label>
-                      <label className="containerss">
-                        Allergies
-                        <input type="checkbox" />
-                        <span className="checkmark" />
-                      </label>
-                      <label className="containerss">
-                        Bone Development
-                        <input type="checkbox" />
-                        <span className="checkmark" />
-                      </label>
-                      <label className="containerss">
-                        Dehydration
-                        <input type="checkbox" />
-                        <span className="checkmark" />
-                      </label>
-                    </div>
-                  </div>
-                </div>
-                <div className="shop-widget">
-                  <div className="check-box-item">
-                    <h5 className="shop-widget-title">Flavor</h5>
-                    <div className="checkbox-container">
-                      <label className="containerss">
-                        Beef
-                        <input type="checkbox" defaultChecked="checked" />
-                        <span className="checkmark" />
-                      </label>
-                      <label className="containerss">
-                        Chicken
-                        <input type="checkbox" />
-                        <span className="checkmark" />
-                      </label>
-                      <label className="containerss">
-                        Fish
-                        <input type="checkbox" />
-                        <span className="checkmark" />
-                      </label>
-                      <label className="containerss">
-                        Duck
-                        <input type="checkbox" />
-                        <span className="checkmark" />
-                      </label>
-                      <label className="containerss">
-                        Other
-                        <input type="checkbox" />
-                        <span className="checkmark" />
-                      </label>
-                    </div>
-                  </div>
-                </div>
               </div>
             </div>
             <div className="col-lg-9">
@@ -219,7 +155,7 @@ function Shop() {
                           <option name="21" value={"21"} >21</option>
                         </select>
                       </div>
-                      <div className="single-select two">
+                      {/* <div className="single-select two">
                         <select
                           style={{ outline: "none" }}
                           className="defult-select-drowpown"
@@ -229,7 +165,7 @@ function Shop() {
                           <option>Grid</option>
                           <option>Closed</option>
                         </select>
-                      </div>
+                      </div> */}
                     </div>
                   </div>
                 </div>
@@ -244,11 +180,14 @@ function Shop() {
                     <nav aria-label="Page navigation example">
                       <ul className="pagination">
                         <li className={`page-item ${currentPage === 0 ? 'disabled' : ''}`}>
+
                           <Link className="page-link" onClick={() => changePageNumber(currentPage - 1)}>
                             <i className="bi bi-arrow-left-short" />
                           </Link>
                         </li>
+
                         {contentPageNumber()}
+                        
                         <li className={`page-item ${currentPage === (totalPages - 1) ? 'disabled' : ''}`}>
                           <Link className="page-link" onClick={() => changePageNumber(currentPage + 1)}>
                             <i className="bi bi-arrow-right-short" />

@@ -1,13 +1,13 @@
 import Layout from "../layout/Layout";
 import OtherServiceSlide from "../components/service/OtherServiceSlide";
 import './ServicePackage.css';
-import {json, useParams} from "react-router-dom";
+import {json, redirect, useParams} from "react-router-dom";
 import React, {useEffect, useState} from "react";
 import BreadcrumbService from "../components/breadcrumb/BreadcrumbService";
 import ServiceNavigation from "../components/service/ServiceNavigation";
 
-const fetchData = async (packageName,pageSize, currentPage) => {
-    const URL = `http://localhost:8080/api/packages/search/${packageName}?size=${pageSize}&page=${currentPage}`;
+const fetchData = async (packageName,pageSize, currentPage, sortedField="") => {
+    const URL = `http://localhost:8080/api/packages/search/${packageName}?size=${pageSize}&page=${currentPage}&sort=${sortedField}`;
     const response = await fetch(URL);
     const data = await response.json();
     const servicePackages = data.content;
@@ -16,22 +16,29 @@ const fetchData = async (packageName,pageSize, currentPage) => {
 };
 export const ServicePackage = () => {
     const  packageName = useParams();
-
+    const [isSortedByPrice, setIsSortedByPrice] = useState(false);
     const [currentPage, setCurrentPage] = useState(0);
     const pageSize = 9;
     const [data, setData] = useState([]);
     const [totalPages, setTotalPages] = useState(0);
     useEffect(() => {
+        let sortedField= '';
+        if(isSortedByPrice){
+            sortedField = 'minPrice'
+        }
         const fetchPage = async () => {
-            const { servicePackages, totalPages } = await fetchData("Package 1", pageSize, currentPage);
+            const { servicePackages, totalPages } = await fetchData("DayCare", pageSize, currentPage, sortedField);
             setData(servicePackages);
             setTotalPages(totalPages);
         };
         fetchPage();
-    }, [currentPage, pageSize]);
+    }, [currentPage, pageSize, isSortedByPrice]);
 
     const getCurrentPageHandler = (currentPage) => {
         setCurrentPage(currentPage)
+    }
+    const sortByPriceHandler = () => {
+        setIsSortedByPrice(!isSortedByPrice);
     }
     return (
         <Layout>
@@ -42,11 +49,11 @@ export const ServicePackage = () => {
                         <div className="service-package-check-box-item">
                             <h5 className="service-package-widget-title">Order By</h5>
                             <div className="service-package-checkbox-container">
-                                <label className="service-package-checkbox-label">
+                                <label className="service-package-checkbox-label" >
                                     Price
-                                    <input type="checkbox" defaultChecked="checked" />
+                                    <input type="button" onClick={sortByPriceHandler} />
                                     <span className="service-package-checkmark" />
-                                    {<p className="service-package-checkmark--checked"></p>}
+                                    {isSortedByPrice && <p className="service-package-checkmark--checked"></p>}
                                 </label>
                                 <label className="service-package-checkbox-label">
                                     Option 2
@@ -88,15 +95,37 @@ export const ServicePackage = () => {
         </Layout>
     )
 }
-export async function loaderPackages({request, params}) {
-    const name = params.name;
-    const URL = 'http://localhost:8080/api/service-packages/';
-    const URL_FAKE = 'https://6436d35a3e4d2b4a12dcb9a2.mockapi.io/api/v1/service-packages/8';
-    const response = await fetch( URL_FAKE);
-    if (!response.ok) {
-        throw json({message: "no result"}, {status: 500})
-    } else {
-        const resData = await response.json();
-        return resData;
+
+
+export const sentRequest = async (url, method = 'GET', data = null) =>{
+    const CART_API = process.env.REACT_APP_FETCH_API;
+    console.log(data)
+    try {
+        const options = {
+            method,
+            headers: {
+                'Content-Type': 'application/json',
+            },
+        };
+
+        if (data) {
+            options.body = JSON.stringify(data);
+            const responsePost = await fetch(`${CART_API}/${url}`, options);
+            return redirect("/cart")
+        }
+
+        const response = await fetch(`${CART_API}/${url}`, options);
+
+        if (!response.ok) {
+            throw new Error('Request failed');
+        }
+
+        const responseData = await response.json();
+        return responseData;
+    } catch (error) {
+        // Handle error here
+        console.error('Error:', error.message);
+        // You can choose to throw an error or return a default value
+        throw error;
     }
-};
+}

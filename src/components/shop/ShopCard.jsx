@@ -8,6 +8,7 @@ function discoutPrice(price, sale){
 }
 
 function ShopCard(props) {
+
   const PRODUCT_API = process.env.REACT_APP_FETCH_API + `/products?size=${props.sizePages}&page=${props.currentPage}&categoryIds=${props.checkedCategory}`;
   const [products, setProducts] = useState([]);
 
@@ -26,7 +27,7 @@ function ShopCard(props) {
     <>
       {products.map((item) => {
         const {
-          productCode,
+          id,
           name, 
           image,
           price,
@@ -34,7 +35,7 @@ function ShopCard(props) {
           markDtoResponse
         } = item;
         return (
-          <div key={productCode} className="col-lg-4 col-md-4 col-sm-6">
+          <div key={id} className="col-lg-4 col-md-4 col-sm-6">
             <div className="collection-card">
               {markDtoResponse.tag === "" ? ("") : (
                 <div 
@@ -49,11 +50,11 @@ function ShopCard(props) {
                   <div className="plus-icon">
                     <i className="bi bi-plus" />
                   </div>
-                  <Link legacyBehavior to="/shop-details">
+                  <Link legacyBehavior to={`/shop-details/${id}`}>
                     <a>View Details</a>
                   </Link>
                 </div>
-                <ul className="cart-icon-list">
+                {/* <ul className="cart-icon-list">
                   <li>
                     <a to="#">
                       <img src="assets/images/icon/Icon-cart3.svg" alt="" />
@@ -67,11 +68,11 @@ function ShopCard(props) {
                       />
                     </a>
                   </li>
-                </ul>
+                </ul> */}
               </div>
               <div className="collection-content text-center">
                 <h4>
-                  <Link legacyBehavior to={`/shop-details/${productCode}`} >
+                  <Link legacyBehavior to={`/shop-details/${id}`} >
                     {name}
                   </Link>
                 </h4>
