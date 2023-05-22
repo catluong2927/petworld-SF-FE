@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import {Link, useRouteLoaderData} from "react-router-dom";
 import Breadcrumb from "../components/breadcrumb/Breadcrumb";
 import ShopCard from "../components/shop/ShopCard";
 import Layout from "../layout/Layout";
@@ -15,6 +15,8 @@ function Shop() {
   const [category, setCategory] = useState([]);
   const [checkedCategory, setCheckedCategory] = useState([]);
 
+  const token = useRouteLoaderData('token');
+  console.log(token);
 
   const CATEGORY_API = process.env.REACT_APP_FETCH_API + `/categorys`;
   useEffect(() => {

@@ -8,12 +8,14 @@ import Home from "./pages";
 import AboutPage from "./pages/about";
 import LoginPage from "./pages/login";
 import SignUpPage from "./pages/sign-up";
+import {useState} from "react";
+import {tokenLoader} from "./utilities/author";
+
 import CartPage from "./pages/cart";
 
 
-
 const router = createBrowserRouter([
-  {path:  '/',children:[
+  {path:  '/', loader: tokenLoader, id: 'token',children:[
       {index: true, element:<Home/>},
           {path:'service-packages', children:[
           {path: 'search/:name',id:'packages',  element: <ServicePackage/>},
@@ -30,6 +32,7 @@ const router = createBrowserRouter([
     ]
 )
 function App() {
+    const [token, setToken] = useState({})
   return (
       <RouterProvider router={router} />
   );
