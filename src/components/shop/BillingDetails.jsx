@@ -1,31 +1,64 @@
-import React from "react";
+import React, {useRef} from "react";
+import {sentRequest} from "../../pages/ServicePackage";
+import { useNavigate } from 'react-router-dom';
 
-function BillingDetails() {
+function BillingDetails(props) {
+  const usernameRef = useRef();
+  const addressRef = useRef();
+  const phoneNumberRef = useRef();
+  const noteRef = useRef();
+  const URL_ORDER = 'orders';
+  const URL_CART = 'cart';
+  const navigate = useNavigate();
+  let items = [];
+  let deleteCartDetailIdList = [];
+  props.onGetData.map(element => {
+    const item = {
+      itemName: element.name,
+      image: element.image,
+      quantity: element.amount,
+      total: element.totalPrice,
+      note: 'Ok'
+    };
+    deleteCartDetailIdList.push(element.id);
+    items.push(item);
+  });
+
+  const submitHandler = (event) => {
+    event.preventDefault();
+    const data = {
+      userEmail: "luong@codegym.com",
+      phoneNumber: usernameRef.current.value,
+      address: addressRef.current.value,
+      note: noteRef.current.value,
+      date: new Date(),
+      status: 'Waiting for confirm',
+      total: props.onGetTotal,
+      orderDetailDtoRequests: items,
+    };
+    const res = sentRequest(URL_ORDER, "POST", data)
+    res.then(
+         sentRequest(URL_CART, "DELETE", deleteCartDetailIdList),
+        props.toast.current.show({severity:'success', summary: 'Success', detail:`Check out successfully`, life: 1000}),
+        navigate('/order')
+    )
+
+  }
   return (
     <>
       <div className="form-wrap box--shadow mb-30">
-        <h4 className="title-25 mb-20">Billing Details</h4>
-        <form>
+        <h4 className="title-25 mb-20">Delivery Details</h4>
+        <form onSubmit={submitHandler}>
           <div className="row">
-            <div className="col-lg-6">
-              <div className="form-inner">
-                <label>First Name</label>
-                <input type="text" name="fname" placeholder="Your first name" />
-              </div>
-            </div>
-            <div className="col-lg-6">
-              <div className="form-inner">
-                <label>Last Name</label>
-                <input type="text" name="fname" placeholder="Your last name" />
-              </div>
-            </div>
             <div className="col-12">
               <div className="form-inner">
-                <label>Country / Region</label>
+                <label>Reciept's Name</label>
                 <input
                   type="text"
                   name="fname"
-                  placeholder="Your country name"
+                  placeholder="Reciept's name"
+                  required
+                  ref={usernameRef}
                 />
               </div>
             </div>
@@ -35,59 +68,42 @@ function BillingDetails() {
                 <input
                   type="text"
                   name="fname"
-                  placeholder="House and street name"
+                  placeholder="Address to recieve"
+                  required
+                  ref={addressRef}
                 />
               </div>
             </div>
             <div className="col-12">
               <div className="form-inner">
-                <select>
-                  <option>Town / City</option>
-                  <option>Dhaka</option>
-                  <option>Saidpur</option>
-                  <option>Newyork</option>
-                </select>
-              </div>
-            </div>
-            <div className="col-12">
-              <div className="form-inner">
-                <input type="text" name="fname" placeholder="Post Code" />
-              </div>
-            </div>
-            <div className="col-12">
-              <div className="form-inner">
-                <label>Additional Information</label>
+                <label>Phone Number</label>
                 <input
                   type="text"
                   name="fname"
-                  placeholder="Your Phone Number"
+                  placeholder="Reciept's Phone Number"
+                  required
+                  ref={phoneNumberRef}
                 />
               </div>
             </div>
             <div className="col-12">
               <div className="form-inner">
-                <input
-                  type="email"
-                  name="email"
-                  placeholder="Your Email Address"
-                />
-              </div>
-            </div>
-            <div className="col-12">
-              <div className="form-inner">
-                <input type="text" name="postcode" placeholder="Post Code" />
-              </div>
-            </div>
-            <div className="col-12">
-              <div className="form-inner">
+                <label>Note for order</label>
                 <textarea
                   name="message"
                   placeholder="Order Notes (Optional)"
                   rows={6}
                   defaultValue={""}
+                  required
+                  ref={noteRef}
                 />
               </div>
             </div>
+          </div>
+          <div className="place-order-btn">
+            <button type="submit" className="primary-btn1 lg-btn">
+              Place Order
+            </button>
           </div>
         </form>
       </div>

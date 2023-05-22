@@ -1,7 +1,7 @@
 import Layout from "../layout/Layout";
 import OtherServiceSlide from "../components/service/OtherServiceSlide";
 import './ServicePackage.css';
-import {json, redirect, useParams} from "react-router-dom";
+import { redirect, useParams} from "react-router-dom";
 import React, {useEffect, useState} from "react";
 import BreadcrumbService from "../components/breadcrumb/BreadcrumbService";
 import ServiceNavigation from "../components/service/ServiceNavigation";
@@ -32,6 +32,8 @@ export const ServicePackage = () => {
             setTotalPages(totalPages);
         };
         fetchPage();
+        console.log("runging")
+
     }, [currentPage, pageSize, isSortedByPrice]);
 
     const getCurrentPageHandler = (currentPage) => {
@@ -99,7 +101,7 @@ export const ServicePackage = () => {
 
 export const sentRequest = async (url, method = 'GET', data = null) =>{
     const CART_API = process.env.REACT_APP_FETCH_API;
-    console.log(data)
+    console.log("runging")
     try {
         const options = {
             method,

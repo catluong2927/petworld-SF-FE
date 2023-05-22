@@ -6,24 +6,44 @@ import {redirect} from "react-router-dom";
 function reducer(state, action) {
   switch (action.type) {
     case "increment":
-      return { count: state.count + 1 };
+      return { count: state.count + 1};
     case "decrement":
-      return { count: state.count - 1 };
+      return { count: state.count - 1};
     default:
       throw new Error();
   }
 }
 function ItemCounter(props) {
   const [products, setProducts] = useState({});
+  const [isDeleting, setIsDeleting] = useState(false);
+  const [isAdding, setIsAdding] = useState(false);
+  const URL_CART = 'cart';
   const [state, dispatch] = useReducer(reducer, {count: props.amount});
-
+  const [quantity, setQuantity] = useState(1);
   const increment = () => {
+    setQuantity(prevState => prevState + 1);
     dispatch({ type: "increment" });
+    if (!isAdding) {
+      setIsAdding(true);
+      setTimeout(() => {
+        console.log(quantity);
+        setQuantity(1);
+        addInCartHandler();
+      }, 100);
+    }
   };
 
   const decrement = () => {
     if (state.count > 1) {
+      setQuantity(prevState => prevState + 1);
       dispatch({ type: "decrement" });
+      if (!isDeleting) {
+        setIsDeleting(true);
+        setTimeout(() => {
+          setQuantity(1);
+          deleteInCartHandler()
+        }, 100)
+      }
     }
   };
   useEffect(()=> {
@@ -33,43 +53,37 @@ function ItemCounter(props) {
   const body = {
     userEmail: "luong@codegym.com",
     ...props,
-    amount:  1,
+    amount: quantity,
   };
 
   const deleteInCartHandler = async () => {
     try {
-      const url = 'cart/';
-      const result = await sentRequest(url, 'DELETE', body);
-
-      return redirect('/cart')
+      const result = await sentRequest(URL_CART, 'PUT', body);
+      setIsDeleting(false);
     } catch (error) {
 
     }
   };
 
-
-  const addInCartHandler = async (event) => {
-    event.preventDefault();
-
+  const addInCartHandler = async () => {
     try {
-      const url = 'cart/';
-      const result = await sentRequest(url, 'POST', body);
-      console.log('Result:', result);
-      props.toast.current.show({severity:'success', summary: 'Success', detail:`Add successfully`, life: 3000});
+      const result = await sentRequest(URL_CART, 'POST', body);
+      setIsAdding(false)
     } catch (error) {
-      props.toast.current.show({severity:'error', summary: 'Fail', detail:`Failed to add to cart `, life: 3000});
-      console.error('Error:', error.message);
     }
   };
+
+  props.onSetAmount(state, quantity, increment, decrement)
+
   return (
       <>
-        <button onClick={deleteInCartHandler} type="button">
+        <button onClick={decrement} type="button">
           <i className="bi bi-dash"></i>
         </button>
         <span style={{ margin: "0 20px", fontFamily: "Cabin" }}>
         {state.count}
       </span>
-        <button onClick={addInCartHandler} type="button">
+        <button onClick={increment} type="button">
           <i className="bi bi-plus"></i>
         </button>
       </>
