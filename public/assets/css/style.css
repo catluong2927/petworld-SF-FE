@@ -1457,6 +1457,11 @@ header.style-1 .nav-right ul {
     visibility: hidden;
   }
 }
+.none-border-circle {
+  width: 70px !important;
+  height: 45px !important;
+  border: none !important;
+}
 header.style-1 .nav-right ul li {
   position: relative;
 }
@@ -1474,19 +1479,7 @@ header.style-1 .nav-right ul li a {
   transition: 0.35s;
   position: relative;
 }
-header.style-1 .nav-right ul li a::after {
-  content: "";
-  position: absolute;
-  left: 0;
-  top: 0;
-  height: 100%;
-  width: 100%;
-  background: var(--gradient-color);
-  opacity: 0;
-  transition: 0.35s;
-  border-radius: 50%;
-  z-index: -1;
-}
+
 header.style-1 .nav-right ul li a svg {
   fill: var(--white);
 }
@@ -1563,6 +1556,20 @@ header.style-1 .nav-right .mobile-menu-btn i {
   font-size: 25px;
 }
 @media (max-width: 991px) {
+  content: "";
+
+  header.style-1 .nav-right ul li a::after {
+    position: absolute;
+    left: 0;
+    top: 0;
+    height: 100%;
+    width: 100%;
+    background: var(--gradient-color);
+    opacity: 0;
+    transition: 0.35s;
+    border-radius: 50%;
+    z-index: -1;
+  }
   header.style-1 .nav-right .mobile-menu-btn {
     display: block;
     visibility: visible;
@@ -13090,6 +13097,7 @@ select#duration:focus {
   border-width: 0 2px 2px 0;
   transform: rotate(45deg);
 }
+
 /*ADD FOR ORDER */
 
 @media (min-width: 1200px) {
@@ -13143,3 +13151,82 @@ select#duration:focus {
 /*  margin-right: auto;*/
 /*  margin-left: auto;*/
 /*}*/
+/*ADD FOR USER AVATAR*/
+.user-avatar {
+  width: 33px;
+  height: 33px;
+  border-radius: 19px;
+}
+.header-infor {
+  display: grid;
+  grid-column: 1fr 1fr;
+  justify-content: center;
+  position: relative;
+  width: 14rem;
+  height: 7rem;
+  /*background: #FBE5DA;*/
+}
+.header-infor-image {
+  margin-top: 5px;
+  margin-left:22px;
+  width: 5rem;
+  height: 5rem;
+  border-radius: 50%;
+}
+.header-infor-name {
+  font-size: 20px;
+  color: #fff;
+}
+.content-infor {
+  margin-top: 25px;
+}
+.infor-link{
+  font-size: 1.25rem;
+  font-weight: 400;
+  color: #fff;
+  font-family: var(--font-cabin);
+  line-height: 30px;
+  margin-left: 50px;
+}
+.infor-link:hover{
+  color: var(--primary-color3);
+}
+.infor-linkusername{
+  font-size: 0.8rem;
+  font-weight: 400;
+  color: #fff;
+  font-family: var(--font-cabin);
+  line-height: 30px;
+  margin-left: 12px;
+  margin-bottom:-6px;
+  margin-top:2px;
+}
+.info{
+  position: absolute;
+  display: none;
+  right: 0px;
+  width: 10rem;
+  background: #001D23;
+  margin: 0 !important;
+
+}
+.info li {
+  display:block;
+}
+header.style-1 .nav-right ul li:hover .info{
+  display: block;
+}
+.inforuserul{
+  display: flex !important;
+  flex-direction: column;
+  flex-wrap: wrap;
+  position: relative;
+  margin-left:-54px !important;
+  margin-top:-19px !important;
+  margin-bottom:-19px !important;
+}
+.inforuserul{
+  margin-left: -54px !important;
+  margin-bottom: 5px !important;
+}
+
