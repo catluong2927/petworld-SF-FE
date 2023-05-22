@@ -7,6 +7,9 @@ import {
     registerFail,
     registerStart,
     registerSuccess,
+    logoutStart,
+    logoutSuccess,
+    logoutFail,
 } from "./authSlice";
 import {useNavigate} from "react-router-dom";
 
@@ -49,9 +52,13 @@ export const signUpUser = async (data, dispatch, navigate, toast) => {
     }
 }
 
-// export const logout = async (dispatch,navigate,token) =>{
-//     dispatch(loginStart());
-//     try{
-//
-//     }catch ()
-// }
+export const logout = async (dispatch,navigate) =>{
+    dispatch(loginStart());
+    try{
+        localStorage.removeItem('persist:root')
+        dispatch(logoutSuccess());
+        navigate("/login")
+    }catch (err){
+        dispatch(logoutFail());
+    }
+}

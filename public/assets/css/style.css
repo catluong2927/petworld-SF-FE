@@ -13097,6 +13097,8 @@ select#duration:focus {
   border-width: 0 2px 2px 0;
   transform: rotate(45deg);
 }
+<<<<<<< HEAD
+=======
 
 /*ADD FOR ORDER */
 
@@ -13228,5 +13230,15 @@ header.style-1 .nav-right ul li:hover .info{
 .inforuserul{
   margin-left: -54px !important;
   margin-bottom: 5px !important;
+}
+
+
+.custom-tag {
+  padding-top: 0!important;
+  padding-bottom: 0!important;
+}
+
+ul.inforuserul {
+  gap: 0px !important;
 }
 
