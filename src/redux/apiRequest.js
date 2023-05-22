@@ -8,6 +8,7 @@ import {
     registerStart,
     registerSuccess,
 } from "./authSlice";
+import {useNavigate} from "react-router-dom";
 
 
 export const browserHistory = createBrowserHistory();
@@ -47,3 +48,10 @@ export const signUpUser = async (data, dispatch, navigate, toast) => {
 
     }
 }
+
+// export const logout = async (dispatch,navigate,token) =>{
+//     dispatch(loginStart());
+//     try{
+//
+//     }catch ()
+// }
