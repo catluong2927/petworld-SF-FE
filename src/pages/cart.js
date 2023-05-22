@@ -1,15 +1,23 @@
-import {Link, redirect} from "react-router-dom";
+import {Link, redirect, useNavigate} from "react-router-dom";
 import React, {useEffect, useState} from "react";
 import Breadcrumb from "../components/breadcrumb/Breadcrumb";
 import ItemCounter from "../components/shop/ProductCount";
 import Layout from "../layout/Layout";
 import { sentRequest} from "./ServicePackage";
+import {useSelector} from "react-redux";
 
 function CartPage() {
   const [data, setData] = useState([]);
   const [total, setTotal] = useState(0);
   const [shouldFetchData, setShouldFetchData] = useState(true);
-  const [alteredAmount, setAlteredAmount] = useState(0);
+  const [alteredAmount, setAlteredAmount] = useState(0)
+  const navigation = useNavigate();
+  const isLogin = useSelector((state) => state.auth.login?.currentUser);
+
+  if(isLogin){
+    navigation("/login")
+  }
+
   const ULR = "cart/luong@codegym.com";
 
     useEffect(()=> {
