@@ -9,7 +9,6 @@ const initialState = {
     navState: false,
     scrollY: 0,
 };
-
 function reducer(state, action) {
     switch (action.type) {
         case "home":
@@ -30,7 +29,6 @@ function reducer(state, action) {
             throw new Error();
     }
 }
-
 function Header1() {
     const isLogin = useSelector((state) => state.auth.login?.currentUser);
     const currentRoute = useLocation().pathname;
@@ -40,14 +38,12 @@ function Header1() {
         const {scrollY} = window;
         dispatch({type: "setScrollY", payload: scrollY});
     };
-
     useEffect(() => {
         window.addEventListener("scroll", handleScroll);
         return () => {
             window.removeEventListener("scroll", handleScroll);
         };
     }, []);
-
     return (
         <>
             <div className="top-bar">
@@ -96,7 +92,6 @@ function Header1() {
                     </div>
                 </div>
             </div>
-
             <header
                 ref={headerRef}
                 className={
@@ -482,5 +477,4 @@ function Header1() {
         </>
     );
 }
-
 export default Header1;
