@@ -100,35 +100,15 @@ function Shop() {
                   </div>
                 </div>
                 <div className="shop-widget">
-                  <div className="check-box-item">
-                    <h5 className="shop-widget-title">Brand</h5>
-                    <div className="checkbox-container">
-                      <label className="containerss">
-                        Fancy Feast
-                        <input type="checkbox" defaultChecked="checked" />
-                        <span className="checkmark" />
-                      </label>
-                      <label className="containerss">
-                        Gentle Giants
-                        <input type="checkbox" />
-                        <span className="checkmark" />
-                      </label>
-                      <label className="containerss">
-                        Purina Pro Plan
-                        <input type="checkbox" />
-                        <span className="checkmark" />
-                      </label>
-                      <label className="containerss">
-                        Stella &amp; Chewy's
-                        <input type="checkbox" />
-                        <span className="checkmark" />
-                      </label>
-                      <label className="containerss">
-                        Pet Dreams
-                        <input type="checkbox" />
-                        <span className="checkmark" />
-                      </label>
-                    </div>
+                  <div className="item">
+                    <h5 className="shop-widget-title">Brands included</h5>
+                    <ul className="container">
+                        <li>Korea </li>
+                        <li>VietNam </li>
+                        <li>Japan</li>
+                        <li>America</li>
+                        <li>ChiNa</li>
+                    </ul>
                   </div>
                 </div>
               </div>
@@ -153,17 +133,6 @@ function Shop() {
                           <option name="21" value={"21"} >21</option>
                         </select>
                       </div>
-                      {/* <div className="single-select two">
-                        <select
-                          style={{ outline: "none" }}
-                          className="defult-select-drowpown"
-                          id="eyes-dropdown"
-                        >
-                          <option>Default</option>
-                          <option>Grid</option>
-                          <option>Closed</option>
-                        </select>
-                      </div> */}
                     </div>
                   </div>
                 </div>

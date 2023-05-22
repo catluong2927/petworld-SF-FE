@@ -8,6 +8,7 @@ import Home from "./pages";
 import AboutPage from "./pages/about";
 import LoginPage from "./pages/login";
 import SignUpPage from "./pages/sign-up";
+import CloudinaryUploader from "./components/uploadFile/imageUpload";
 
 
 
@@ -30,6 +31,8 @@ const router = createBrowserRouter([
 function App() {
   return (
       <RouterProvider router={router} />
+      // <CloudinaryUploader/>
+
   );
 }
 
