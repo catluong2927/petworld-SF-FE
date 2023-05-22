@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import {Link, useParams} from "react-router-dom";
 import React, { useEffect, useState, useRef } from "react";
 import ProductPriceCount from "./ProductPriceCount";
 import {sentRequest} from "../../pages/ServicePackage";
@@ -6,31 +6,34 @@ import {sentRequest} from "../../pages/ServicePackage";
 
 
 function ProductDetails(props) {
-  const product = props.productDetail;
-  let {imageDetailList, image} = props.productDetail;
+  const { id } = useParams();
+  const [product, setProduct] = useState([]);
+  const URL_PRODUCT_DETAIL = 'products/' + id;
+  let [images, setImages] = useState([]);
   const [mainImage, setMainImage] = useState("")
-
-
   const [productPriceCount, setProductPriceCount] = useState({})
   const [productCart, setProductCart] = useState({})
   function discoutPrice(price, sale){
     return price*(1 - (sale/100));
   }
 
-  if (typeof imageDetailList === "undefined") {
-    imageDetailList = [];
-  }
   const mainImageHandler = (props) => {
     setMainImage(props)
   }
 
   useEffect(() => {
+    const res = sentRequest(URL_PRODUCT_DETAIL);
+    res.then(data => {
+      setProduct(data)
+      setMainImage(data.image)
+      setImages([...data.imageDetailList, { url: data.image }]);
+    });
     setProductCart({
       ...productPriceCount,
       'productId': props.productId
     })
-    setMainImage(product.image)
-  }, [productPriceCount, props.productId, imageDetailList])
+  }, [])
+
 
 
 
@@ -66,7 +69,7 @@ function ProductDetails(props) {
             >
               <img
                 className="img-fluid product-image"
-                src={mainImage} 
+                src={mainImage}
                 alt=""
               />
             </div>
@@ -77,25 +80,15 @@ function ProductDetails(props) {
             role="tablist"
             aria-orientation="vertical"
           >
-          
-            {imageDetailList.map((item, index) => (
+
+            {images.map((item, index) => (
                 <button key={index}
                 className="nav-link"
-                // id={`v-pills-img1-tab`}
-                // data-bs-toggle="pill"
-                // data-bs-target={`#v-pills-img1`}
-                // type="button"
-                // role="tab"
-                // aria-controls={`v-pills-img1`}
-                // aria-selected="false"
                 onClick={mainImageHandler.bind(null, item.url)}
                 >
                 <img src={item.url} alt="" className="product-detail-image" />
               </button>
             ))}
-            
-
-
           </div>
         </div>
         <div className="col-lg-5">
@@ -136,8 +129,8 @@ function ProductDetails(props) {
             </p>
             <div className="shop-quantity d-flex align-items-center justify-content-start mb-20">
               <div className="quantity d-flex align-items-center">
-                <ProductPriceCount 
-                    price={product.sale !== 0 ? discoutPrice(product.price, product.sale) : product.price} 
+                <ProductPriceCount
+                    price={product.sale !== 0 ? discoutPrice(product.price, product.sale) : product.price}
                     onSendCart={setProductPriceCount}
                  />
               </div>
@@ -145,59 +138,10 @@ function ProductDetails(props) {
                 <button className="primary-btn3" onClick={handlePostData}>Add to cart</button>
               </Link>
             </div>
-            <div className="buy-now-btn">
+            <div className="buy-now-btn" onClick={handlePostData}>
               <Link legacyBehavior to="/cart">
                 <a>Buy Now</a>
               </Link>
-            </div>
-            <div className="compare-wishlist-area">
-              <ul>
-                <li>
-                  <a to="#">
-                    <span>
-                      <img src="../assets/images/icon/compare.svg" alt="" />
-                    </span>{" "}
-                    Compare
-                  </a>
-                </li>
-                <li>
-                  <a to="#">
-                    <span>
-                      <img
-                        src="../assets/images/icon/Icon-favorites2.svg"
-                        alt=""
-                      />
-                    </span>{" "}
-                    Add to wishlist
-                  </a>
-                </li>
-              </ul>
-            </div>
-            <div className="pyment-method">
-              <h6>Guaranted Safe Checkout</h6>
-              <ul>
-                <li>
-                  <img src="../assets/images/icon/visa2.svg" alt="" />
-                </li>
-                <li>
-                  <img src="../assets/images/icon/amex.svg" alt="" />
-                </li>
-                <li>
-                  <img src="../assets/images/icon/discover.svg" alt="" />
-                </li>
-                <li>
-                  <img src="../assets/images/icon/mastercard.svg" alt="" />
-                </li>
-                <li>
-                  <img src="../assets/images/icon/stripe.svg" alt="" />
-                </li>
-                <li>
-                  <img src="../assets/images/icon/paypal.svg" alt="" />
-                </li>
-                <li>
-                  <img src="../assets/images/icon/pay.svg" alt="" />
-                </li>
-              </ul>
             </div>
           </div>
         </div>

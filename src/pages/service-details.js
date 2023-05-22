@@ -1,5 +1,5 @@
 import { Link,  useParams} from "react-router-dom";
-import React, { useEffect, useMemo, useReducer, useState} from "react";
+import React, {useEffect, useMemo, useReducer, useRef, useState} from "react";
 import DatePicker from "react-datepicker";
 import Breadcrumb from "../components/breadcrumb/Breadcrumb";
 import Layout from "../layout/Layout";
@@ -11,6 +11,7 @@ import {ServiceProcess} from "../components/service/ServiceProcess";
 import {ServicePackageDescription} from "../components/service/ServicePackageDescription";
 import ProductPriceCount from "../components/shop/ProductPriceCount";
 import {sentRequest} from "./ServicePackage";
+import { Toast } from 'primereact/toast';
 SwiperCore.use([Navigation, Pagination, Autoplay, EffectFade]);
 const  initialState = {description: true, review: false, process: false};
 const infoReducer = (state, action) => {
@@ -31,6 +32,7 @@ const infoReducer = (state, action) => {
   return newState;
 };
 function ServiceDetails(props) {
+  const toast = useRef(null);
   const [servicePackage, setServicePackage] = useState({});
   const [mainImage, setMainImage] = useState('');
   const [services, setServices] = useState([]);
@@ -110,15 +112,16 @@ function ServiceDetails(props) {
       const url = 'cart';
       const result = await sentRequest(url, 'POST', body);
       console.log('Result:', result);
-      props.toast.current.show({severity:'success', summary: 'Success', detail:`Add successfully`, life: 3000});
+      toast.current.show({severity:'success', summary: 'Success', detail:`Add successfully`, life: 3000});
     } catch (error) {
-      props.toast.current.show({severity:'error', summary: 'Fail', detail:`Failed to add to cart `, life: 3000});
+      toast.current.show({severity:'error', summary: 'Fail', detail:`Failed to add to cart `, life: 3000});
       console.error('Error:', error.message);
     }
   };
   return (
       <Layout>
         <Breadcrumb pageName="Packages Details" pageTitle={servicePackage.name} />
+        <Toast ref={toast} />
             <div className="services-details-area pt-120 mb-120">
               <div className="container">
                 <div className="row g-lg-4 gy-5 mb-120">

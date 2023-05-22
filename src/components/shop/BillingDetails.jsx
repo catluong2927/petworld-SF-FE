@@ -1,6 +1,6 @@
 import React, {useRef} from "react";
-import * as events from "events";
 import {sentRequest} from "../../pages/ServicePackage";
+import { useNavigate } from 'react-router-dom';
 
 function BillingDetails(props) {
   const usernameRef = useRef();
@@ -9,11 +9,13 @@ function BillingDetails(props) {
   const noteRef = useRef();
   const URL_ORDER = 'orders';
   const URL_CART = 'cart';
+  const navigate = useNavigate();
   let items = [];
   let deleteCartDetailIdList = [];
   props.onGetData.map(element => {
     const item = {
       itemName: element.name,
+      image: element.image,
       quantity: element.amount,
       total: element.totalPrice,
       note: 'Ok'
@@ -31,16 +33,15 @@ function BillingDetails(props) {
       note: noteRef.current.value,
       date: new Date(),
       status: 'Waiting for confirm',
+      total: props.onGetTotal,
       orderDetailDtoRequests: items,
     };
     const res = sentRequest(URL_ORDER, "POST", data)
     res.then(
          sentRequest(URL_CART, "DELETE", deleteCartDetailIdList),
-        // props.toast.current.show({severity:'success', summary: 'Success', detail:`Add successfully`, life: 3000})
-        alert("success"),
-    ).catch(
-        // props.toast.current.show({severity:'error', summary: 'Fail', detail:`Failed to add to cart `, life: 3000})
-  )
+        props.toast.current.show({severity:'success', summary: 'Success', detail:`Check out successfully`, life: 1000}),
+        navigate('/order')
+    )
 
   }
   return (

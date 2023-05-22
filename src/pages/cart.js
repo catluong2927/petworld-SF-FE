@@ -6,23 +6,25 @@ import Layout from "../layout/Layout";
 import { sentRequest} from "./ServicePackage";
 
 function CartPage() {
-    const [data, setData] = useState([]);
-    const ULR = "cart/luong@codegym.com";
-    let price;
-    let totalPrice;
+  const [data, setData] = useState([]);
+  const [total, setTotal] = useState(0);
+  const [shouldFetchData, setShouldFetchData] = useState(true);
+  const [alteredAmount, setAlteredAmount] = useState(0);
+  const ULR = "cart/luong@codegym.com";
 
     useEffect(()=> {
+      calculateTotal();
        const carts = sentRequest(ULR, "GET"  )
       carts.then(data => {
       setData(data)
+        setShouldFetchData(false)
       }).then(
-
       )
-    }, [])
+    }, [shouldFetchData, alteredAmount])
 
 
   const deleteInCartHandler = async ( props) => {
-
+    setShouldFetchData(!shouldFetchData);
     const body = {
       userEmail: "luong@codegym.com",
       ...props
@@ -30,12 +32,24 @@ function CartPage() {
     try {
       const url = 'cart';
       const result = await sentRequest(url, 'PUT', body);
-      props.toast.current.show({severity:'success', summary: 'Success', detail:`Add successfully`, life: 3000});
-      return redirect('/cart')
+      setTimeout(() => {
+        window.location.reload();
+      }, 500);
     } catch (error) {
-      props.toast.current.show({severity:'error', summary: 'Fail', detail:`Failed to add to cart `, life: 3000});
     }
+
   };
+
+
+  const calculateTotal = () => {
+    let sum = 0;
+    data.forEach((item) => {
+      const itemPrice = item.price ? item.price : item.minPrice;
+      sum += itemPrice * item.amount;
+    });
+    setTotal(sum);
+  };
+
 
   return (
     <>
@@ -90,6 +104,7 @@ function CartPage() {
                             <ItemCounter
                                 amount={item.amount}
                                 typeId={item.typeId}
+                                onSetAmount={setAlteredAmount}
                                 totalPrice={item.totalPrice}
                                 type={item.type} />
                           </div>
@@ -97,9 +112,7 @@ function CartPage() {
                       </td>
                       <td data-label="Subtotal">${item.price ? (item.price * item.amount): (item.minPrice * item.amount)}</td>
                     </tr>
-                    )
-
-                    }
+                    )}
                     </tbody>
                   </table>
                 </div>
@@ -121,7 +134,7 @@ function CartPage() {
                     <tr>
                       <th>Cart Totals</th>
                       <th />
-                      <th>${}</th>
+                      <th>${total}</th>
                     </tr>
                   </thead>
                 </table>

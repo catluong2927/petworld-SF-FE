@@ -13090,4 +13090,56 @@ select#duration:focus {
   border-width: 0 2px 2px 0;
   transform: rotate(45deg);
 }
+/*ADD FOR ORDER */
 
+@media (min-width: 1200px) {
+  .order {
+    width: 78rem;
+    margin-top: 7rem;
+    margin-left: 15rem;
+    height: auto;
+    margin-bottom: 5rem;
+  }
+}
+.order-header{
+  display:flex;
+  gap:5rem;
+}
+.order-image{
+  width: 5rem;
+  height: 4rem;
+  border-radius: 5px;
+}
+.order-detail-content {
+  display: flex;
+  justify-content: space-between;
+  gap: 15rem;
+}
+.order-detail-content--name {
+  color: #333;
+}
+/*@media (min-width: 992px) {*/
+/*  .order {*/
+/*    max-width: 960px;*/
+/*  }*/
+/*}*/
+
+/*@media (min-width: 768px) {*/
+/*  .order {*/
+/*    max-width: 720px;*/
+/*  }*/
+/*}*/
+
+/*@media (min-width: 576px) {*/
+/*  .order {*/
+/*    max-width: 540px;*/
+/*  }*/
+/*}*/
+
+/*.order {*/
+/*  width: 100%;*/
+/*  padding-right: var(--bs-gutter-x, 0.75rem);*/
+/*  padding-left: var(--bs-gutter-x, 0.75rem);*/
+/*  margin-right: auto;*/
+/*  margin-left: auto;*/
+/*}*/
