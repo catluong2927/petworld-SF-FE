@@ -1,16 +1,17 @@
-import {Await, json, Link, NavLink, useParams, useRouteLoaderData} from "react-router-dom";
-import React, {Suspense, useEffect, useMemo, useReducer, useState} from "react";
+import { Link,  useParams} from "react-router-dom";
+import React, {useEffect, useMemo, useReducer, useRef, useState} from "react";
 import DatePicker from "react-datepicker";
 import Breadcrumb from "../components/breadcrumb/Breadcrumb";
 import Layout from "../layout/Layout";
 import "react-datepicker/dist/react-datepicker.css";
-import ItemCounter from "../components/shop/ProductCount";
 import SwiperCore, {Autoplay, EffectFade, Navigation, Pagination,} from "swiper";
 import { Swiper, SwiperSlide } from "swiper/react";
 import {ServiceReview} from "../components/service/ServiceReview";
 import {ServiceProcess} from "../components/service/ServiceProcess";
 import {ServicePackageDescription} from "../components/service/ServicePackageDescription";
-import {sendRequest} from "./ServicePackage";
+import ProductPriceCount from "../components/shop/ProductPriceCount";
+import {sentRequest} from "./ServicePackage";
+import { Toast } from 'primereact/toast';
 SwiperCore.use([Navigation, Pagination, Autoplay, EffectFade]);
 const  initialState = {description: true, review: false, process: false};
 const infoReducer = (state, action) => {
@@ -30,35 +31,33 @@ const infoReducer = (state, action) => {
   }
   return newState;
 };
-function ServiceDetails() {
+function ServiceDetails(props) {
+  const toast = useRef(null);
   const [servicePackage, setServicePackage] = useState({});
   const [mainImage, setMainImage] = useState('');
   const [services, setServices] = useState([]);
   const [startDate, setStartDate] = useState(new Date());
   const [images, setImages] = useState([]);
-  const [reviews, setReviews] = useState([]);
-  const  packageId = useParams();
-  const  data = useRouteLoaderData('services');
-  useEffect(() => {
-    // const fetchData = async () => {
-    //   const response = await fetch(`http://localhost:8080/api/service-packages/`+ id);
-    //   const data = await response.json();
-    setServicePackage(data);
-    setMainImage(data.image);
-    setServices(data.serviceDtoResponses);
-    const serviceImages = data.serviceDtoResponses.flatMap(service => service.serviceImages)
-    setImages(serviceImages);
-    const img = {id: 100, url:data.image }
-    setImages(prevState => [...prevState, img]);
-    // };
-    // fetchData();
-  }, [data]);
-  const URL = 'api/package-reviews/package/' + packageId.packageId;
-  useEffect(async () => {
-    const response = await fetch(`http://localhost:8080/api/package-reviews/package/`+ packageId.packageId);
-    const data = await response.json();
-    setReviews(data.content);
-  }, []);
+  const [amount, setAmount] = useState(0);
+  const [isLoaded, setIsLoaded] = useState(false);
+  const packageId = useParams();
+  const PACKAGE_URL = "packages/" + packageId.packageId;
+  useEffect( () => {
+    const request =  sentRequest(PACKAGE_URL);
+    request.then(data => {
+          setServicePackage(data);
+          setMainImage(data.image);
+          setServices(data.serviceDtoResponses);
+          const serviceImages = data.serviceDtoResponses.flatMap(service => service.serviceImages)
+          setImages(serviceImages);
+          const img = {id: 100, url: data.image}
+          setImages(prevState => [...prevState, img]);
+        }
+    );
+    setIsLoaded(true);
+  }, [isLoaded]);
+
+
 
   const onChangeImageHandler = props => {
     setMainImage(props);
@@ -74,6 +73,7 @@ function ServiceDetails() {
   const showReviewHandler = () => {
     infoDispatch({type:'review'})
   };
+
   const slider = useMemo(() => {
     return (
         {
@@ -98,9 +98,30 @@ function ServiceDetails() {
   };
   /// Price Handler
   const  price = (selectedDuration === 'full-day')? servicePackage.maxPrice: servicePackage.minPrice;
+
+  const body = {
+    userEmail: "luong@codegym.com",
+    type: 0,
+    typeId: servicePackage.id,
+    ...amount
+
+  };
+  const addToCartHandler = async (event) => {
+    event.preventDefault();
+    try {
+      const url = 'cart';
+      const result = await sentRequest(url, 'POST', body);
+      console.log('Result:', result);
+      toast.current.show({severity:'success', summary: 'Success', detail:`Add successfully`, life: 3000});
+    } catch (error) {
+      toast.current.show({severity:'error', summary: 'Fail', detail:`Failed to add to cart `, life: 3000});
+      console.error('Error:', error.message);
+    }
+  };
   return (
       <Layout>
         <Breadcrumb pageName="Packages Details" pageTitle={servicePackage.name} />
+        <Toast ref={toast} />
             <div className="services-details-area pt-120 mb-120">
               <div className="container">
                 <div className="row g-lg-4 gy-5 mb-120">
@@ -191,12 +212,16 @@ function ServiceDetails() {
                             <div className="shop-quantity d-flex flex-wrap align-items-center justify-content-start mb-20">
                               <div className="quantity d-flex align-items-center">
                                 <div className="quantity-nav nice-number d-flex align-items-center">
-                                  <ItemCounter />
+                                  <ProductPriceCount
+                                      onSendCart={setAmount}
+                                      price={price} />
                                 </div>
                               </div>
-                              <NavLink to="/cart">
-                                <p className="primary-btn3">Add to cart</p>
-                              </NavLink>
+                              <Link to="/cart">
+                                <p className="primary-btn3"
+                                   onClick={addToCartHandler}
+                                >Add to cart</p>
+                              </Link>
                             </div>
                             <div className="pyment-method">
                               <h6>Guaranted Safe Checkout</h6>
@@ -247,7 +272,7 @@ function ServiceDetails() {
                       >Review</button>
                     </div>
                     {description && <ServicePackageDescription content={servicePackage.description} />}
-                    {review && <ServiceReview reviews ={reviews} />}
+                    {review && <ServiceReview />}
                     {process && <ServiceProcess process ={services} />}
                   </div>
                 </div>
@@ -257,16 +282,3 @@ function ServiceDetails() {
   );
 }
 export default ServiceDetails;
-export async function loader({request, params}) {
-  const id = params.packageId;
-  const  URL = 'http://localhost:8080/api/packages/' ;
-  const URL_FAKE = 'https://6436d35a3e4d2b4a12dcb9a2.mockapi.io/api/v1/service-packages/';
-  const response = await fetch(URL+ id );
-  if (!response.ok) {
-    throw json({message: "no result"}, {status: 500})
-  } else {
-    const resData = await response.json();
-    console.log('Service Detail' + resData)
-    return resData;
-  }
-};

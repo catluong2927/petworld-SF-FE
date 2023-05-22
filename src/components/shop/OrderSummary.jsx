@@ -1,54 +1,66 @@
-import React from "react";
-import ProductPriceCount from "./ProductPriceCount";
+import React, {useEffect, useState} from "react";
+import {sentRequest} from "../../pages/ServicePackage";
+import ItemCounter from "./ProductCount";
 
-function OrderSummary() {
+function OrderSummary(props) {
+  const [data, setData] = useState([]);
+  const [subTotal, setSubTotal] = useState(0);
+  const [alteredAmount, setAlteredAmount] = useState(0);
+  const tax = subTotal * 0.1;
+  const shippingFee = 1;
+  const total = subTotal + tax + shippingFee;
+  const [shouldFetchData, setShouldFetchData] = useState(true);
+  const ULR = "cart/luong@codegym.com"
+
+  useEffect(()=> {
+    const carts = sentRequest(ULR, "GET"  );
+    calculateTotal();
+    carts.then(data => {
+      setData(data)
+      setShouldFetchData(false)
+    }).catch(
+    )
+  }, [shouldFetchData, alteredAmount])
+
+  props.onSendData(data);
+  props.onSenTotal(total);
+
+  const calculateTotal = () => {
+    let sum = 0;
+    data.forEach((item) => {
+      const itemPrice = item.price ? item.price : item.minPrice;
+      sum += itemPrice * item.amount;
+    });
+    setSubTotal(sum);
+  };
+  props.onSentAmount(alteredAmount)
   return (
     <>
       <div className="added-product-summary mb-30">
         <h5 className="title-25 checkout-title">Order Summary</h5>
         <ul className="added-products">
-          <li className="single-product d-flex justify-content-start">
+          { data.map(element =>
+
+          <li className="single-product d-flex justify-content-start" key={element.id}>
             <div className="product-img">
-              <img src="assets/images/bg/check-out-01.png" alt="" />
+              <img src={element.image} alt="" />
             </div>
             <div className="product-info">
               <h5 className="product-title">
-                <a href="#">Whiskas Cat Food Core Tuna</a>
+                <a href="#">{element.name}</a>
               </h5>
-              <ProductPriceCount price={22} />
+              <ItemCounter
+                  amount={element.amount}
+                  typeId={element.typeId}
+                  onSetAmount={setAlteredAmount}
+                  totalPrice={element.totalPrice}
+                  type={element.type} />
             </div>
             <div className="delete-btn">
               <i className="bi bi-x-lg" />
             </div>
           </li>
-          <li className="single-product d-flex justify-content-start">
-            <div className="product-img">
-              <img src="assets/images/bg/check-out-02.png" alt="" />
-            </div>
-            <div className="product-info">
-              <h5 className="product-title">
-                <a href="#">Friskies Kitten Discoveries.</a>
-              </h5>
-              <ProductPriceCount price={24} />
-            </div>
-            <div className="delete-btn">
-              <i className="bi bi-x-lg" />
-            </div>
-          </li>
-          <li className="single-product d-flex justify-content-start">
-            <div className="product-img">
-              <img src="assets/images/bg/check-out-03.png" alt="" />
-            </div>
-            <div className="product-info">
-              <h5 className="product-title">
-                <a href="#">Natural Dog Fresh Food.</a>
-              </h5>
-              <ProductPriceCount price={12} />
-            </div>
-            <div className="delete-btn">
-              <i className="bi bi-x-lg" />
-            </div>
-          </li>
+          )}
         </ul>
       </div>
       <div className="summery-card cost-summery mb-30">
@@ -56,21 +68,17 @@ function OrderSummary() {
           <thead>
             <tr>
               <th>Subtotal</th>
-              <th>$128.70</th>
+              <th>${subTotal}</th>
             </tr>
           </thead>
           <tbody>
             <tr>
               <td className="tax">Tax</td>
-              <td>$5</td>
+              <td>${tax}</td>
             </tr>
             <tr>
-              <td>Total ( tax excl.)</td>
-              <td>$15</td>
-            </tr>
-            <tr>
-              <td>Total ( tax incl.)</td>
-              <td>$15</td>
+              <td className="tax">Shipping fee</td>
+              <td>${shippingFee}</td>
             </tr>
           </tbody>
         </table>
@@ -80,7 +88,7 @@ function OrderSummary() {
           <thead>
             <tr>
               <th>Total</th>
-              <th>$162.70</th>
+              <th>${total}</th>
             </tr>
           </thead>
         </table>

@@ -1,5 +1,5 @@
-import {Link} from "react-router-dom";
-import React, {useRef, useState} from "react";
+import {Link, useNavigate} from "react-router-dom";
+import React, {useEffect, useRef, useState} from "react";
 import Breadcrumb from "../components/breadcrumb/Breadcrumb";
 import Layout from "../layout/Layout";
 import "./sign-up.css";
@@ -7,20 +7,22 @@ import {Toast} from "primereact/toast";
 import "primereact/resources/themes/lara-light-indigo/theme.css";
 import "primereact/resources/primereact.min.css";
 import {Formik} from "formik";
-import axios from "axios";
+
+import {signUpUser} from "../redux/apiRequest";
+import {useDispatch, useSelector} from "react-redux";
+
 
 function SignUpPage() {
-    const headers = {
-        'Content-Type': 'application/json',
-        'Authorization': 'JWT fefege...'
-    }
-    const [isInputBlurred, setIsInputBlurred] = useState(true);
+    const registerError = useSelector((state) => state.auth.register?.data);
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
     const toast = useRef(null);
-    const LOGIN_API = process.env.REACT_APP_FETCH_API;
     const [isCheckedCus, setIsCheckedCus] = useState(true);
     const [isCheckedOwn, setIsCheckedOwn] = useState(false);
     const [form, setForm] = useState({});
     const [messErorr, setMessErorr] = useState({})
+
+
     const REGEX = {
         email: /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/,
         password: /^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=])(?=\S+$).{8,}$/,
@@ -83,7 +85,6 @@ function SignUpPage() {
         } else if (form.password !== form.confirmPassword) {
             errors.confirmPassword = "password does not match";
         }
-        console.log(messErorr);
         return errors;
     }
 
@@ -98,7 +99,7 @@ function SignUpPage() {
     // }
 
 
-    function handleSubmit() {
+    const handleSubmit = async () => {
         const data = {
             userName: form.username,
             fullName: form.fullName,
@@ -106,32 +107,14 @@ function SignUpPage() {
             password: form.password,
             roles
         }
-        axios
-            .post(`${LOGIN_API}/users`, data, {
-                headers: headers
-            })
-            .then((res) => {
-                console.log(res.data)
-                if (res.data === '') {
-                    toast.current.show({
-                        severity: 'success',
-                        summary: 'Success',
-                        detail: 'registration successful',
-                        life: 1500
-                    })
-                    setTimeout(() => {
-                        window.location.href = "/";
-                    }, 3000);
-                }
-            })
-            .catch(err => {
-                setMessErorr(err.response.data);
-                toast.current.show(
-                    {severity: 'error', summary: 'Error', detail: 'registration fail', life: 3150})
-            });
+        await signUpUser(data, dispatch, navigate, toast);
+        // setMessErorr(registerError)
     }
 
-    console.log(messErorr);
+    useEffect(()=>{
+        setMessErorr(registerError)
+    },[registerError])
+
 
     return (
         <>

@@ -2,7 +2,6 @@ import { useParams } from "react-router-dom";
 import React, { useEffect, useState, useRef } from "react";
 import axios from "axios";
 import Breadcrumb from "../components/breadcrumb/Breadcrumb";
-import OthersProduct from "../components/shop/OthersProduct";
 import ProductDetails from "../components/shop/ProductDetails";
 import SingleProductDescription from "../components/shop/SingleProductDescription";
 import Layout from "../layout/Layout";
@@ -36,7 +35,6 @@ function ShopDetails() {
           <div className="container">
             <ProductDetails productDetail={product} productId={id} toast={toast}/>
             <SingleProductDescription productDescription={product}/>
-            <OthersProduct />
           </div>
         </div>
       </Layout>

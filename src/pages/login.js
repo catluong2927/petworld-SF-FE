@@ -1,18 +1,23 @@
-import {Link} from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
 import React, {useRef, useState} from "react";
 import Breadcrumb from "../components/breadcrumb/Breadcrumb";
 import Layout from "../layout/Layout";
 import "./login.css";
-import axios from "axios";
 import {Toast} from "primereact/toast";
 import "primereact/resources/themes/lara-light-indigo/theme.css";
 import "primereact/resources/primereact.min.css";
 import {Formik} from "formik";
+import {loginUser} from "../redux/apiRequest";
+import {useDispatch, useSelector} from "react-redux";
+
+
 
 function LoginPage() {
+    const response = useSelector((state)=>state.auth.login?.currentUser);
     const toast = useRef(null);
-    const LOGIN_API = process.env.REACT_APP_FETCH_API;
     const [form, setForm] = useState({});
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
     const REGEX = {
         email: /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/,
         password: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/,
@@ -39,20 +44,11 @@ function LoginPage() {
         return errors;
     }
 
-    const handleSubmit = () => {
-        axios
-            .post(`${LOGIN_API}/auth/login`, form)
-            .then((res) => {
-                toast.current.show({severity: 'success', summary: 'Success', detail: 'Message Content', life: 3000})
-                setTimeout(window.location.href = "/", 6000)
-            })
-            .catch(err => {
-                    toast.current.show(
-                        {severity: 'error', summary: 'Error', detail: 'Message Content', life: 3150})
-                }
-            )
+    const handleSubmit = async (e) => {
+        await loginUser(form, dispatch, navigate, toast)
     }
 
+    console.log(response);
 
     return (
         <>
@@ -124,12 +120,12 @@ function LoginPage() {
                                                             <div className="form-group">
                                                                 <input type="checkbox" id="html"/>
                                                                 <label htmlFor="html">
-                                                                    I agree to the <a href="#">Terms &amp; Policy</a>
+                                                                    I agree to the <Link  to="#">Terms &amp; Policy</Link>
                                                                 </label>
                                                             </div>
-                                                            <a href="#" className="forgot-pass">
+                                                            <Link to="#" className="forgot-pass">
                                                                 Forgotten Password
-                                                            </a>
+                                                            </Link>
                                                         </div>
                                                     </div>
                                                 </div>
