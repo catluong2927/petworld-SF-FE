@@ -190,7 +190,7 @@ function ServiceDetails(props) {
                       <div className="banner-title">
                         <h2>{servicePackage.name}</h2>
                         <div className="currency">
-                          <h5>${servicePackage.price}</h5>
+                          <h5>${price}</h5>
                         </div>
                       </div>
                       <div className="service-area">
