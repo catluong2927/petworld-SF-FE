@@ -1,6 +1,7 @@
 import React, {useRef} from "react";
 import {sentRequest} from "../../pages/ServicePackage";
 import { useNavigate } from 'react-router-dom';
+import {useSelector} from "react-redux";
 
 function BillingDetails(props) {
   const usernameRef = useRef();
@@ -9,6 +10,12 @@ function BillingDetails(props) {
   const noteRef = useRef();
   const URL_ORDER = 'orders';
   const URL_CART = 'cart';
+  const isLogin = useSelector((state) => state.auth.login?.currentUser);
+  let email = "";
+  if(isLogin){
+    email = isLogin.userDtoResponse.email;
+  }
+  console.log(isLogin)
   const navigate = useNavigate();
   let items = [];
   let deleteCartDetailIdList = [];
@@ -27,7 +34,7 @@ function BillingDetails(props) {
   const submitHandler = (event) => {
     event.preventDefault();
     const data = {
-      userEmail: "luong@codegym.com",
+      userEmail: email,
       phoneNumber: usernameRef.current.value,
       address: addressRef.current.value,
       note: noteRef.current.value,
@@ -41,6 +48,8 @@ function BillingDetails(props) {
          sentRequest(URL_CART, "DELETE", deleteCartDetailIdList),
         props.toast.current.show({severity:'success', summary: 'Success', detail:`Check out successfully`, life: 1000}),
         navigate('/order')
+    ).catch(
+        props.toast.current.show({severity:'success', summary: 'Success', detail:`Failed payment!`, life: 1000}),
     )
 
   }
@@ -59,6 +68,7 @@ function BillingDetails(props) {
                   placeholder="Reciept's name"
                   required
                   ref={usernameRef}
+                  defaultValue={isLogin.userDtoResponse.fullName}
                 />
               </div>
             </div>
@@ -94,7 +104,6 @@ function BillingDetails(props) {
                   placeholder="Order Notes (Optional)"
                   rows={6}
                   defaultValue={""}
-                  required
                   ref={noteRef}
                 />
               </div>

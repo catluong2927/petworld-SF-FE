@@ -14,6 +14,7 @@ import CheckOutPage from "./pages/check-out";
 import {Order} from "./components/order/Order";
 import ErrorPage from "./pages/404";
 import Contact from "./pages/contact";
+import Auth from "./hoc/Auth";
 
 
 const router = createBrowserRouter([
@@ -29,9 +30,9 @@ const router = createBrowserRouter([
       {path:'about', element:<AboutPage/>},
       {path:'login', element:<LoginPage/>},
       {path:'sign-up', element:<SignUpPage/>},
-      {path:'cart', element:<CartPage/>},
-      {path:'check-out', element:<CheckOutPage/>},
-      {path:'order', element:<Order/>},
+      {path:'cart', element:<Auth><CartPage/></Auth>},
+      {path:'check-out', element:<Auth><CheckOutPage/></Auth>},
+      {path:'order', element:<Auth><Order/></Auth>},
       {path:'contact', element:<Contact/>},
     ]},
     ]
@@ -39,7 +40,7 @@ const router = createBrowserRouter([
 function App() {
     const [token, setToken] = useState({})
   return (
-      <RouterProvider router={router} />
+        <RouterProvider router={router} />
   );
 }
 

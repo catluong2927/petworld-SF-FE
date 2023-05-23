@@ -1,4 +1,4 @@
-import { Link,  useParams} from "react-router-dom";
+import {Link, useNavigate, useParams} from "react-router-dom";
 import React, {useEffect, useMemo, useReducer, useRef, useState} from "react";
 import DatePicker from "react-datepicker";
 import Breadcrumb from "../components/breadcrumb/Breadcrumb";
@@ -12,6 +12,7 @@ import {ServicePackageDescription} from "../components/service/ServicePackageDes
 import ProductPriceCount from "../components/shop/ProductPriceCount";
 import {sentRequest} from "./ServicePackage";
 import { Toast } from 'primereact/toast';
+import {useSelector} from "react-redux";
 SwiperCore.use([Navigation, Pagination, Autoplay, EffectFade]);
 const  initialState = {description: true, review: false, process: false};
 const infoReducer = (state, action) => {
@@ -40,8 +41,15 @@ function ServiceDetails(props) {
   const [images, setImages] = useState([]);
   const [amount, setAmount] = useState(0);
   const [isLoaded, setIsLoaded] = useState(false);
+  const [descriptions, setDescriptions] = useState('');
   const packageId = useParams();
   const PACKAGE_URL = "packages/" + packageId.packageId;
+  const isLogin = useSelector((state) => state.auth.login?.currentUser);
+  const navigation = useNavigate();
+  let email = "";
+  if(isLogin){
+    email = isLogin.userDtoResponse.email;
+  }
   useEffect( () => {
     const request =  sentRequest(PACKAGE_URL);
     request.then(data => {
@@ -50,6 +58,7 @@ function ServiceDetails(props) {
           setServices(data.serviceDtoResponses);
           const serviceImages = data.serviceDtoResponses.flatMap(service => service.serviceImages)
           setImages(serviceImages);
+          setDescriptions(data.description)
           const img = {id: 100, url: data.image}
           setImages(prevState => [...prevState, img]);
         }
@@ -100,22 +109,30 @@ function ServiceDetails(props) {
   const  price = (selectedDuration === 'full-day')? servicePackage.maxPrice: servicePackage.minPrice;
 
   const body = {
-    userEmail: "luong@codegym.com",
+    userEmail: email,
     type: 0,
     typeId: servicePackage.id,
     ...amount
 
   };
+  console.log(body)
   const addToCartHandler = async (event) => {
     event.preventDefault();
-    try {
-      const url = 'cart';
-      const result = await sentRequest(url, 'POST', body);
-      console.log('Result:', result);
-      toast.current.show({severity:'success', summary: 'Success', detail:`Add successfully`, life: 3000});
-    } catch (error) {
-      toast.current.show({severity:'error', summary: 'Fail', detail:`Failed to add to cart `, life: 3000});
-      console.error('Error:', error.message);
+    if(isLogin) {
+      try {
+        const url = 'cart';
+        const result = await sentRequest(url, 'POST', body);
+        console.log('Result:', result);
+        toast.current.show({severity: 'success', summary: 'Success', detail: `Add successfully`, life: 1000});
+        setTimeout(() => {
+          navigation("/shop")
+        }, 1000)
+      } catch (error) {
+        toast.current.show({severity: 'error', summary: 'Fail', detail: `Failed to add to cart `, life: 1000});
+        console.error('Error:', error.message);
+      }
+    }else {
+      navigation("/login")
     }
   };
   return (
@@ -271,7 +288,7 @@ function ServiceDetails(props) {
                               onClick={showReviewHandler}
                       >Review</button>
                     </div>
-                    {description && <ServicePackageDescription content={servicePackage.description} />}
+                    {description && <ServicePackageDescription content={descriptions} />}
                     {review && <ServiceReview />}
                     {process && <ServiceProcess process ={services} />}
                   </div>
