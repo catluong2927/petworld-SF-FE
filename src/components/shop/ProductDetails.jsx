@@ -140,7 +140,7 @@ function ProductDetails(props) {
             </div>
             <div className="price-tag">
               <h4>
-                ${discoutPrice(product.price, product.sale)} {product.sale !==  0 && <del>${product.price}</del>}
+               {product.price}
               </h4>
             </div>
             <p>
@@ -149,7 +149,7 @@ function ProductDetails(props) {
             <div className="shop-quantity d-flex align-items-center justify-content-start mb-20">
               <div className="quantity d-flex align-items-center">
                 <ProductPriceCount
-                    price={product.sale !== 0 ? discoutPrice(product.price, product.sale) : product.price}
+                    price={product.price}
                     onSendCart={setProductPriceCount}
                  />
               </div>

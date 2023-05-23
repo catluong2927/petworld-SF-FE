@@ -87,7 +87,7 @@ export const Order = (props) => {
                                 </tr>
                                 <tr>
                                     <th>Total price: </th>
-                                    <td className={"order-detail-price"}>{totalBill} $</td>
+                                    <td className={"order-detail-price"}>{element.total} $</td>
                                 </tr>
                             </table>
                         </div>
