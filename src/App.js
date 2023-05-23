@@ -14,6 +14,7 @@ import CheckOutPage from "./pages/check-out";
 import {Order} from "./components/order/Order";
 import ErrorPage from "./pages/404";
 import Contact from "./pages/contact";
+import Profile from "./pages/profile";
 
 
 const router = createBrowserRouter([
@@ -33,6 +34,7 @@ const router = createBrowserRouter([
       {path:'check-out', element:<CheckOutPage/>},
       {path:'order', element:<Order/>},
       {path:'contact', element:<Contact/>},
+      {path:'profile', element:<Profile/>},
     ]},
     ]
 )
