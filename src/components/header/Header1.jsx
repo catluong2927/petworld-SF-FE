@@ -162,25 +162,25 @@ function Header1() {
                                     }
                                 >
                                     <li>
-                                        <a href="/service-packages/search/Day Care">
+                                        <a href="/service-packages/search/DayCare">
                                             <p className={`menu-item-children ${currentRoute === "/service-packages/search/Day Care" ? "active" : ""}`}>
-                                                Daycare
+                                                Day Care
                                             </p>
                                         </a>
                                     </li>
                                     <li>
-                                        <a href="/service-packages/search/Sa Pa">
-                                            <p className='menu-item-children'>Sapa</p>
+                                        <a href="/service-packages/search/Walking Service">
+                                            <p className='menu-item-children'>Walking Service</p>
                                         </a>
                                     </li>
                                     <li>
-                                        <a href="/service-packages/search/Health Care">
-                                            <p className='menu-item-children'>Health Care</p>
+                                        <a href="/service-packages/search/'Pet's Sapa'">
+                                            <p className='menu-item-children'>'Pet's Sapa'</p>
                                         </a>
                                     </li>
                                     <li>
-                                        <a href="/service-packages/search/Day Care">
-                                            <p className='menu-item-children'>Veterinary</p>
+                                        <a href="/service-packages/search/Training Program">
+                                            <p className='menu-item-children'>Training Program</p>
                                         </a>
                                     </li>
                                 </ul>
@@ -199,9 +199,9 @@ function Header1() {
                                     }
                                 >
                                     <li>
-                                        <Link to="/pricing-plan">
+                                        <Link to="/order">
                                             <p className={`menu-item-children ${currentRoute === "/pricing-plan" ? "active" : ""}`}>
-                                                Pricing Plan
+                                                Your order
                                             </p>
                                         </Link>
                                     </li>
@@ -216,20 +216,6 @@ function Header1() {
                                         <Link to="/sign-up">
                                             <p className={`menu-item-children ${currentRoute === "/sign-up" ? "active" : ""}`}>
                                                 sign up
-                                            </p>
-                                        </Link>
-                                    </li>
-                                    <li>
-                                        <Link to="/team">
-                                            <p className={`menu-item-children ${currentRoute === "/team" ? "active" : ""}`}>
-                                                Our Team
-                                            </p>
-                                        </Link>
-                                    </li>
-                                    <li>
-                                        <Link to="/gallery">
-                                            <p className={`menu-item-children ${currentRoute === "/gallery" ? "active" : ""}`}>
-                                                Gallery
                                             </p>
                                         </Link>
                                     </li>
@@ -256,13 +242,6 @@ function Header1() {
                                         </Link>
                                     </li>
                                     <li>
-                                        <Link to="/shop-details">
-                                            <p className={`menu-item-children ${currentRoute === "/shop-details" ? "active" : ""}`}>
-                                                Shop Details
-                                            </p>
-                                        </Link>
-                                    </li>
-                                    <li>
                                         <Link to="/cart">
                                             <p className={`menu-item-children ${currentRoute === "/cart" ? "active" : ""}`}>
                                                 Cart
@@ -273,49 +252,6 @@ function Header1() {
                                         <Link to="/check-out">
                                             <p className={`menu-item-children ${currentRoute === "/check-out" ? "active" : ""}`}>
                                                 Check Out
-                                            </p>
-                                        </Link>
-                                    </li>
-                                </ul>
-                            </li>
-                            <li className="menu-item-has-children">
-                                <p className='menu-list-navigation-has-children'>BLOG</p>
-                                <i
-                                    className="bi bi-plus dropdown-icon"
-                                    onClick={() => dispatch({type: "blog"})}
-                                />
-                                <ul
-                                    className={
-                                        state.activeMenu === "blog"
-                                            ? "sub-menu  d-block"
-                                            : "sub-menu d-xl-block d-none"
-                                    }
-                                >
-                                    <li>
-                                        <Link to="/blog-grid">
-                                            <p className={`menu-item-children ${currentRoute === "/blog-grid" ? "active" : ""}`}>
-                                                Blog Grid
-                                            </p>
-                                        </Link>
-                                    </li>
-                                    <li>
-                                        <Link to="/blog-grid-sidebar">
-                                            <p className={`menu-item-children ${currentRoute === "/blog-grid-sidebar" ? "active" : ""}`}>
-                                                blog-grid-sidebar
-                                            </p>
-                                        </Link>
-                                    </li>
-                                    <li>
-                                        <Link to="/blog-standard">
-                                            <p className={`menu-item-children ${currentRoute === "/blog-standard" ? "active" : ""}`}>
-                                                Blog Standard
-                                            </p>
-                                        </Link>
-                                    </li>
-                                    <li>
-                                        <Link to="/blog-details">
-                                            <p className={`menu-item-children ${currentRoute === "/blog-details" ? "active" : ""}`}>
-                                                Blog Details
                                             </p>
                                         </Link>
                                     </li>
@@ -411,7 +347,7 @@ function Header1() {
                                 </form>
                             </li>
                             <li>
-                                <Link to="/heart">
+                                <Link to="/order">
                                     <svg
                                         width={14}
                                         height={13}

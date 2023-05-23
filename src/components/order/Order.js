@@ -3,10 +3,16 @@ import Breadcrumb from "../breadcrumb/Breadcrumb";
 import {Link} from "react-router-dom";
 import React, {useEffect, useState} from "react";
 import {sentRequest} from "../../pages/ServicePackage";
+import {useSelector} from "react-redux";
 
 export const Order = (props) => {
     const [orders, setOrders] = useState([]);
-    const URL_ORDER = "orders/luong@codegym.com";
+    const isLogin = useSelector((state) => state.auth.login?.currentUser);
+    let email = "";
+    if(isLogin){
+        email = isLogin.userDtoResponse.email;
+    }
+    const URL_ORDER = `orders/${email}`;
     useEffect(() => {
         const res = sentRequest(URL_ORDER);
         res.then(data => {

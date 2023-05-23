@@ -13,14 +13,13 @@ function CartPage() {
   const [alteredAmount, setAlteredAmount] = useState(0)
   const navigation = useNavigate();
   const isLogin = useSelector((state) => state.auth.login?.currentUser);
-
+  let email = "";
   if(isLogin){
-    navigation("/login")
+    email = isLogin.userDtoResponse.email;
   }
 
-  const ULR = "cart/luong@codegym.com";
-
     useEffect(()=> {
+      const ULR = `cart/${email}`;
       calculateTotal();
        const carts = sentRequest(ULR, "GET"  )
       carts.then(data => {
@@ -34,7 +33,7 @@ function CartPage() {
   const deleteInCartHandler = async ( props) => {
     setShouldFetchData(!shouldFetchData);
     const body = {
-      userEmail: "luong@codegym.com",
+      userEmail: email,
       ...props
     };
     try {
