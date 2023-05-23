@@ -4,7 +4,6 @@ import { useNavigate } from 'react-router-dom';
 import {useSelector} from "react-redux";
 
 function BillingDetails(props) {
-  const usernameRef = useRef();
   const addressRef = useRef();
   const phoneNumberRef = useRef();
   const noteRef = useRef();
@@ -35,7 +34,7 @@ function BillingDetails(props) {
     event.preventDefault();
     const data = {
       userEmail: email,
-      phoneNumber: usernameRef.current.value,
+      phoneNumber: phoneNumberRef.current.value,
       address: addressRef.current.value,
       note: noteRef.current.value,
       date: new Date(),
@@ -60,17 +59,17 @@ function BillingDetails(props) {
         <form onSubmit={submitHandler}>
           <div className="row">
             <div className="col-12">
-              <div className="form-inner">
-                <label>Reciept's Name</label>
-                <input
-                  type="text"
-                  name="fname"
-                  placeholder="Reciept's name"
-                  required
-                  ref={usernameRef}
-                  defaultValue={isLogin.userDtoResponse.fullName}
-                />
-              </div>
+              {/*<div className="form-inner">*/}
+              {/*  <label>Reciept's Name</label>*/}
+              {/*  <input*/}
+              {/*    type="text"*/}
+              {/*    name="fname"*/}
+              {/*    placeholder="Reciept's name"*/}
+              {/*    required*/}
+              {/*    ref={usernameRef}*/}
+              {/*    defaultValue={isLogin.userDtoResponse.fullName}*/}
+              {/*  />*/}
+              {/*</div>*/}
             </div>
             <div className="col-12">
               <div className="form-inner">
@@ -88,8 +87,8 @@ function BillingDetails(props) {
               <div className="form-inner">
                 <label>Phone Number</label>
                 <input
-                  type="text"
-                  name="fname"
+                  type="number"
+                  name="phoneNumber"
                   placeholder="Reciept's Phone Number"
                   required
                   ref={phoneNumberRef}

@@ -13102,7 +13102,7 @@ select#duration:focus {
 
 @media (min-width: 1200px) {
   .order {
-    width: 78rem;
+    width: 60rem;
     margin-top: 7rem;
     margin-left: 15rem;
     height: auto;
@@ -13121,11 +13121,14 @@ select#duration:focus {
 .order-detail-content {
   display: flex;
   justify-content: space-between;
-  gap: 15rem;
+  gap: 30rem;
+  ;
 }
 .order-detail-content--name {
   color: #333;
+  width:100px;
 }
+
 /*@media (min-width: 992px) {*/
 /*  .order {*/
 /*    max-width: 960px;*/
@@ -13238,5 +13241,35 @@ header.style-1 .nav-right ul li:hover .info{
 
 ul.inforuserul {
   gap: 0px !important;
+}
+
+
+/*Order*/
+.info-customer{
+  border-top: double 5px var(--primary-color3);
+}
+
+p.title-order {
+  display:block;
+  font-size: large;
+  font-weight: bold;
+  color: #000;
+  margin-left:20px
+
+}
+
+.order-table th {
+  padding-right :40px;
+  font-size: 20px;
+}
+
+.order-table td{
+  font-weight: bold;
+  font-size: 18px;
+  color : #000;
+}
+
+.order-detail-price{
+  color : var(--primary-color3) !important;
 }
 
