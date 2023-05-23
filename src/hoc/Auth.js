@@ -5,11 +5,9 @@ import Login from "../pages/login";
 
 
 function Auth({ children }) {
-  // const user = useSelector(selectUser);
-  // const localUser = getLocalUser(LOCALSTORAGE_KEY);
   const navigate = useNavigate();
-  // const dispatch = useDispatch();
   const isLogin = useSelector((state) => state.auth.login?.currentUser);
+  console.log(isLogin)
 
 
   useEffect(() => {

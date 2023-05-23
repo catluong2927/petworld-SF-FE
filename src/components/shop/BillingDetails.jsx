@@ -19,15 +19,17 @@ function BillingDetails(props) {
   let items = [];
   let deleteCartDetailIdList = [];
   props.onGetData.map(element => {
+    const totalPrice = element.price? element.price * element.amount: element.minPrice * element.amount;
     const item = {
       itemName: element.name,
       image: element.image,
       quantity: element.amount,
-      total: element.totalPrice,
+      total: totalPrice,
       note: 'Ok'
     };
     deleteCartDetailIdList.push(element.id);
     items.push(item);
+    console.log(props);
   });
 
   const submitHandler = (event) => {
@@ -46,7 +48,7 @@ function BillingDetails(props) {
     res.then(
          sentRequest(URL_CART, "DELETE", deleteCartDetailIdList),
         props.toast.current.show({severity:'success', summary: 'Success', detail:`Check out successfully`, life: 1000}),
-        navigate('/order')
+        navigate('/')
     ).catch(
         props.toast.current.show({severity:'success', summary: 'Success', detail:`Failed payment!`, life: 1000}),
     )
@@ -59,17 +61,6 @@ function BillingDetails(props) {
         <form onSubmit={submitHandler}>
           <div className="row">
             <div className="col-12">
-              {/*<div className="form-inner">*/}
-              {/*  <label>Reciept's Name</label>*/}
-              {/*  <input*/}
-              {/*    type="text"*/}
-              {/*    name="fname"*/}
-              {/*    placeholder="Reciept's name"*/}
-              {/*    required*/}
-              {/*    ref={usernameRef}*/}
-              {/*    defaultValue={isLogin.userDtoResponse.fullName}*/}
-              {/*  />*/}
-              {/*</div>*/}
             </div>
             <div className="col-12">
               <div className="form-inner">
