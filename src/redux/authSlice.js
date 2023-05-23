@@ -1,27 +1,23 @@
 import {createSlice} from "@reduxjs/toolkit";
-
-
-const initialState = {
-    login: {
-        currentUser: null,
-        isFetching: false,
-        error: false
-    },
-    register: {
-        isFetching: false,
-        error: false,
-        success: false,
-        data: ''
-    },
-    logout:{
-        isFetching:false,
-        error: false
-    }
-}
-
 const authSlice = createSlice({
-    name: "kakashi",
-    initialState,
+    name: "auth",
+    initialState:{
+        login: {
+            currentUser: null,
+            isFetching: false,
+            error: false
+        },
+        register: {
+            isFetching: false,
+            error: false,
+            success: false,
+            data: ''
+        },
+        logout:{
+            isFetching:false,
+            error: false
+        }
+    },
     reducers: {
         loginStart: (state) => {
             state.login.isFetching = true;

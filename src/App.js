@@ -14,7 +14,9 @@ import CheckOutPage from "./pages/check-out";
 import {Order} from "./components/order/Order";
 import ErrorPage from "./pages/404";
 import Contact from "./pages/contact";
+import Profile from "./pages/profile";
 import Auth from "./hoc/Auth";
+
 
 
 const router = createBrowserRouter([
@@ -34,6 +36,7 @@ const router = createBrowserRouter([
       {path:'check-out', element:<Auth><CheckOutPage/></Auth>},
       {path:'order', element:<Auth><Order/></Auth>},
       {path:'contact', element:<Contact/>},
+      {path:'profile', element:<Profile/>},
     ]},
     ]
 )
