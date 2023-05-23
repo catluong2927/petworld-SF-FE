@@ -13102,7 +13102,7 @@ select#duration:focus {
 
 @media (min-width: 1200px) {
   .order {
-    width: 78rem;
+    width: 60rem;
     margin-top: 7rem;
     margin-left: 15rem;
     height: auto;
@@ -13121,11 +13121,14 @@ select#duration:focus {
 .order-detail-content {
   display: flex;
   justify-content: space-between;
-  gap: 15rem;
+  gap: 30rem;
+  ;
 }
 .order-detail-content--name {
   color: #333;
+  width:100px;
 }
+
 /*@media (min-width: 992px) {*/
 /*  .order {*/
 /*    max-width: 960px;*/

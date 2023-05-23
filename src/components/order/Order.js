@@ -21,6 +21,7 @@ export const Order = (props) => {
 
         )
     }, [])
+    let totalBill = 0;
     return (<>
         <Layout>
             <Breadcrumb pageName="Your Order" pageTitle="Your Order"/>
@@ -49,6 +50,7 @@ export const Order = (props) => {
                                             <h6 className='order-detail-content--name'>{item.itemName}</h6>
                                             <h6>
                                                 <p> $ {item.total}</p>
+                                               <p hidden={true}>{totalBill += item.total}</p>
                                             </h6>
                                         </div>
                                     </div>
@@ -85,7 +87,7 @@ export const Order = (props) => {
                                 </tr>
                                 <tr>
                                     <th>Total price: </th>
-                                    <td className={"order-detail-price"}>{element.total} $</td>
+                                    <td className={"order-detail-price"}>{totalBill} $</td>
                                 </tr>
                             </table>
                         </div>
