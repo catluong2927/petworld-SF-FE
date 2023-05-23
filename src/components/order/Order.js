@@ -29,17 +29,7 @@ export const Order = (props) => {
                     <div className="single-widgets widget_egns_recent_post mb-30 order">
                       <span className="widget-title order-header">
                         <h3>{element.status}</h3>
-                        <p>{new Date(element.date).toLocaleDateString('en-US', {
-                            day: 'numeric',
-                            month: 'long',
-                            year: 'numeric',
-                            hour: 'numeric',
-                            minute: 'numeric',
-                            hour12: true
-                        })}</p>
-                        <p>{element.phoneNumber}</p>
-                        <p>{element.note}</p>
-                        <p>{element.address}</p>
+
                       </span>
                         <div className="recent-post-wraper">
                             {Array.isArray(element.orderDetailDtoResponses) && element.orderDetailDtoResponses.map((item) => (
@@ -63,6 +53,41 @@ export const Order = (props) => {
                                         </div>
                                     </div>
                                 </div>))}
+                        </div>
+                        <div className="recent-post-wraper info-customer">
+                            <table className={"order-table"}>
+                                <tr>
+                                    <th> Date: </th>
+                                    <td>{new Date(element.date).toLocaleDateString('en-US', {
+                                        day: 'numeric',
+                                        month: 'long',
+                                        year: 'numeric',
+                                        hour: 'numeric',
+                                        minute: 'numeric',
+                                        hour12: true
+                                    })}</td>
+                                </tr>
+                                <tr>
+                                    <th>Order's Name: </th>
+                                    <td>{element.userDtoResponse.fullName}</td>
+                                </tr>
+                                <tr>
+                                    <th>Phone Number:</th>
+                                    <td>{element.phoneNumber}</td>
+                                </tr>
+                                <tr>
+                                    <th>Address: </th>
+                                    <td>{element.address}</td>
+                                </tr>
+                                <tr>
+                                    <th>Notice: </th>
+                                    <td>{element.note}</td>
+                                </tr>
+                                <tr>
+                                    <th>Total price: </th>
+                                    <td className={"order-detail-price"}>{element.total} $</td>
+                                </tr>
+                            </table>
                         </div>
                     </div>
                 </div>))}

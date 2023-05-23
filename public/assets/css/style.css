@@ -13240,3 +13240,33 @@ ul.inforuserul {
   gap: 0px !important;
 }
 
+
+/*Order*/
+.info-customer{
+  border-top: double 5px var(--primary-color3);
+}
+
+p.title-order {
+  display:block;
+  font-size: large;
+  font-weight: bold;
+  color: #000;
+  margin-left:20px
+
+}
+
+.order-table th {
+  padding-right :40px;
+  font-size: 20px;
+}
+
+.order-table td{
+  font-weight: bold;
+  font-size: 18px;
+  color : #000;
+}
+
+.order-detail-price{
+  color : var(--primary-color3) !important;
+}
+
