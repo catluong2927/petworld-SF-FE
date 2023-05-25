@@ -39,6 +39,7 @@ function Shop() {
   //Cập nhật lại số trang hiện tại
   function changePageNumber(page) {
     setCurrentPage(page);
+    window.scroll(0,0);
   };
 
  
