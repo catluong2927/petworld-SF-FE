@@ -1,34 +1,42 @@
 import React, {useRef} from "react";
 import {sentRequest} from "../../pages/ServicePackage";
 import { useNavigate } from 'react-router-dom';
+import {useSelector} from "react-redux";
 
 function BillingDetails(props) {
-  const usernameRef = useRef();
   const addressRef = useRef();
   const phoneNumberRef = useRef();
   const noteRef = useRef();
   const URL_ORDER = 'orders';
   const URL_CART = 'cart';
+  const isLogin = useSelector((state) => state.auth.login?.currentUser);
+  let email = "";
+  if(isLogin){
+    email = isLogin.userDtoResponse.email;
+  }
+  console.log(isLogin)
   const navigate = useNavigate();
   let items = [];
   let deleteCartDetailIdList = [];
   props.onGetData.map(element => {
+    const totalPrice = element.price? element.price * element.amount: element.minPrice * element.amount;
     const item = {
       itemName: element.name,
       image: element.image,
       quantity: element.amount,
-      total: element.totalPrice,
+      total: totalPrice,
       note: 'Ok'
     };
     deleteCartDetailIdList.push(element.id);
     items.push(item);
+    console.log(props);
   });
 
   const submitHandler = (event) => {
     event.preventDefault();
     const data = {
-      userEmail: "luong@codegym.com",
-      phoneNumber: usernameRef.current.value,
+      userEmail: email,
+      phoneNumber: phoneNumberRef.current.value,
       address: addressRef.current.value,
       note: noteRef.current.value,
       date: new Date(),
@@ -40,7 +48,9 @@ function BillingDetails(props) {
     res.then(
          sentRequest(URL_CART, "DELETE", deleteCartDetailIdList),
         props.toast.current.show({severity:'success', summary: 'Success', detail:`Check out successfully`, life: 1000}),
-        navigate('/order')
+        navigate('/')
+    ).catch(
+        props.toast.current.show({severity:'success', summary: 'Success', detail:`Failed payment!`, life: 1000}),
     )
 
   }
@@ -51,16 +61,6 @@ function BillingDetails(props) {
         <form onSubmit={submitHandler}>
           <div className="row">
             <div className="col-12">
-              <div className="form-inner">
-                <label>Reciept's Name</label>
-                <input
-                  type="text"
-                  name="fname"
-                  placeholder="Reciept's name"
-                  required
-                  ref={usernameRef}
-                />
-              </div>
             </div>
             <div className="col-12">
               <div className="form-inner">
@@ -78,8 +78,8 @@ function BillingDetails(props) {
               <div className="form-inner">
                 <label>Phone Number</label>
                 <input
-                  type="text"
-                  name="fname"
+                  type="number"
+                  name="phoneNumber"
                   placeholder="Reciept's Phone Number"
                   required
                   ref={phoneNumberRef}
@@ -94,7 +94,6 @@ function BillingDetails(props) {
                   placeholder="Order Notes (Optional)"
                   rows={6}
                   defaultValue={""}
-                  required
                   ref={noteRef}
                 />
               </div>

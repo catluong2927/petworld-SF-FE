@@ -21,13 +21,14 @@ export const ServicePackage = () => {
     const pageSize = 9;
     const [data, setData] = useState([]);
     const [totalPages, setTotalPages] = useState(0);
+
     useEffect(() => {
         let sortedField= '';
         if(isSortedByPrice){
             sortedField = 'minPrice'
         }
         const fetchPage = async () => {
-            const { servicePackages, totalPages } = await fetchData("DayCare", pageSize, currentPage, sortedField);
+            const { servicePackages, totalPages } = await fetchData(packageName.name, pageSize, currentPage, sortedField);
             setData(servicePackages);
             setTotalPages(totalPages);
         };

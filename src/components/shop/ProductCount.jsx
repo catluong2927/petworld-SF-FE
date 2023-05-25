@@ -1,6 +1,7 @@
 import {useEffect, useReducer, useState} from "react";
 import {sentRequest} from "../../pages/ServicePackage";
 import {redirect} from "react-router-dom";
+import {useSelector} from "react-redux";
 
 
 function reducer(state, action) {
@@ -19,15 +20,20 @@ function ItemCounter(props) {
   const [isAdding, setIsAdding] = useState(false);
   const URL_CART = 'cart';
   const [state, dispatch] = useReducer(reducer, {count: props.amount});
-  const [quantity, setQuantity] = useState(1);
+  let  quantity = 1;
+  const isLogin = useSelector((state) => state.auth.login?.currentUser);
+  let email = "";
+  if(isLogin){
+    email = isLogin.userDtoResponse.email;
+  };
+
   const increment = () => {
-    setQuantity(prevState => prevState + 1);
+    quantity += 1;
     dispatch({ type: "increment" });
     if (!isAdding) {
       setIsAdding(true);
       setTimeout(() => {
-        console.log(quantity);
-        setQuantity(1);
+        quantity = 1;
         addInCartHandler();
       }, 100);
     }
@@ -35,15 +41,17 @@ function ItemCounter(props) {
 
   const decrement = () => {
     if (state.count > 1) {
-      setQuantity(prevState => prevState + 1);
       dispatch({ type: "decrement" });
       if (!isDeleting) {
         setIsDeleting(true);
+          quantity = 1;
         setTimeout(() => {
-          setQuantity(1);
           deleteInCartHandler()
         }, 100)
       }
+      quantity += 1;
+      console.log(quantity)
+
     }
   };
   useEffect(()=> {
@@ -51,7 +59,7 @@ function ItemCounter(props) {
   }, [products])
 
   const body = {
-    userEmail: "luong@codegym.com",
+    userEmail: email,
     ...props,
     amount: quantity,
   };

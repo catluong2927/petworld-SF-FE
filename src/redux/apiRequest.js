@@ -1,5 +1,4 @@
 import axios from "axios";
-import { createBrowserHistory } from 'history';
 import {
     loginFail,
     loginStart,
@@ -11,10 +10,8 @@ import {
     logoutSuccess,
     logoutFail,
 } from "./authSlice";
-import {useNavigate} from "react-router-dom";
+import {getUserFail, getUserStart, getUserSuccess} from "./userSlice";
 
-
-export const browserHistory = createBrowserHistory();
 export const loginUser = async (form, dispatch, navigate, toast) => {
     const LOGIN_API = process.env.REACT_APP_FETCH_API;
     dispatch(loginStart());
@@ -53,12 +50,29 @@ export const signUpUser = async (data, dispatch, navigate, toast) => {
 }
 
 export const logout = async (dispatch,navigate) =>{
-    dispatch(loginStart());
+    dispatch(logoutStart());
     try{
         localStorage.removeItem('persist:root')
         dispatch(logoutSuccess());
         navigate("/login")
     }catch (err){
         dispatch(logoutFail());
+    }
+}
+
+export const getUserDetail = async (userId,token,dispatch,navigate) =>{
+    const LOGIN_API = process.env.REACT_APP_FETCH_API;
+    dispatch(getUserStart());
+
+    try{
+        const res = await axios.get(`${LOGIN_API}/users/${userId}`,{
+           headers: {
+               Authorization: `Bearer ${token}`
+           }
+       })
+        dispatch(getUserSuccess(res.data));
+        navigate("/profile");
+    }catch (err){
+        dispatch(getUserFail())
     }
 }
