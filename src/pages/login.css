@@ -16,10 +16,7 @@ label {
 }
 .form-wrapper p{
     color: rgba(0, 0, 0, 0.73) !important;
-
-
-}
-
-.form-inner > label {
     margin-bottom: 0px !important;
+
 }
+
