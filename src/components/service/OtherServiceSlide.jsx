@@ -25,7 +25,7 @@ const OtherServiceSlide = (props) => {
                         </div>
                     </div>
                     <div className="row home1-services-slider">
-                        {servicePackages.map((element, index) =>
+                        {servicePackages && servicePackages.map((element, index) =>
                             <div className="services-card1" key={index}>
                                 <div className="icon">
                                     <img src={element.image} alt="" className='package-image ' />
@@ -39,7 +39,7 @@ const OtherServiceSlide = (props) => {
                                     <p>{element.description}</p>
                                 </div>
                                 <div >
-                                    <h6 className="package-price">{`$ ${element.minPrice}`}</h6>
+                                    <h6 className="package-price">{`$ ${element.price}`}</h6>
                                     <del></del>
                                 </div>
                                 <a  href={`/service-packages/${element.id}`}>

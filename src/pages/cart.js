@@ -1,67 +1,76 @@
-import {Link, redirect, useNavigate} from "react-router-dom";
+import {Link, } from "react-router-dom";
 import React, {useEffect, useState} from "react";
 import Breadcrumb from "../components/breadcrumb/Breadcrumb";
-import ItemCounter from "../components/shop/ProductCount";
 import Layout from "../layout/Layout";
-import { sentRequest} from "./ServicePackage";
-import {useSelector} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
+import {addItemByOne, decreaseItemByOne, deleteAllItems, deleteItem, firstCallApi} from "../store/cartInventorySlice";
+import {sentRequest} from "./ServicePackage";
 
 function CartPage() {
   const [data, setData] = useState([]);
-  const [total, setTotal] = useState(0);
   const [shouldFetchData, setShouldFetchData] = useState(true);
-  const [alteredAmount, setAlteredAmount] = useState(0)
-  const navigation = useNavigate();
   const isLogin = useSelector((state) => state.auth.login?.currentUser);
+  const dispatch = useDispatch();
+  const cartItems = useSelector((state) => state.cartInventory.items);
+  const cartTotal = useSelector((state) => state.cartInventory.cartTotal)
+  const URL_CART = 'cart';
   let email = "";
   if(isLogin){
     email = isLogin.userDtoResponse.email;
   }
 
-    useEffect(()=> {
-      const ULR = `cart/${email}`;
-      calculateTotal();
-       const carts = sentRequest(ULR, "GET"  )
-      carts.then(data => {
-      setData(data)
-        setShouldFetchData(false)
-      }).then(
-      )
-    }, [shouldFetchData, alteredAmount])
+  useEffect(() => {
+    const URL = `cart/${email}`
+      const res = sentRequest(URL);
+      res.then(data => {
+        dispatch(deleteAllItems());
+        dispatch(firstCallApi(data))
+      })
 
+  }, [])
+
+
+    useEffect(()=> {
+      setData(cartItems)
+    }, [shouldFetchData, dispatch])
 
   const deleteInCartHandler = async ( props) => {
     setShouldFetchData(!shouldFetchData);
     const body = {
+    id: props.typeId,
       userEmail: email,
       ...props
     };
-    try {
-      const url = 'cart';
-      const result = await sentRequest(url, 'PUT', body);
-      setTimeout(() => {
-        window.location.reload();
-      }, 500);
-    } catch (error) {
-    }
-
+    dispatch(deleteItem(body))
   };
 
 
-  const calculateTotal = () => {
-    let sum = 0;
-    data.forEach((item) => {
-      const itemPrice = item.price ? item.price : item.minPrice;
-      sum += itemPrice * item.amount;
-    });
-    setTotal(sum);
+
+  const increase = (props) => {
+    setShouldFetchData(!shouldFetchData)
+    const body = {
+      userEmail: email,
+      ...props,
+      amount: 1,
+    };
+    dispatch(addItemByOne(body))
+
   };
+  const decrease = (props) => {
+    setShouldFetchData(!shouldFetchData)
+    const body = {
+      userEmail: email,
+      ...props,
+      amount: 1,
+    };
+    dispatch(decreaseItemByOne(body));
 
-
+  }
   return (
     <>
       <Layout>
         <Breadcrumb pageName="Cart" pageTitle="Cart" />
+        { cartItems &&
         <div className="cart-section pt-120 pb-120">
           <div className="container">
             <div className="row">
@@ -85,7 +94,7 @@ function CartPage() {
                       <td data-label="Delete">
                         <div className="delete-icon"
                              onClick={deleteInCartHandler.bind(null, {type: item.type,
-                               amount: item.amount, typeId: item.typeId, totalPrice: item.totalPrice
+                               amount: item.amount, typeId: item.typeId, price: item.price
                              })}
                         >
                           <i className="bi bi-x" />
@@ -103,21 +112,24 @@ function CartPage() {
                         <del>${item.originalPrice}</del>
                       </td>
                       <td data-label="Discount Price">${
-                         item.price? item.price: item.minPrice
+                         item.price
                       }</td>
                       <td data-label="Quantity" >
                         <div className="quantity d-flex align-items-center">
                           <div className="quantity-nav nice-number d-flex align-items-center">
-                            <ItemCounter
-                                amount={item.amount}
-                                typeId={item.typeId}
-                                onSetAmount={setAlteredAmount}
-                                totalPrice={item.totalPrice}
-                                type={item.type} />
+                            <>
+                              <button onClick={decrease.bind(null, item)} type="button">
+                                <i className="bi bi-dash"></i>
+                              </button>
+                              <span style={{ margin: "0 20px", fontFamily: "Cabin" }}>{item.amount}</span>
+                              <button onClick={increase.bind(null, item)} type="button">
+                                <i className="bi bi-plus"></i>
+                              </button>
+                            </>
                           </div>
                         </div>
                       </td>
-                      <td data-label="Subtotal">${item.price ? (item.price * item.amount): (item.minPrice * item.amount)}</td>
+                      <td data-label="Subtotal">${(item.price * item.amount).toLocaleString()}</td>
                     </tr>
                     )}
                     </tbody>
@@ -141,7 +153,7 @@ function CartPage() {
                     <tr>
                       <th>Cart Totals</th>
                       <th />
-                      <th>${total}</th>
+                      <th>${cartTotal.toLocaleString()}</th>
                     </tr>
                   </thead>
                 </table>
@@ -161,6 +173,7 @@ function CartPage() {
             </div>
           </div>
         </div>
+        }
       </Layout>
     </>
   );

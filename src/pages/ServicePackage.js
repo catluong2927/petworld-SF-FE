@@ -7,7 +7,7 @@ import BreadcrumbService from "../components/breadcrumb/BreadcrumbService";
 import ServiceNavigation from "../components/service/ServiceNavigation";
 
 const fetchData = async (packageName,pageSize, currentPage, sortedField="") => {
-    const URL = `http://localhost:8080/api/packages/search/${packageName}?size=${pageSize}&page=${currentPage}&sort=${sortedField}`;
+    const URL = `http://localhost:8080/api/package-details/search/${packageName}?size=${pageSize}&page=${currentPage}&sort=${sortedField}`;
     const response = await fetch(URL);
     const data = await response.json();
     const servicePackages = data.content;
@@ -22,6 +22,7 @@ export const ServicePackage = () => {
     const [data, setData] = useState([]);
     const [totalPages, setTotalPages] = useState(0);
 
+
     useEffect(() => {
         let sortedField= '';
         if(isSortedByPrice){
@@ -33,7 +34,7 @@ export const ServicePackage = () => {
             setTotalPages(totalPages);
         };
         fetchPage();
-        console.log("runging")
+
 
     }, [currentPage, pageSize, isSortedByPrice]);
 
@@ -102,7 +103,7 @@ export const ServicePackage = () => {
 
 export const sentRequest = async (url, method = 'GET', data = null) =>{
     const CART_API = process.env.REACT_APP_FETCH_API;
-    console.log("runging")
+
     try {
         const options = {
             method,

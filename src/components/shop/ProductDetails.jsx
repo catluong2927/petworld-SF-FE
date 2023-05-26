@@ -2,7 +2,8 @@ import {Link, useNavigate, useParams} from "react-router-dom";
 import React, { useEffect, useState, useRef } from "react";
 import ProductPriceCount from "./ProductPriceCount";
 import {sentRequest} from "../../pages/ServicePackage";
-import {useSelector} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
+import {addItem} from "../../store/cartInventorySlice";
 
 
 
@@ -15,6 +16,7 @@ function ProductDetails(props) {
   const [productPriceCount, setProductPriceCount] = useState({})
   const [productCart, setProductCart] = useState({})
   const navigation = useNavigate();
+  const dispatch = useDispatch();
   const isLogin = useSelector((state) => state.auth.login?.currentUser);
   let email = "";
   if(isLogin){
@@ -42,12 +44,16 @@ function ProductDetails(props) {
   }, [])
 
 
-
+  const finalPrice = product.sale? product.price*(1 - (product.sale/100)): product.price;
 
   const body = {
     userEmail: email,
-    type: 1,
+    type: true,
     typeId: product.id,
+    image: product.image,
+    name: product.name,
+    originalPrice: product.price,
+    price: finalPrice,
     ...productPriceCount
 
   };
@@ -56,8 +62,7 @@ function ProductDetails(props) {
     if(isLogin) {
       try {
         const url = 'cart';
-        const result = await sentRequest(url, 'POST', body);
-        console.log('Result:', result);
+        dispatch(addItem(body));
         props.toast.current.show({
           severity: 'success',
           summary: 'Success',
@@ -70,6 +75,7 @@ function ProductDetails(props) {
       } catch (error) {
         props.toast.current.show({severity: 'error', summary: 'Fail', detail: `Failed to add to cart `, life: 1000});
         console.error('Error:', error.message);
+
       }
     }else {
       navigation("/login")

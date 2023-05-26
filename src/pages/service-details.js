@@ -12,7 +12,8 @@ import {ServicePackageDescription} from "../components/service/ServicePackageDes
 import ProductPriceCount from "../components/shop/ProductPriceCount";
 import {sentRequest} from "./ServicePackage";
 import { Toast } from 'primereact/toast';
-import {useSelector} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
+import {addItem} from "../store/cartInventorySlice";
 SwiperCore.use([Navigation, Pagination, Autoplay, EffectFade]);
 const  initialState = {description: true, review: false, process: false};
 const infoReducer = (state, action) => {
@@ -43,9 +44,10 @@ function ServiceDetails(props) {
   const [isLoaded, setIsLoaded] = useState(false);
   const [descriptions, setDescriptions] = useState('');
   const packageId = useParams();
-  const PACKAGE_URL = "packages/" + packageId.packageId;
+  const PACKAGE_URL = "package-details/" + packageId.packageId;
   const isLogin = useSelector((state) => state.auth.login?.currentUser);
   const navigation = useNavigate();
+  const dispatch = useDispatch();
   let email = "";
   if(isLogin){
     email = isLogin.userDtoResponse.email;
@@ -105,24 +107,26 @@ function ServiceDetails(props) {
   const handleDurationChange = (event) => {
     setSelectedDuration(event.target.value);
   };
-  /// Price Handler
-  const  price = (selectedDuration === 'full-day')? servicePackage.maxPrice: servicePackage.minPrice;
+
 
   const body = {
     userEmail: email,
-    type: 0,
+    type: false,
+    name: servicePackage.name,
+    image: servicePackage.image,
     typeId: servicePackage.id,
+    price: servicePackage.price,
+    originalPrice: servicePackage.price,
     ...amount
 
   };
-  console.log(body)
+
   const addToCartHandler = async (event) => {
     event.preventDefault();
     if(isLogin) {
       try {
         const url = 'cart';
-        const result = await sentRequest(url, 'POST', body);
-        console.log('Result:', result);
+        dispatch(addItem(body))
         toast.current.show({severity: 'success', summary: 'Success', detail: `Add successfully`, life: 1000});
         setTimeout(() => {
           navigation("/shop")
@@ -135,6 +139,16 @@ function ServiceDetails(props) {
       navigation("/login")
     }
   };
+
+  // Prevent the past date
+
+  const today = new Date();
+  const handleDateChange = (date) => {
+    if (date > today) {
+      setStartDate(date);
+    }
+  };
+
   return (
       <Layout>
         <Breadcrumb pageName="Packages Details" pageTitle={servicePackage.name} />
@@ -190,7 +204,7 @@ function ServiceDetails(props) {
                       <div className="banner-title">
                         <h2>{servicePackage.name}</h2>
                         <div className="currency">
-                          <h5>${price}</h5>
+                          <h5>${servicePackage.price}</h5>
                         </div>
                       </div>
                       <div className="service-area">
@@ -220,7 +234,8 @@ function ServiceDetails(props) {
                                 <label>Date</label>
                                 <DatePicker
                                     selected={startDate}
-                                    onChange={(date) => setStartDate(date)}
+                                    onChange={handleDateChange}
+                                    minDate={today}
                                     placeholderText="Check In"
                                     className="calendar"
                                 />
@@ -231,7 +246,7 @@ function ServiceDetails(props) {
                                 <div className="quantity-nav nice-number d-flex align-items-center">
                                   <ProductPriceCount
                                       onSendCart={setAmount}
-                                      price={price} />
+                                      price={servicePackage.price} />
                                 </div>
                               </div>
                               <Link to="/cart">

@@ -8,8 +8,8 @@ import Layout from "../layout/Layout";
 function CheckOutPage() {
   const toast = useRef(null);
   const [alteredAmount, setAlteredAmount] = useState(0);
-  const [items, setItems] = useState([]);
   const  [total, seTotal] = useState(0);
+
   useEffect(() => {
 
   }, [alteredAmount])
@@ -21,10 +21,10 @@ function CheckOutPage() {
         <div className="container">
           <div className="row g-4">
             <div className="col-lg-7">
-              <BillingDetails onGetData={items} toast={toast} onGetTotal={total} />
+              <BillingDetails  toast={toast} onGetTotal={total} />
             </div>
             <aside className="col-lg-5">
-              <OrderSummary onSendData={setItems} onSenTotal={seTotal} onSentAmount={setAlteredAmount}  />
+              <OrderSummary  onSenTotal={seTotal}  />
             </aside>
           </div>
         </div>

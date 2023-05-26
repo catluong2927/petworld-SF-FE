@@ -1,12 +1,14 @@
 import React, {useRef} from "react";
 import {sentRequest} from "../../pages/ServicePackage";
 import { useNavigate } from 'react-router-dom';
-import {useSelector} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
+import {deleteAllItems} from "../../store/cartInventorySlice";
 
 function BillingDetails(props) {
   const addressRef = useRef();
   const phoneNumberRef = useRef();
   const noteRef = useRef();
+  const dispatch = useDispatch();
   const URL_ORDER = 'orders';
   const URL_CART = 'cart';
   const isLogin = useSelector((state) => state.auth.login?.currentUser);
@@ -14,12 +16,24 @@ function BillingDetails(props) {
   if(isLogin){
     email = isLogin.userDtoResponse.email;
   }
-  console.log(isLogin)
   const navigate = useNavigate();
+  const cartItems = useSelector(state => state.cartInventory.items)
+  const validatePhoneNumber = () => {
+    const phoneNumber = phoneNumberRef.current.value;
+    const phoneNumberPattern = /^\d{10}$/;
+
+    if (!phoneNumberPattern.test(phoneNumber)) {
+      phoneNumberRef.current.setCustomValidity("Invalid phone number");
+    } else {
+      phoneNumberRef.current.setCustomValidity("");
+    }
+  };
+
+
   let items = [];
   let deleteCartDetailIdList = [];
-  props.onGetData.map(element => {
-    const totalPrice = element.price? element.price * element.amount: element.minPrice * element.amount;
+  cartItems.map(element => {
+    const totalPrice =  element.price * element.amount;
     const item = {
       itemName: element.name,
       image: element.image,
@@ -44,14 +58,20 @@ function BillingDetails(props) {
       total: props.onGetTotal,
       orderDetailDtoRequests: items,
     };
+    if(cartItems.isEmpty){
     const res = sentRequest(URL_ORDER, "POST", data)
-    res.then(
-         sentRequest(URL_CART, "DELETE", deleteCartDetailIdList),
-        props.toast.current.show({severity:'success', summary: 'Success', detail:`Check out successfully`, life: 1000}),
-        navigate('/')
-    ).catch(
-        props.toast.current.show({severity:'success', summary: 'Success', detail:`Failed payment!`, life: 1000}),
-    )
+      res.then(
+          sentRequest(URL_CART, "DELETE", deleteCartDetailIdList),
+          dispatch(deleteAllItems()),
+          props.toast.current.show({severity:'success', summary: 'Success', detail:`Check out successfully`, life: 1000}),
+          navigate('/')
+      ).catch(
+          props.toast.current.show({severity:'success', summary: 'Success', detail:`Failed payment!`, life: 1000}),
+      )
+    } else {
+          navigate('/shop')
+    }
+
 
   }
   return (
@@ -66,23 +86,24 @@ function BillingDetails(props) {
               <div className="form-inner">
                 <label>Street Address</label>
                 <input
-                  type="text"
-                  name="fname"
-                  placeholder="Address to recieve"
-                  required
-                  ref={addressRef}
+                    type="text"
+                    name="phoneNumber"
+                    placeholder="Address to recieve our order"
+                    required
+                    ref={addressRef}
                 />
               </div>
             </div>
             <div className="col-12">
-              <div className="form-inner">
+              <div className="form-inner form-inner-phone">
                 <label>Phone Number</label>
                 <input
-                  type="number"
+                  type="text"
                   name="phoneNumber"
                   placeholder="Reciept's Phone Number"
                   required
                   ref={phoneNumberRef}
+                  onChange={validatePhoneNumber}
                 />
               </div>
             </div>

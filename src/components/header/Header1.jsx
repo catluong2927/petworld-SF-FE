@@ -162,7 +162,7 @@ function Header1() {
                                     }
                                 >
                                     <li>
-                                        <a href="/service-packages/search/DayCare">
+                                        <a href="/service-packages/search/Day care">
                                             <p className={`menu-item-children ${currentRoute === "/service-packages/search/Day Care" ? "active" : ""}`}>
                                                 Day Care
                                             </p>
@@ -174,7 +174,7 @@ function Header1() {
                                         </a>
                                     </li>
                                     <li>
-                                        <a href="/service-packages/search/'Pet's Sapa'">
+                                        <a href="/service-packages/search/Pet's Sap">
                                             <p className='menu-item-children'>'Pet's Sapa'</p>
                                         </a>
                                     </li>
@@ -375,7 +375,8 @@ function Header1() {
                                     </svg>
                                 </Link>
                             </li>
-                            {isLogin ?
+                            {
+                                isLogin ?
                                 <li className="user-profile-has--hover">
                                     <img className='user-avatar'
                                          src={isLogin.userDtoResponse.avatar}

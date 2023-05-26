@@ -7,7 +7,7 @@ export const ServiceReview = () => {
     const [reviews, setReviews] = useState([]);
     const  packageId = useParams();
 
-    const REVIEW_URL = 'package-reviews/package/' + packageId.packageId;
+    const REVIEW_URL = 'package-reviews/package-details/' + packageId.packageId;
     useEffect(async () => {
         const testData = sentRequest(REVIEW_URL,)
         testData.then ( data =>
