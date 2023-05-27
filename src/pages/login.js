@@ -1,5 +1,5 @@
 import {Link, useNavigate} from "react-router-dom";
-import React, {useRef, useState} from "react";
+import React, {useEffect, useRef, useState} from "react";
 import Breadcrumb from "../components/breadcrumb/Breadcrumb";
 import Layout from "../layout/Layout";
 import "./login.css";
@@ -13,15 +13,15 @@ import {useDispatch, useSelector} from "react-redux";
 
 
 function LoginPage() {
-    const response = useSelector((state)=>state.auth.login?.currentUser);
+    const response = useSelector((state)=>state.auth.login?.error);
     const toast = useRef(null);
     const [form, setForm] = useState({});
     const dispatch = useDispatch();
     const navigate = useNavigate();
-    const REGEX = {
-        email: /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/,
-        password: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/,
-    };
+    const [errorMess,setErrorMess] = useState('');
+    useEffect(()=>{
+        setErrorMess(response)
+    },[response]);
 
     function handleChangeLogin(event) {
         setForm({
@@ -32,11 +32,8 @@ function LoginPage() {
 
     function handleValidateLogin() {
         const errors = {};
-        if (!form.email) {
-            errors.email = "Required";
-        } else if (!REGEX.email.test(form.email)) {
-            errors.email = "Invalid email address";
-            console.log("code");
+        if (!form.account) {
+            errors.account = "Required";
         }
         if (!form.password) {
             errors.password = "Required";
@@ -85,17 +82,19 @@ function LoginPage() {
                                                 <div className="row">
                                                     <div className="col-12">
                                                         <div className={`form-inner ${
-                                                            errors.email ? "custom-input-error" : ""
+                                                            errors.account ? "custom-input-error" : ""
                                                         }`}>
-                                                            <label>Enter Your Email *</label>
-                                                            <input type="email"
-                                                                   placeholder="Enter Your Email"
-                                                                   name="email"
-                                                                   value={form.email || ""}
+                                                            <label>Enter Your Account *</label>
+                                                            <p className='customer'>(Email or User Name or Phone Number)</p>
+                                                            <input type="text"
+                                                                   placeholder="Enter Your Account"
+                                                                   name="account"
+                                                                   value={form.account || ""}
                                                                    onChange={handleChangeLogin}
                                                             />
-                                                            <p className="error">{errors.email}</p>
                                                         </div>
+                                                        <p className="error">{errors.account}</p>
+                                                        {errorMess && <p className="error">{errorMess}</p>}
                                                     </div>
                                                     <div className="col-12">
                                                         <div className={`form-inner ${
@@ -110,9 +109,9 @@ function LoginPage() {
                                                                 value={form.password || ""}
                                                                 onChange={handleChangeLogin}
                                                             />
-                                                            <p className="error">{errors.password}</p>
                                                             <i className="bi bi-eye-slash" id="togglePassword"/>
                                                         </div>
+                                                        <p className="error">{errors.password}</p>
                                                     </div>
                                                     <div className="col-12">
                                                         <div
@@ -133,33 +132,6 @@ function LoginPage() {
                                             </form>
                                         )}
                                     </Formik>
-                                    {/*<div className="alternate-signup-box">*/}
-                                    {/*    <h6>or signup WITH</h6>*/}
-                                    {/*    <div className="btn-group gap-4">*/}
-                                    {/*        <a*/}
-                                    {/*            href="#"*/}
-                                    {/*            className="eg-btn google-btn d-flex align-items-center"*/}
-                                    {/*        >*/}
-                                    {/*            <i className="bx bxl-google"/>*/}
-                                    {/*            <span>signup whit google</span>*/}
-                                    {/*        </a>*/}
-                                    {/*        <a*/}
-                                    {/*            href="#"*/}
-                                    {/*            className="eg-btn facebook-btn d-flex align-items-center"*/}
-                                    {/*        >*/}
-                                    {/*            <i className="bx bxl-facebook"/>*/}
-                                    {/*            signup whit facebook*/}
-                                    {/*        </a>*/}
-                                    {/*    </div>*/}
-                                    {/*</div>*/}
-                                    {/*<div className="form-poicy-area">*/}
-                                    {/*    <p>*/}
-                                    {/*        By clicking the "signup" button, you create a Cobiro*/}
-                                    {/*        account, and you agree to Cobiro's{" "}*/}
-                                    {/*        <a href="#">Terms &amp; Conditions</a> &amp;{" "}*/}
-                                    {/*        <a href="#">Privacy Policy.</a>*/}
-                                    {/*    </p>*/}
-                                    {/*</div>*/}
                                 </div>
                             </div>
                         </div>
@@ -167,7 +139,7 @@ function LoginPage() {
                 </div>
             </Layout>
         </>
-    );
+    )
 }
 export default LoginPage;
 

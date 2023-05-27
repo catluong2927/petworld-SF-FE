@@ -33,7 +33,7 @@ export const signUpUser = async (data, dispatch, navigate, toast) => {
     const LOGIN_API = process.env.REACT_APP_FETCH_API;
     dispatch(registerStart());
     try {
-        const res = await axios.post(`${LOGIN_API}/users`, data);
+        const res = await axios.post(`${LOGIN_API}/auth`, data);
         dispatch(registerSuccess());
         toast.current.show(
             {severity: 'success', summary: 'Success', detail: 'Create account successfully', life: 1000})
