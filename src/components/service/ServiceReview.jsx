@@ -1,12 +1,19 @@
 import React, {useEffect, useRef, useState,} from "react";
-import {sendRequest, sentRequest} from "../../pages/ServicePackage";
-import {useParams} from "react-router-dom";
+import { sentRequest} from "../../pages/ServicePackage";
+import {useNavigate, useParams} from "react-router-dom";
+import { useSelector} from "react-redux";
+import {POST, URL_REVIEW_PACKAGE} from "../../utilities/constantVariable";
 
 
 export const ServiceReview = () => {
     const [reviews, setReviews] = useState([]);
     const  packageId = useParams();
-
+    const isLogin = useSelector((state) => state.auth.login?.currentUser);
+    const navigate = useNavigate();
+    let email = "";
+    if(isLogin){
+        email = isLogin.userDtoResponse.email;
+    }
     const REVIEW_URL = 'package-reviews/package-details/' + packageId.packageId;
     useEffect(async () => {
         const testData = sentRequest(REVIEW_URL,)
@@ -21,24 +28,23 @@ export const ServiceReview = () => {
 
 
 
-    const emailRef = useRef();
     const starRef = useRef();
     const messageRef = useRef();
     const submitReviewHandler = (event) => {
-        const email = emailRef.current.value;
+      event.preventDefault();
         const star = starRef.current.value;
         const review = messageRef.current.value;
         const date = new Date().toLocaleDateString();
         const newReview = {
-            email,
             star,
             review,
             date,
-            userDtoRequest: {email}
+            userEmail: email,
         };
         console.log(newReview)
+        sentRequest(URL_REVIEW_PACKAGE, POST, newReview);
+
     };
-    // sendRequest()
     return (
         <div
             className="tab-content tab-content2"
@@ -100,6 +106,7 @@ export const ServiceReview = () => {
                                 </ul>
                             </div>
                         </div>
+
                         <div className="col-lg-4">
                             <div className="review-form">
                                 <div className="number-of-review">
@@ -108,20 +115,11 @@ export const ServiceReview = () => {
                                 <form onSubmit={submitReviewHandler}>
                                     <div className="row">
                                         <div className="col-lg-12">
-                                            <div className="form-inner mb-20">
-                                                <input
-                                                    type="email"
-                                                    placeholder="Your Email*"
-                                                    required
-                                                    ref={emailRef}
-                                                />
-                                            </div>
-                                        </div>
-                                        <div className="col-lg-12">
                                             <div className="form-inner mb-10">
                                       <textarea
                                           placeholder="Message..."
                                           defaultValue={""}
+                                          required
                                           ref={messageRef}
                                       />
                                             </div>

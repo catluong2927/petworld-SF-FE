@@ -13300,3 +13300,35 @@ p.title-order {
 .form-inner-phone input[type="text"]::placeholder {
   color: red;
 }
+.order-cancel-modal-alert {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #333;
+  font-family: var(--font-dosis);
+  letter-spacing: 0.02em;
+  text-transform: capitalize;
+  line-height: 1;
+}
+.order-cancle-modal-btn {
+  display: flex;
+  justify-content: space-between;
+}
+
+.order-cancle-modal--no,
+.order-cancle-moal--yes {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 4px;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.order-cancle-modal--no {
+  background-color: #ccc;
+  color: #333;
+}
+
+.order-cancle-moal--yes {
+  background-color: #f44336;
+  color: #fff;
+}

@@ -3,19 +3,20 @@ import {sentRequest} from "../../pages/ServicePackage";
 import { useNavigate } from 'react-router-dom';
 import {useDispatch, useSelector} from "react-redux";
 import {deleteAllItems} from "../../store/cartInventorySlice";
+import {DELETE, POST, URL_CART, URL_ORDER} from "../../utilities/constantVariable";
+import {getAllOrders, increaseOneOrder} from "../../store/order-slice";
 
 function BillingDetails(props) {
   const addressRef = useRef();
   const phoneNumberRef = useRef();
   const noteRef = useRef();
   const dispatch = useDispatch();
-  const URL_ORDER = 'orders';
-  const URL_CART = 'cart';
   const isLogin = useSelector((state) => state.auth.login?.currentUser);
   let email = "";
   if(isLogin){
     email = isLogin.userDtoResponse.email;
   }
+  const URL = URL_ORDER + '/' + email;
   const navigate = useNavigate();
   const cartItems = useSelector(state => state.cartInventory.items)
   const validatePhoneNumber = () => {
@@ -38,12 +39,12 @@ function BillingDetails(props) {
       itemName: element.name,
       image: element.image,
       quantity: element.amount,
+      fullName: isLogin.userDtoResponse.fullName,
       total: totalPrice,
       note: 'Ok'
     };
     deleteCartDetailIdList.push(element.id);
     items.push(item);
-    console.log(props);
   });
 
   const submitHandler = (event) => {
@@ -56,22 +57,23 @@ function BillingDetails(props) {
       date: new Date(),
       status: 'Waiting for confirm',
       total: props.onGetTotal,
+      fullName: isLogin.userDtoResponse.fullName,
       orderDetailDtoRequests: items,
+      orderDetailDtoResponses: items,
     };
-    if(cartItems.isEmpty){
-    const res = sentRequest(URL_ORDER, "POST", data)
-      res.then(
-          sentRequest(URL_CART, "DELETE", deleteCartDetailIdList),
-          dispatch(deleteAllItems()),
-          props.toast.current.show({severity:'success', summary: 'Success', detail:`Check out successfully`, life: 1000}),
-          navigate('/')
-      ).catch(
-          props.toast.current.show({severity:'success', summary: 'Success', detail:`Failed payment!`, life: 1000}),
-      )
-    } else {
-          navigate('/shop')
+    if(cartItems.length !== 0) {
+      dispatch(increaseOneOrder(data));
+      dispatch(deleteAllItems());
+      const res =  sentRequest(URL_CART, DELETE, deleteCartDetailIdList);
+        res.then(
+            props.toast.current.show({severity:'success', summary: 'Success', detail:`Check out successfully`, life: 1000}),
+            navigate('/order')
+        ).catch(
+            props.toast.current.show({severity:'success', summary: 'Success', detail:`Failed payment!`, life: 1000}),
+        )
+    }else  {
+      navigate('/shop')
     }
-
 
   }
   return (

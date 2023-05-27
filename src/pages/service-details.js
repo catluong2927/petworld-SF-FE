@@ -125,7 +125,6 @@ function ServiceDetails(props) {
     event.preventDefault();
     if(isLogin) {
       try {
-        const url = 'cart';
         dispatch(addItem(body))
         toast.current.show({severity: 'success', summary: 'Success', detail: `Add successfully`, life: 1000});
         setTimeout(() => {

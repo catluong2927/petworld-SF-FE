@@ -1,6 +1,6 @@
 import {createSlice} from "@reduxjs/toolkit";
 import {sentRequest} from "../pages/ServicePackage";
-const URL_CART = "cart";
+import {POST, PUT, URL_CART} from "../utilities/constantVariable";
 let initialState = {
     items: [],
     cartTotal: 0,
@@ -32,7 +32,7 @@ const cartInventorySlice = createSlice({
             if (!itemFound) {
                 state.items.push(newItem);
             }
-           const  res = sentRequest(URL_CART, "POST", action.payload)
+           const  res = sentRequest(URL_CART, POST, action.payload)
 
           },
         deleteItem(state, action) {
@@ -41,7 +41,7 @@ const cartInventorySlice = createSlice({
 
             state.cartTotal = +state.cartTotal - (deleteItem.price * deleteItem.amount);
             state.items = state.items.filter(item => !(item.typeId === deleteItem.typeId && item.type === deleteItem.type));
-            const res =  sentRequest(URL_CART, "PUT", action.payload)
+            const res =  sentRequest(URL_CART, PUT, action.payload)
 
         },
         deleteAllItems(state, action){
@@ -56,7 +56,7 @@ const cartInventorySlice = createSlice({
                         state.cartTotal = +state.cartTotal - (decreaseItem.price);
                         item.amount = Math.max(1, item.amount - 1);
                         item.total = Math.max(decreaseItem.total, item.total - decreaseItem.total);
-                        const res =  sentRequest(URL_CART, 'PUT', action.payload);
+                        const res =  sentRequest(URL_CART, PUT, action.payload);
                     }
                 }
             });
@@ -73,7 +73,7 @@ const cartInventorySlice = createSlice({
                     itemFound = true;
                 }
             });
-            const res =  sentRequest(URL_CART, 'POST', action.payload);
+            const res =  sentRequest(URL_CART, POST, action.payload);
         }
 
         }

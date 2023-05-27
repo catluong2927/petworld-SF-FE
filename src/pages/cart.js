@@ -5,6 +5,7 @@ import Layout from "../layout/Layout";
 import {useDispatch, useSelector} from "react-redux";
 import {addItemByOne, decreaseItemByOne, deleteAllItems, deleteItem, firstCallApi} from "../store/cartInventorySlice";
 import {sentRequest} from "./ServicePackage";
+import {URL_CART} from "../utilities/constantVariable";
 
 function CartPage() {
   const [data, setData] = useState([]);
@@ -13,14 +14,13 @@ function CartPage() {
   const dispatch = useDispatch();
   const cartItems = useSelector((state) => state.cartInventory.items);
   const cartTotal = useSelector((state) => state.cartInventory.cartTotal)
-  const URL_CART = 'cart';
   let email = "";
   if(isLogin){
     email = isLogin.userDtoResponse.email;
   }
 
   useEffect(() => {
-    const URL = `cart/${email}`
+    const URL = `${URL_CART}/${email}`
       const res = sentRequest(URL);
       res.then(data => {
         dispatch(deleteAllItems());
