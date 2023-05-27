@@ -85,16 +85,16 @@ function LoginPage() {
                                                             errors.account ? "custom-input-error" : ""
                                                         }`}>
                                                             <label>Enter Your Account *</label>
-                                                            <p>(Email or User Name or Phone Number)</p>
+                                                            <p className='customer'>(Email or User Name or Phone Number)</p>
                                                             <input type="text"
                                                                    placeholder="Enter Your Account"
                                                                    name="account"
                                                                    value={form.account || ""}
                                                                    onChange={handleChangeLogin}
                                                             />
-                                                            <p className="error">{errors.account}</p>
-                                                            {errorMess && <p className="error">{errorMess}</p>}
                                                         </div>
+                                                        <p className="error">{errors.account}</p>
+                                                        {errorMess && <p className="error">{errorMess}</p>}
                                                     </div>
                                                     <div className="col-12">
                                                         <div className={`form-inner ${
@@ -109,9 +109,9 @@ function LoginPage() {
                                                                 value={form.password || ""}
                                                                 onChange={handleChangeLogin}
                                                             />
-                                                            {/*<i className="bi bi-eye-slash" id="togglePassword"/>*/}
-                                                            <p className="error">{errors.password}</p>
+                                                            <i className="bi bi-eye-slash" id="togglePassword"/>
                                                         </div>
+                                                        <p className="error">{errors.password}</p>
                                                     </div>
                                                     <div className="col-12">
                                                         <div

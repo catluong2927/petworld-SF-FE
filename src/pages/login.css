@@ -14,9 +14,12 @@ label {
     color: red;
     margin: 0;
 }
-.form-wrapper p{
+.customer{
     color: rgba(0, 0, 0, 0.73) !important;
     margin-bottom: 0px !important;
-
 }
+.form-wrapper label{
+    margin-bottom: 0px !important;
+}
+
 
