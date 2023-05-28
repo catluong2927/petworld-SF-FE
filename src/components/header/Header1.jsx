@@ -222,7 +222,7 @@ function Header1() {
                                 </ul>
                             </li>
                             <li className="menu-item-has-children">
-                                <p className='menu-list-navigation-has-children'>SHOP</p>
+                                <p className='menu-list-navigation-has-children'>SHOPPING</p>
                                 <i
                                     className="bi bi-plus dropdown-icon"
                                     onClick={() => dispatch({type: "shop"})}
@@ -237,7 +237,7 @@ function Header1() {
                                     <li>
                                         <Link to="/shop">
                                             <p className={`menu-item-children ${currentRoute === "/shop" ? "active" : ""}`}>
-                                                Shop
+                                                products
                                             </p>
                                         </Link>
                                     </li>

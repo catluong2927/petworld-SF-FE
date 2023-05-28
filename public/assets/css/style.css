@@ -7661,6 +7661,12 @@ footer.style2 .social-area ul li:hover a i {
 /*=======================================
  7. Home Three Collection
 =======================================*/
+
+
+.col-lg-4.col-md-4.col-sm-6 :hover{
+  scale: 1.05;
+}
+
 .collection-card {
   border: 1px solid #ececec;
   border-radius: 10px;
@@ -7670,6 +7676,8 @@ footer.style2 .social-area ul li:hover a i {
   width: 100%;
   margin: 0 auto;
 }
+
+
 .collection-card .offer-card {
   position: absolute;
   left: -1px;
@@ -13332,3 +13340,7 @@ p.title-order {
   background-color: #f44336;
   color: #fff;
 }
+.hover_image :hover{
+    transform: scale(1.5) !important;
+}
+
