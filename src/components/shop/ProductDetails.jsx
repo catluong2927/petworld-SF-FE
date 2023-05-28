@@ -1,6 +1,9 @@
 import { Link, useNavigate, useParams } from "react-router-dom";
 import React, { useEffect, useState, useRef } from "react";
 import ProductPriceCount from "./ProductPriceCount";
+import {sentRequest} from "../../pages/ServicePackage";
+import {useDispatch, useSelector} from "react-redux";
+import {addItem} from "../../store/cartInventorySlice";
 import { sentRequest } from "../../pages/ServicePackage";
 import { useSelector } from "react-redux";
 import { Swiper, SwiperSlide } from "swiper/react";
@@ -15,6 +18,7 @@ function ProductDetails(props) {
   const [productPriceCount, setProductPriceCount] = useState({});
   const [productCart, setProductCart] = useState({});
   const navigation = useNavigate();
+  const dispatch = useDispatch();
   const isLogin = useSelector((state) => state.auth.login?.currentUser);
   let email = "";
   if (isLogin) {
@@ -59,23 +63,27 @@ function ProductDetails(props) {
     });
     setProductCart({
       ...productPriceCount,
-      productId: props.productId,
-    });
-  }, []);
+      'productId': props.productId
+    })
+  }, [])
 
+  const finalPrice = product.sale? product.price*(1 - (product.sale/100)): product.price;
   const body = {
     userEmail: email,
-    type: 1,
+    type: true,
     typeId: product.id,
-    ...productPriceCount,
+    image: product.image,
+    name: product.name,
+    originalPrice: product.price,
+    price: finalPrice,
+    ...productPriceCount
   };
   const handlePostData = async (event) => {
     event.preventDefault();
     if (isLogin) {
       try {
-        const url = "cart";
-        const result = await sentRequest(url, "POST", body);
-        console.log("Result:", result);
+        const url = 'cart';
+        dispatch(addItem(body));
         props.toast.current.show({
           severity: "success",
           summary: "Success",
@@ -86,13 +94,9 @@ function ProductDetails(props) {
           navigation("/shop");
         }, 1000);
       } catch (error) {
-        props.toast.current.show({
-          severity: "error",
-          summary: "Fail",
-          detail: `Failed to add to cart `,
-          life: 1000,
-        });
-        console.error("Error:", error.message);
+        props.toast.current.show({severity: 'error', summary: 'Fail', detail: `Failed to add to cart `, life: 1000});
+        console.error('Error:', error.message);
+
       }
     } else {
       navigation("/login");
@@ -150,7 +154,9 @@ function ProductDetails(props) {
               <span>Product Code: {product.productCode}</span>
             </div>
             <div className="price-tag">
-              <h4>{product.price}</h4>
+              <h4>
+                ${finalPrice} <del>${product.price}</del>
+              </h4>
             </div>
             <p>Description : {product.description} </p>
             <div className="shop-quantity d-flex align-items-center justify-content-start mb-20">
