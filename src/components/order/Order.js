@@ -7,21 +7,23 @@ import {useDispatch, useSelector} from "react-redux";
 import {Toast} from "primereact/toast";
 import {cancelOrder, deleteAllOrders, getAllOrders} from "../../store/order-slice";
 import Modal from "./CustomePrompt";
-import {PUT} from "../../utilities/constantVariable";
 
-export const Order = (props) => {
+
+export const Order = () => {
     const toast = useRef(null);
     const [orders, setOrders] = useState([]);
     const isLogin = useSelector((state) => state.auth.login?.currentUser);
     const dispatch = useDispatch();
     const [shouldRender, setShouldRender] = useState(false);
     const getOrders = useSelector((state) => state.order.products);
+    const [id, setId] = useState(0);
     const navigate = useNavigate();
     let email = "";
     if(isLogin){
         email = isLogin.userDtoResponse.email;
     }
     const URL_ORDER = `orders/${email}`;
+    const [showModal, setShowModal] = useState(false);
     useEffect(() => {
         dispatch(deleteAllOrders)
         const res = sentRequest(URL_ORDER);
@@ -31,55 +33,50 @@ export const Order = (props) => {
 
     }, [])
 
-
     useEffect(() => {
         dispatch(deleteAllOrders)
         setOrders(getOrders)
     }, [shouldRender]);
 
-
     let totalBill = 0;
-    const cancelBillHandler = (props) => {
-        setShouldRender(false)
-        const url = URL_ORDER + props
-        const canceledOrder = {id: props, status: "Canceled" }
-         dispatch(cancelOrder(canceledOrder))
-        console.log(props)
-        navigate('/order')
-        setShowModal(!showModal)
-    }
-
-    const [showModal, setShowModal] = useState(false);
-
-    const openModal = () => {
+    const openModal = (props) => {
         setShowModal(true);
+        setId(props);
     };
 
     const closeModal = () => {
         setShowModal(false);
     };
+
+    const cancelBillHandler = () => {
+        setShouldRender(!shouldRender);
+        const canceledOrder = {id: id, status: "Canceled" }
+        dispatch(cancelOrder(canceledOrder))
+        navigate('/order')
+        setShowModal(!showModal)
+    }
+
     return (<>
         <Layout>
             <Breadcrumb pageName="Your Order" pageTitle="Your Order"/>
             <Toast ref={toast}/>
-
+                {showModal && (
+                    <Modal onClose={closeModal}>
+                        <h3 className='order-cancel-modal-alert'>Are you Sure?</h3>
+                        <div className='order-cancle-modal-btn'>
+                            <button className='order-cancle-modal--no' onClick={closeModal}>No</button>
+                            <button className='order-cancle-moal--yes' onClick={cancelBillHandler}>Ok</button>
+                        </div>
+                    </Modal>
+                )}
             <div className="col-lg-4">
                 {orders.map((element) => (<div className="widget-area" key={element.id}>
                     <div className="single-widgets widget_egns_recent_post mb-30 order">
                         <div>
-                            {showModal && (
-                                <Modal onClose={closeModal}>
-                                    <h3 className='order-cancel-modal-alert'>Are you Sure?</h3>
-                                    <div className='order-cancle-modal-btn'>
-                                        <button className='order-cancle-modal--no' onClick={closeModal}>No</button>
-                                        <button className='order-cancle-moal--yes' onClick={cancelBillHandler.bind(null, element.id)}>Ok</button>
-                                    </div>
-                                </Modal>
-                            )}
                         </div>
                       <span className="widget-title order-header">
                         <h3>{element.status}</h3>
-                          {element.status === 'Waiting for confirm'? <button className='order-cancle' onClick={openModal} >
+                          {element.status === 'Waiting for confirm'? <button className='order-cancle' onClick={openModal.bind(null, element.id)} >
                               <h4 className='order-cancle-btn'> Cancel Order</h4></button>: ''}
                       </span>
                         <div className="recent-post-wraper">

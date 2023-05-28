@@ -146,7 +146,7 @@ function ProductDetails(props) {
             </div>
             <div className="price-tag">
               <h4>
-               {product.price}
+                ${finalPrice} <del>${product.price}</del>
               </h4>
             </div>
             <p>
