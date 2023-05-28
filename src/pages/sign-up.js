@@ -9,24 +9,31 @@ import "primereact/resources/primereact.min.css";
 import {Formik} from "formik";
 
 import {signUpUser} from "../redux/apiRequest";
-import {useDispatch, useSelector} from "react-redux";
+import {useDispatch} from "react-redux";
+import axios from "axios";
 
 
 function SignUpPage() {
-    const registerError = useSelector((state) => state.auth.register?.data);
+    const LOGIN_API = process.env.REACT_APP_FETCH_API;
+    // const registerError = useSelector((state) => state.auth.register?.data);
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const toast = useRef(null);
     const [isCheckedCus, setIsCheckedCus] = useState(true);
     const [isCheckedOwn, setIsCheckedOwn] = useState(false);
     const [form, setForm] = useState({});
-    const [messErorr, setMessErorr] = useState({})
+    const [userName, setUserName] = useState('');
+    const [messErrName, setMessErrName] = useState(false);
+    const [email, setEmail] = useState('');
+    const [messEmailErr, setMessEmailErr] = useState(false);
+    const [phone, setPhone] = useState(null);
+    const [messPhoneErr, setMessPhoneErr] = useState(false);
 
 
     const REGEX = {
         email: /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/,
         password: /^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=])(?=\S+$).{8,}$/,
-        username: /^(?=.{8,20}$)(?![_.])(?!.*[_.]{2})[a-zA-Z0-9._]+(?<![_.])$/
+        userName: /^(?=.{8,20}$)(?![_.])(?!.*[_.]{2})[a-zA-Z0-9._]+(?<![_.])$/
     };
 
     const checkBoxCusHandler = () => {
@@ -74,46 +81,77 @@ function SignUpPage() {
             errors.password = "have at least 8 characters, have uppercase letters, lowercase letters, special characters";
             console.log("code");
         }
-        if (!form.username) {
-            errors.username = "Required";
-        } else if (!REGEX.username.test(form.username)) {
-            errors.username = "be at least 8 to 20 characters, without periods. _ at the beginning of the middle name and at the end of the name";
-            console.log("code");
+        if (!form.userName) {
+            errors.userName = "Required";
+        } else if (!REGEX.userName.test(form.userName)) {
+            errors.userName = "be at least 8 to 20 characters, without periods. _ at the beginning of the middle name and at the end of the name";
         }
         if (!form.confirmPassword) {
             errors.confirmPassword = "Required";
         } else if (form.password !== form.confirmPassword) {
             errors.confirmPassword = "password does not match";
         }
+        if (!form.phone) {
+            errors.phone = "Required";
+        }
         return errors;
     }
 
-    // function handleBlurSignup(e) {
-    //     if (e.target.name === "username") {
-    //         setIsInputBlurred(false)
-    //         setMessErorr((prevState) => ({ ...prevState, userName: null }));
-    //     }
-    //     if (e.target.name === "email") {
-    //         setMessErorr((prevState) => ({ ...prevState, email: null }));
-    //     }
-    // }
 
+    const handleBlurSignup = async (e) => {
+        // await setUserName(form.userName);
+        if (e.target.name === 'userName') {
+            console.log(1)
+            await setUserName(form.userName)
+        }
+        if (e.target.name === 'email') {
+            console.log(2)
+            await setEmail(form.email)
+        }
+        if (e.target.name === 'phone') {
+            console.log(3)
+            await setPhone(form.phone)
+        }
+    }
 
     const handleSubmit = async () => {
         const data = {
-            userName: form.username,
+            userName: userName,
             fullName: form.fullName,
-            email: form.email,
+            email: email,
             password: form.password,
+            phone: phone,
             roles
         }
+        console.log(data)
         await signUpUser(data, dispatch, navigate, toast);
-        // setMessErorr(registerError)
     }
-
     useEffect(()=>{
-        setMessErorr(registerError)
-    },[registerError])
+           axios.get(`${LOGIN_API}/auth?account=${userName}`)
+                .then(res => setMessErrName(res.data))
+                .catch(err => {
+                    setMessErrName(err.response.data)
+                })
+
+    },[userName,LOGIN_API])
+
+    useEffect(() => {
+        axios.get(`${LOGIN_API}/auth?account=${email}`)
+            .then(res => setMessEmailErr(res.data))
+            .catch(err => {
+                setMessEmailErr(err.response.data)
+            })
+
+    }, [email, LOGIN_API])
+
+    useEffect(() => {
+        axios.get(`${LOGIN_API}/auth?account=${phone}`)
+            .then(res => setMessPhoneErr(res.data))
+            .catch(err => {
+                setMessPhoneErr(err.response.data)
+            })
+
+    }, [phone, LOGIN_API])
 
 
     return (
@@ -150,20 +188,21 @@ function SignUpPage() {
                                             <form className="w-100" onSubmit={handleSubmit}>
                                                 <div className="row">
                                                     <div className="col-md-6">
-                                                        <div
-                                                            className={`form-inner${errors.username ? "custom-input-error" : ""}`}>
+                                                        <div className={`form-inner ${
+                                                            errors.userName ? "custom-input-error" : ""
+                                                        }`}>
                                                             <label>User Name *</label>
                                                             <input type="text"
                                                                    placeholder="Enter Your User Name"
-                                                                   name="username"
-                                                                   value={form.username || ""}
+                                                                   name="userName"
+                                                                   value={form.userName || ""}
                                                                    onChange={handleChangeSignup}
-                                                                   // onBlur={isInputBlurred ? handleBlurSignup : null}
+                                                                   onBlur={handleBlurSignup}
 
                                                             />
-                                                            <p className="error">{errors.username}</p>
-                                                            {messErorr.userName &&
-                                                                <p className="error">{messErorr.userName}</p>}
+                                                            <p className="error">{errors.userName}</p>
+                                                            {messErrName &&
+                                                                <p className="error">this User Name already exists</p>}
                                                         </div>
                                                     </div>
                                                     <div className="col-md-6">
@@ -174,7 +213,6 @@ function SignUpPage() {
                                                                    name="fullName"
                                                                    value={form.fullName || ""}
                                                                    onChange={handleChangeSignup}
-
                                                             />
                                                         </div>
                                                     </div>
@@ -188,11 +226,28 @@ function SignUpPage() {
                                                                    name="email"
                                                                    value={form.email || ""}
                                                                    onChange={handleChangeSignup}
-                                                                   // onBlur={isInputBlurred ? handleBlurSignup : null}
+                                                                   onBlur={handleBlurSignup}
                                                             />
                                                             <p className="error">{errors.email}</p>
-                                                            {messErorr.email &&
-                                                                <p className="error">{messErorr.email}</p>}
+                                                            {messEmailErr &&
+                                                                <p className="error">this Email already exists</p>}
+                                                        </div>
+                                                    </div>
+                                                    <div className="col-md-12">
+                                                        <div className={`form-inner ${
+                                                            errors.phone ? "custom-input-error" : ""
+                                                        }`}>
+                                                            <label>Enter Your Phone Number *</label>
+                                                            <input type="text"
+                                                                   placeholder="Enter Your Phone Number"
+                                                                   name="phone"
+                                                                   value={form.phone || ""}
+                                                                   onChange={handleChangeSignup}
+                                                                   onBlur={handleBlurSignup}
+                                                            />
+                                                            <p className="error">{errors.phone}</p>
+                                                            {messPhoneErr &&
+                                                                <p className="error">this Phone already exists</p>}
                                                         </div>
                                                     </div>
                                                     <div className="col-md-12">
@@ -208,8 +263,9 @@ function SignUpPage() {
                                                                 value={form.password || ""}
                                                                 onChange={handleChangeSignup}
                                                             />
+                                                            <i className="bi bi-eye-slash" id="togglePassword"/>
                                                             <p className="error">{errors.password}</p>
-                                                            {/*<i className="bi bi-eye-slash" id="togglePassword"/>*/}
+
                                                         </div>
                                                     </div>
                                                     <div className="col-md-12">
@@ -225,8 +281,9 @@ function SignUpPage() {
                                                                 value={form.confirmPassword || ""}
                                                                 onChange={handleChangeSignup}
                                                             />
+                                                            <i className="bi bi-eye-slash" id="togglePassword2"/>
                                                             <p className="error">{errors.confirmPassword}</p>
-                                                            {/*<i className="bi bi-eye-slash" id="togglePassword2"/>*/}
+
                                                         </div>
                                                     </div>
                                                     <div className="col-md-12">
