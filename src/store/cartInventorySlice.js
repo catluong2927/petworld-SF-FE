@@ -32,7 +32,7 @@ const cartInventorySlice = createSlice({
             if (!itemFound) {
                 state.items.push(newItem);
             }
-           const  res = sentRequest(URL_CART, POST, action.payload)
+           const  res = sentRequest(URL_CART, POST, action.payload, action.payload.token)
 
           },
         deleteItem(state, action) {
@@ -41,7 +41,7 @@ const cartInventorySlice = createSlice({
 
             state.cartTotal = +state.cartTotal - (deleteItem.price * deleteItem.amount);
             state.items = state.items.filter(item => !(item.typeId === deleteItem.typeId && item.type === deleteItem.type));
-            const res =  sentRequest(URL_CART, PUT, action.payload)
+            const res =  sentRequest(URL_CART, PUT, action.payload, action.payload.token)
 
         },
         deleteAllItems(state, action){
@@ -56,7 +56,7 @@ const cartInventorySlice = createSlice({
                         state.cartTotal = +state.cartTotal - (decreaseItem.price);
                         item.amount = Math.max(1, item.amount - 1);
                         item.total = Math.max(decreaseItem.total, item.total - decreaseItem.total);
-                        const res =  sentRequest(URL_CART, PUT, action.payload);
+                        const res =  sentRequest(URL_CART, PUT, action.payload, action.payload.token);
                     }
                 }
             });
@@ -73,7 +73,7 @@ const cartInventorySlice = createSlice({
                     itemFound = true;
                 }
             });
-            const res =  sentRequest(URL_CART, POST, action.payload);
+            const res =  sentRequest(URL_CART, POST, action.payload, action.payload.token);
         }
 
         }

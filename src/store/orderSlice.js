@@ -30,13 +30,12 @@ const OrderSlice = createSlice({
                 }
                 return order;
             });
-            sentRequest(url, PUT, editOrder);
+            sentRequest(url, PUT, editOrder, action.payload.token);
         },
         increaseOneOrder(state, action) {
             const newOrder = action.payload;
-            console.log(newOrder)
+            sentRequest(URL_ORDER, POST, action.payload, action.payload.token);
             state.products.unshift(newOrder);
-            sentRequest(URL_ORDER, POST, action.payload)
         },
         deleteAllOrders(state) {
             state.products = []

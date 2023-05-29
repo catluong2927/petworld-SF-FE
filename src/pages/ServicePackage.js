@@ -5,15 +5,31 @@ import { redirect, useParams} from "react-router-dom";
 import React, {useEffect, useState} from "react";
 import BreadcrumbService from "../components/breadcrumb/BreadcrumbService";
 import ServiceNavigation from "../components/service/ServiceNavigation";
+import {useSelector} from "react-redux";
 
-const fetchData = async (packageName,pageSize, currentPage, sortedField="") => {
+const fetchData = async (packageName, pageSize, currentPage, sortedField = "", token = "") => {
     const URL = `http://localhost:8080/api/package-details/search/${packageName}?size=${pageSize}&page=${currentPage}&sort=${sortedField}`;
-    const response = await fetch(URL);
+
+    const headers = {
+        'Content-Type': 'application/json',
+    };
+
+    if (token) {
+        headers['Authorization'] = `Bearer ${token}`; // Chèn token vào header
+    }
+
+    const options = {
+        method: 'GET',
+        headers: headers,
+    };
+
+    const response = await fetch(URL, options);
     const data = await response.json();
     const servicePackages = data.content;
     const totalPages = data.totalPages;
     return { servicePackages, totalPages };
 };
+
 export const ServicePackage = () => {
     const  packageName = useParams();
     const [isSortedByPrice, setIsSortedByPrice] = useState(false);
@@ -21,15 +37,19 @@ export const ServicePackage = () => {
     const pageSize = 9;
     const [data, setData] = useState([]);
     const [totalPages, setTotalPages] = useState(0);
-
-
+    const isLogin = useSelector((state) => state.auth.login?.currentUser);
+    let token = "";
+    if(isLogin){
+        token = isLogin.token;
+    }
+    console.log(token)
     useEffect(() => {
         let sortedField= '';
         if(isSortedByPrice){
-            sortedField = 'minPrice'
+            sortedField = 'price'
         }
         const fetchPage = async () => {
-            const { servicePackages, totalPages } = await fetchData(packageName.name, pageSize, currentPage, sortedField);
+            const { servicePackages, totalPages } = await fetchData(packageName.name, pageSize, currentPage, sortedField, token);
             setData(servicePackages);
             setTotalPages(totalPages);
         };
@@ -101,7 +121,7 @@ export const ServicePackage = () => {
 }
 
 
-export const sentRequest = async (url, method = 'GET', data = null) =>{
+export const sentRequest = async (url, method = 'GET', data = null, token = null) => {
     const CART_API = process.env.REACT_APP_FETCH_API;
 
     try {
@@ -111,6 +131,10 @@ export const sentRequest = async (url, method = 'GET', data = null) =>{
                 'Content-Type': 'application/json',
             },
         };
+
+        if (token) {
+            options.headers['Authorization'] = `Bearer ${token}`; // Chèn token vào header
+        }
 
         if (data) {
             options.body = JSON.stringify(data);
@@ -133,3 +157,4 @@ export const sentRequest = async (url, method = 'GET', data = null) =>{
         throw error;
     }
 }
+
