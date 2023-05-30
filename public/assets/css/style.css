@@ -10,7 +10,7 @@ Template Name: Scooby - Petcare HTML Template
 5. Preloader
 6. Pagination
 7. search area
-8. Mobile-menu 
+8. Mobile-menu
 9. Topbar-section
 10. Header-section
 11. Banner-section
@@ -7788,8 +7788,49 @@ footer.style2 .social-area ul li:hover a i {
   transition: 0.35s;
 }
 .collection-card .cart-icon-list li a:hover {
-  background-color: var(--title-color2);
+  /*background-color: var(--title-color2);*/
+  background-color: #fd2020;
 }
+/*///////////////////////////////////////////////////////////*/
+.cart-icon-list-favorite {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  position: absolute;
+  right: 5%;
+  top: 1%;
+  opacity: 1;
+  transform: scale(1);
+  transition: 0.4s;
+  z-index: 9!important;
+}
+
+
+
+.cart-icon-list-favorite li {
+  margin-bottom: 10px;
+}
+
+.cart-icon-list-favorite li:last-child {
+  margin-bottom: 0;
+}
+
+.cart-icon-list-favorite li a {
+  width: 30px;
+  height: 30px;
+  background: red;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: 0.35s;
+}
+
+.collection-card:hover .cart-icon-list-favorite {
+  display:none;
+}
+
+/*/////////////////////////////////////////////////////////////*/
 .collection-card .collection-content {
   padding: 15px 10px 25px;
 }
@@ -12965,7 +13006,7 @@ footer.style2 .social-area ul li:hover a i {
 select#duration:focus {
   border: none;
   outline: none;
-}/*# sourceMappingURL=style.css.map */
+}/*# sourceMappingURL=UserProfile.css.map */
 
 /*ADD FOR NEW INTERFACE*/
 .pet-image{
@@ -13053,10 +13094,10 @@ select#duration:focus {
   height: 100px;
 }
 .product-image {
-    width: 42rem;
-    height: 30rem;
+  width: 42rem;
+  height: 30rem;
 }
-                                                                                  
+
 .package-price {
   font-size: 1.25rem;
   font-weight: 700;
@@ -13131,7 +13172,7 @@ select#duration:focus {
   display: flex;
   justify-content: space-between;
   gap: 30rem;
-  ;
+;
 }
 .order-detail-content--name {
   color: #333;
@@ -13342,7 +13383,7 @@ p.title-order {
   color: #fff;
 }
 .hover_image :hover{
-    transform: scale(1.5) !important;
+  transform: scale(1.5) !important;
 }
 
 .user-review-image {
