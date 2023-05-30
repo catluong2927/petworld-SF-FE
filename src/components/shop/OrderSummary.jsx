@@ -1,54 +1,109 @@
-import React from "react";
-import ProductPriceCount from "./ProductPriceCount";
+import React, {useEffect, useState} from "react";
+import {sentRequest} from "../../pages/ServicePackage";
+import {
+  addItemByOne,
+  decreaseItemByOne,
+  deleteAllItems,
+  deleteItem,
+  firstCallApi
+} from "../../store/cartInventorySlice";
+import {useDispatch, useSelector} from "react-redux";
 
-function OrderSummary() {
+function OrderSummary(props) {
+  const [data, setData] = useState([]);
+  const cartTotal = useSelector((state) => state.cartInventory.cartTotal)
+  const cartItems = useSelector((state) => state.cartInventory.items)
+  const [alteredAmount, setAlteredAmount] = useState(0);
+  const tax = cartTotal * 0.1;
+  const shippingFee = 1;
+  const total = cartTotal + tax + shippingFee;
+  const dispatch = useDispatch();
+  const [shouldFetchData, setShouldFetchData] = useState(false);
+  const isLogin = useSelector((state) => state.auth.login?.currentUser);
+  let email = "";
+  if(isLogin){
+    email = isLogin.userDtoResponse.email;
+  }
+  const URL = `cart/${email}`
+
+  useEffect(()=> {
+    const carts = sentRequest(URL, "GET"  );
+    carts.then(data => {
+      dispatch(deleteAllItems());
+      dispatch(firstCallApi(data))
+    }).catch(
+    )
+  }, [])
+
+  useEffect(()=> {
+    setData(cartItems)
+  }, [shouldFetchData, dispatch])
+
+  props.onSenTotal(total);
+
+  const deleteInCartHandler = async ( props) => {
+    setShouldFetchData(!shouldFetchData);
+    const body = {
+      id: props.typeId,
+      userEmail: email,
+      ...props
+    };
+    dispatch(deleteItem(body))
+  };
+
+  const increase = (props) => {
+    setShouldFetchData(!shouldFetchData)
+    const body = {
+      userEmail: email,
+      ...props,
+      amount: 1,
+    };
+    dispatch(addItemByOne(body))
+
+  };
+
+  const decrease = (props) => {
+    setShouldFetchData(!shouldFetchData)
+    const body = {
+      userEmail: email,
+      ...props,
+      amount: 1,
+    };
+    dispatch(decreaseItemByOne(body));
+
+  }
+
   return (
     <>
       <div className="added-product-summary mb-30">
         <h5 className="title-25 checkout-title">Order Summary</h5>
         <ul className="added-products">
-          <li className="single-product d-flex justify-content-start">
+          { data.map(element =>
+
+          <li className="single-product d-flex justify-content-start" key={element.id}>
             <div className="product-img">
-              <img src="assets/images/bg/check-out-01.png" alt="" />
+              <img src={element.image} alt="" />
             </div>
             <div className="product-info">
               <h5 className="product-title">
-                <a href="#">Whiskas Cat Food Core Tuna</a>
+                <a href="#">{element.name}</a>
               </h5>
-              <ProductPriceCount price={22} />
+              <>
+                <button onClick={decrease.bind(null, element)} type="button">
+                  <i className="bi bi-dash"></i>
+                </button>
+                <span style={{ margin: "0 20px", fontFamily: "Cabin" }}>{element.amount}</span>
+                <button onClick={increase.bind(null, element)} type="button">
+                  <i className="bi bi-plus"></i>
+                </button>
+                <span className='product-price'> $ {element.price}</span>
+              </>
             </div>
-            <div className="delete-btn">
+            <div className="delete-btn" onClick={deleteInCartHandler.bind(null, element)}>
               <i className="bi bi-x-lg" />
             </div>
           </li>
-          <li className="single-product d-flex justify-content-start">
-            <div className="product-img">
-              <img src="assets/images/bg/check-out-02.png" alt="" />
-            </div>
-            <div className="product-info">
-              <h5 className="product-title">
-                <a href="#">Friskies Kitten Discoveries.</a>
-              </h5>
-              <ProductPriceCount price={24} />
-            </div>
-            <div className="delete-btn">
-              <i className="bi bi-x-lg" />
-            </div>
-          </li>
-          <li className="single-product d-flex justify-content-start">
-            <div className="product-img">
-              <img src="assets/images/bg/check-out-03.png" alt="" />
-            </div>
-            <div className="product-info">
-              <h5 className="product-title">
-                <a href="#">Natural Dog Fresh Food.</a>
-              </h5>
-              <ProductPriceCount price={12} />
-            </div>
-            <div className="delete-btn">
-              <i className="bi bi-x-lg" />
-            </div>
-          </li>
+          )}
         </ul>
       </div>
       <div className="summery-card cost-summery mb-30">
@@ -56,21 +111,17 @@ function OrderSummary() {
           <thead>
             <tr>
               <th>Subtotal</th>
-              <th>$128.70</th>
+              <th>${cartTotal}</th>
             </tr>
           </thead>
           <tbody>
             <tr>
               <td className="tax">Tax</td>
-              <td>$5</td>
+              <td>${tax}</td>
             </tr>
             <tr>
-              <td>Total ( tax excl.)</td>
-              <td>$15</td>
-            </tr>
-            <tr>
-              <td>Total ( tax incl.)</td>
-              <td>$15</td>
+              <td className="tax">Shipping fee</td>
+              <td>${shippingFee}</td>
             </tr>
           </tbody>
         </table>
@@ -80,7 +131,7 @@ function OrderSummary() {
           <thead>
             <tr>
               <th>Total</th>
-              <th>$162.70</th>
+              <th>${total}</th>
             </tr>
           </thead>
         </table>

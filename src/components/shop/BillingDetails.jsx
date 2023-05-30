@@ -1,93 +1,134 @@
-import React from "react";
+import React, {useRef} from "react";
+import {sentRequest} from "../../pages/ServicePackage";
+import { useNavigate } from 'react-router-dom';
+import {useDispatch, useSelector} from "react-redux";
+import {deleteAllItems} from "../../store/cartInventorySlice";
+import {DELETE,  URL_CART, URL_ORDER} from "../../utilities/constantVariable";
+import { increaseOneOrder} from "../../store/orderSlice";
 
-function BillingDetails() {
+function BillingDetails(props) {
+  const addressRef = useRef();
+  const phoneNumberRef = useRef();
+  const noteRef = useRef();
+  const dispatch = useDispatch();
+  const isLogin = useSelector((state) => state.auth.login?.currentUser);
+  let email = "";
+  let token = "";
+  if(isLogin){
+    email = isLogin.userDtoResponse.email;
+    token = isLogin.token;
+  }
+  const URL = URL_ORDER + '/' + email;
+  const navigate = useNavigate();
+  const cartItems = useSelector(state => state.cartInventory.items)
+  const validatePhoneNumber = () => {
+    const phoneNumber = phoneNumberRef.current.value;
+    const phoneNumberPattern = /^\d{10}$/;
+
+    if (!phoneNumberPattern.test(phoneNumber)) {
+      phoneNumberRef.current.setCustomValidity("Invalid phone number");
+    } else {
+      phoneNumberRef.current.setCustomValidity("");
+    }
+  };
+
+
+  let items = [];
+  let deleteCartDetailIdList = [];
+  cartItems.map(element => {
+    const totalPrice =  element.price * element.amount;
+    const item = {
+      itemName: element.name,
+      image: element.image,
+      quantity: element.amount,
+      fullName: isLogin.userDtoResponse.fullName,
+      total: totalPrice,
+      note: 'Ok'
+    };
+    deleteCartDetailIdList.push(element.id);
+    items.push(item);
+  });
+
+  const submitHandler = (event) => {
+    event.preventDefault();
+    const data = {
+      userEmail: email,
+      phoneNumber: phoneNumberRef.current.value,
+      address: addressRef.current.value,
+      note: noteRef.current.value,
+      token,
+      date: new Date(),
+      status: 'Waiting for confirm',
+      total: props.onGetTotal,
+      fullName: isLogin.userDtoResponse.fullName,
+      orderDetailDtoRequests: items,
+      orderDetailDtoResponses: items,
+    };
+    if(cartItems.length !== 0) {
+      dispatch(increaseOneOrder(data));
+      dispatch(deleteAllItems());
+      const res =  sentRequest(URL_CART, DELETE, deleteCartDetailIdList);
+        res.then(
+            props.toast.current.show({severity:'success', summary: 'Success', detail:`Check out successfully`, life: 1000}),
+             navigate('/order')
+        ).catch(
+            props.toast.current.show({severity:'success', summary: 'Success', detail:`Failed payment!`, life: 1000}),
+        )
+    }else  {
+      navigate('/shop')
+    }
+
+  }
   return (
     <>
       <div className="form-wrap box--shadow mb-30">
-        <h4 className="title-25 mb-20">Billing Details</h4>
-        <form>
+        <h4 className="title-25 mb-20">Delivery Details</h4>
+        <form onSubmit={submitHandler}>
           <div className="row">
-            <div className="col-lg-6">
-              <div className="form-inner">
-                <label>First Name</label>
-                <input type="text" name="fname" placeholder="Your first name" />
-              </div>
-            </div>
-            <div className="col-lg-6">
-              <div className="form-inner">
-                <label>Last Name</label>
-                <input type="text" name="fname" placeholder="Your last name" />
-              </div>
-            </div>
             <div className="col-12">
-              <div className="form-inner">
-                <label>Country / Region</label>
-                <input
-                  type="text"
-                  name="fname"
-                  placeholder="Your country name"
-                />
-              </div>
             </div>
             <div className="col-12">
               <div className="form-inner">
                 <label>Street Address</label>
                 <input
-                  type="text"
-                  name="fname"
-                  placeholder="House and street name"
+                    type="text"
+                    name="phoneNumber"
+                    placeholder="Address to recieve our order"
+                    required
+                    ref={addressRef}
                 />
               </div>
             </div>
             <div className="col-12">
-              <div className="form-inner">
-                <select>
-                  <option>Town / City</option>
-                  <option>Dhaka</option>
-                  <option>Saidpur</option>
-                  <option>Newyork</option>
-                </select>
-              </div>
-            </div>
-            <div className="col-12">
-              <div className="form-inner">
-                <input type="text" name="fname" placeholder="Post Code" />
-              </div>
-            </div>
-            <div className="col-12">
-              <div className="form-inner">
-                <label>Additional Information</label>
+              <div className="form-inner form-inner-phone">
+                <label>Phone Number</label>
                 <input
                   type="text"
-                  name="fname"
-                  placeholder="Your Phone Number"
+                  name="phoneNumber"
+                  placeholder="Reciept's Phone Number"
+                  required
+                  ref={phoneNumberRef}
+                  onChange={validatePhoneNumber}
                 />
               </div>
             </div>
             <div className="col-12">
               <div className="form-inner">
-                <input
-                  type="email"
-                  name="email"
-                  placeholder="Your Email Address"
-                />
-              </div>
-            </div>
-            <div className="col-12">
-              <div className="form-inner">
-                <input type="text" name="postcode" placeholder="Post Code" />
-              </div>
-            </div>
-            <div className="col-12">
-              <div className="form-inner">
+                <label>Note for order</label>
                 <textarea
                   name="message"
                   placeholder="Order Notes (Optional)"
                   rows={6}
                   defaultValue={""}
+                  ref={noteRef}
                 />
               </div>
             </div>
+          </div>
+          <div className="place-order-btn">
+            <button type="submit" className="primary-btn1 lg-btn">
+              Place Order
+            </button>
           </div>
         </form>
       </div>

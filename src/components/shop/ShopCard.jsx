@@ -1,19 +1,28 @@
 import {Link} from "react-router-dom";
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-
+import {useSelector} from "react-redux";
 
 function discoutPrice(price, sale){
   return price*(1 - (sale/100));
 }
 
 function ShopCard(props) {
+
   const PRODUCT_API = process.env.REACT_APP_FETCH_API + `/products?size=${props.sizePages}&page=${props.currentPage}&categoryIds=${props.checkedCategory}`;
   const [products, setProducts] = useState([]);
-
+    const isLogin = useSelector((state) => state.auth.login?.currentUser);
+    let token= '';
+    if(isLogin){
+        token = isLogin.token;
+    }
   useEffect(() => {
     axios
-        .get(`${PRODUCT_API}`)
+        .get(`${PRODUCT_API}`, {
+            headers: {
+                'Authorization': `Bearer ${token}`
+            }
+        })
         .then(res => {
             setProducts(res.data.content)
             props.setTotalPages(res.data.totalPages)
@@ -26,7 +35,7 @@ function ShopCard(props) {
     <>
       {products.map((item) => {
         const {
-          productCode,
+          id,
           name, 
           image,
           price,
@@ -34,7 +43,7 @@ function ShopCard(props) {
           markDtoResponse
         } = item;
         return (
-          <div key={productCode} className="col-lg-4 col-md-4 col-sm-6">
+          <div key={id} className="col-lg-4 col-md-4 col-sm-6">
             <div className="collection-card">
               {markDtoResponse.tag === "" ? ("") : (
                 <div 
@@ -44,34 +53,33 @@ function ShopCard(props) {
                 </div>
               )}
               <div className="collection-img">
-                <img className="img-gluid" style={{width:'200px', height:'200px'}} src={image} alt="" />
+                
+              <Link legacyBehavior to={`/shop-details/${id}`}>   
+                <img className="hover_image" style={{width:'200px', height: '200px'}} src={image} alt="" />
+                </Link>
+
                 <div className="view-dt-btn">   
                   <div className="plus-icon">
                     <i className="bi bi-plus" />
                   </div>
-                  <Link legacyBehavior to="/shop-details">
+                  <Link legacyBehavior to={`/shop-details/${id}`}>
                     <a>View Details</a>
                   </Link>
                 </div>
-                <ul className="cart-icon-list">
-                  <li>
-                    <a to="#">
-                      <img src="assets/images/icon/Icon-cart3.svg" alt="" />
-                    </a>
-                  </li>
-                  <li>
-                    <a to="#">
-                      <img
-                        src="assets/images/icon/Icon-favorites3.svg"
-                        alt=""
-                      />
-                    </a>
-                  </li>
-                </ul>
+                  <ul className="cart-icon-list">
+                      <li>
+                          <a href="#">
+                              <img
+                                  src="assets/images/icon/Icon-favorites3.svg"
+                                  alt=""
+                              />
+                          </a>
+                      </li>
+                  </ul>
               </div>
               <div className="collection-content text-center">
                 <h4>
-                  <Link legacyBehavior to={`/shop-details/${productCode}`} >
+                  <Link legacyBehavior to={`/shop-details/${id}`} >
                     {name}
                   </Link>
                 </h4>
@@ -80,24 +88,6 @@ function ShopCard(props) {
                   {sale !==  0 && <del>${price}</del>}
                 </div>
                 <div className="review">
-                  <ul>
-                    <li>
-                      <i className="bi bi-star-fill" />
-                    </li>
-                    <li>
-                      <i className="bi bi-star-fill" />
-                    </li>
-                    <li>
-                      <i className="bi bi-star-fill" />
-                    </li>
-                    <li>
-                      <i className="bi bi-star-fill" />
-                    </li>
-                    <li>
-                      <i className="bi bi-star-fill" />
-                    </li>
-                  </ul>
-                  {/* <span>({review})</span> */}
                 </div>
               </div>
             </div>

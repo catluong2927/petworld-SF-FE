@@ -277,54 +277,6 @@ html {
     font-size: 88%;
   }
 }
-html1 {
-  font-size: 100%;
-  scroll-behavior: smooth;
-
-  @include xl-device() {
-    font-size: 97%;
-  }
-
-  @include lg-device() {
-    font-size: 95%;
-  }
-
-  @include md-device() {
-    font-size: 90%;
-  }
-
-  @include sm-device() {
-    font-size: 90%;
-  }
-
-  @include sm-down-device() {
-    font-size: 88%;
-  }
-}
-html2 {
-  font-size: 100%;
-  scroll-behavior: smooth;
-
-  @include xl-device() {
-    font-size: 97%;
-  }
-
-  @include lg-device() {
-    font-size: 95%;
-  }
-
-  @include md-device() {
-    font-size: 90%;
-  }
-
-  @include sm-device() {
-    font-size: 90%;
-  }
-
-  @include sm-down-device() {
-    font-size: 88%;
-  }
-}
 
 body {
   font-family: var(--font-dosis);
@@ -12754,3 +12706,4 @@ select#duration:focus {
   border: none;
   outline: none;
 }
+

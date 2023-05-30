@@ -1,10 +1,40 @@
-import React from "react";
+import React, { useEffect } from "react";
 
-function SingleProductDescription() {
+function SingleProductDescription(props) {
+
+  const product = props.productDescription;
+  const getElement = document.querySelector.bind(document);
+  const getElements = document.querySelectorAll.bind(document);
+
+  useEffect(() => {
+    const navLinks = getElements('.nav-link');
+    const tabPanes = getElements('.tab-pane');
+
+    navLinks.forEach((navLink, index) => {
+      const pane = tabPanes[index];
+      navLink.addEventListener('click', () => {
+        
+        const activeTabPane = getElement('.tab-pane.fade.active.show');
+        if (activeTabPane !== null) {
+          activeTabPane.classList.remove('active', 'show');
+        }
+
+        const activeNavLink = getElement('.nav-link.active');
+        if (activeNavLink) {
+          activeNavLink.classList.remove('active');
+        }
+
+        navLink.classList.add('active');
+        pane.classList.add('active', 'show');
+      });
+    });
+  }, [getElement, getElements]);
+
   return (
     <>
       <div className="row mb-120">
         <div className="col-lg-12">
+
           <div
             className="nav nav2 nav  nav-pills"
             id="v-pills-tab2"
@@ -48,6 +78,7 @@ function SingleProductDescription() {
               Review
             </button>
           </div>
+
           <div className="tab-content tab-content2" id="v-pills-tabContent2">
             <div
               className="tab-pane fade active show"
@@ -57,24 +88,7 @@ function SingleProductDescription() {
             >
               <div className="description">
                 <p className="para-2 mb-3">
-                  This is a type of food that is specifically formulated and
-                  intended for consumption by pets. It is usually sold in the
-                  form of dry kibble or wet cans, and is designed to meet the
-                  nutritional needs of a variety of different types of pets,
-                  including dogs, cats, and small animals like guinea pigs and
-                  rabbits.
-                </p>
-                <p className="para-2 mb-3">
-                  This food may help from a variety of different ingredients,
-                  including meat, grains, vegetables, and fortified vitamins and
-                  minerals. Some pet food is formulated for specific life
-                  stages, such as puppy or senior, and may contain higher levels
-                  of certain nutrients to support the needs of pets at those
-                  stages of life.
-                </p>
-                <p className="para-2 mb-0">
-                  At the end, also formulated for pets with special dietary
-                  needs, such as those with food allergies or sensitivities.
+                  {product.description}
                 </p>
               </div>
             </div>
@@ -90,45 +104,44 @@ function SingleProductDescription() {
                     <tr>
                       <td>Protein</td>
                       <td>
-                        25%, to build and repair tissues, produce enzymes, and
-                        maintain healthy organs.
+                        {product.protein}
                       </td>
                     </tr>
                     <tr>
                       <td>Fats</td>
                       <td>
-                        0.5%, They also help keep the skin and coat healthy.
+                        {product.fats}
                       </td>
                     </tr>
                     <tr>
                       <td>Carbohydrates</td>
                       <td>
-                        10%, provide energy and help pets maintain healthy
-                        weight and keep good the digestive system.
+                        {product.carbohydrates}
                       </td>
                     </tr>
                     <tr>
                       <td>Minerals</td>
                       <td>
-                        20%,Help building strong bones, maintaining healthy
-                        muscles, and regulating the body's fluid balance.
+                        {product.minerals}
                       </td>
                     </tr>
                     <tr>
                       <td>Vitamins</td>
                       <td>
-                        15.5%, Essential for a variety of functions in the body,
-                        including the immune system, metabolism, and growth.
+                        {product.vitamins}
                       </td>
                     </tr>
                     <tr>
                       <td>Animale</td>
-                      <td> For Dog, Cat.</td>
+                      <td>
+                        {product.animal}
+                      </td>
                     </tr>
                   </tbody>
                 </table>
               </div>
             </div>
+
             <div
               className="tab-pane fade"
               id="v-pills-common"
@@ -354,5 +367,6 @@ function SingleProductDescription() {
     </>
   );
 }
+
 
 export default SingleProductDescription;
