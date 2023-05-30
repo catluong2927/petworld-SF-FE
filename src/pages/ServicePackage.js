@@ -30,9 +30,11 @@ const fetchData = async (packageName, pageSize, currentPage, sortedField = "", t
     return { servicePackages, totalPages };
 };
 
+
 export const ServicePackage = () => {
     const  packageName = useParams();
     const [isSortedByPrice, setIsSortedByPrice] = useState(false);
+    const [isSortedByCenterName, setIsSortedByCenterName] = useState(false);
     const [currentPage, setCurrentPage] = useState(0);
     const pageSize = 9;
     const [data, setData] = useState([]);
@@ -42,11 +44,14 @@ export const ServicePackage = () => {
     if(isLogin){
         token = isLogin.token;
     }
-    console.log(token)
+    console.log(isLogin)
     useEffect(() => {
         let sortedField= '';
         if(isSortedByPrice){
-            sortedField = 'price'
+            sortedField = 'price';
+        }
+        if(isSortedByCenterName){
+            sortedField = 'center';
         }
         const fetchPage = async () => {
             const { servicePackages, totalPages } = await fetchData(packageName.name, pageSize, currentPage, sortedField, token);
@@ -63,7 +68,13 @@ export const ServicePackage = () => {
     }
     const sortByPriceHandler = () => {
         setIsSortedByPrice(!isSortedByPrice);
+        setIsSortedByCenterName(false);
     }
+    const sortByCenterNameHandler = () => {
+        setIsSortedByCenterName(!isSortedByCenterName)
+        setIsSortedByPrice(false)
+    }
+
     return (
         <Layout>
             <BreadcrumbService/>
@@ -80,19 +91,19 @@ export const ServicePackage = () => {
                                     {isSortedByPrice && <p className="service-package-checkmark--checked"></p>}
                                 </label>
                                 <label className="service-package-checkbox-label">
-                                    Option 2
+                                    Center Name
+                                    <input type="checkbox" onClick={sortByCenterNameHandler} />
+                                    <span className="service-package-checkmark" />
+                                    {isSortedByCenterName && <p className="service-package-checkmark--checked"></p>}
+                                </label>
+                                <label className="service-package-checkbox-label">
+                                    Asc
                                     <input type="checkbox" />
                                     <span className="service-package-checkmark" />
                                     {<p className="service-package-checkmark--checked"></p>}
                                 </label>
                                 <label className="service-package-checkbox-label">
-                                    Option 3
-                                    <input type="checkbox" />
-                                    <span className="service-package-checkmark" />
-                                    {<p className="service-package-checkmark--checked"></p>}
-                                </label>
-                                <label className="service-package-checkbox-label">
-                                    Option 4
+                                    Desc
                                     <input type="checkbox" />
                                     <span className="service-package-checkmark" />
                                     {<p className="service-package-checkmark--checked"></p>}
