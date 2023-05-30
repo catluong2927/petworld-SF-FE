@@ -2,6 +2,8 @@ import {Link} from "react-router-dom";
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import {useSelector} from "react-redux";
+import {sentRequest} from "../../pages/ServicePackage";
+import {GET, POST, URL_FAVORITE_PRODUCT} from "../../utilities/constantVariable";
 
 function discoutPrice(price, sale){
   return price*(1 - (sale/100));
@@ -11,11 +13,17 @@ function ShopCard(props) {
 
   const PRODUCT_API = process.env.REACT_APP_FETCH_API + `/products?size=${props.sizePages}&page=${props.currentPage}&categoryIds=${props.checkedCategory}`;
   const [products, setProducts] = useState([]);
-    const isLogin = useSelector((state) => state.auth.login?.currentUser);
+  const isLogin = useSelector((state) => state.auth.login?.currentUser);
     let token= '';
+    let userId = 0;
     if(isLogin){
         token = isLogin.token;
+        userId = isLogin.userDtoResponse.id;
     }
+  const FAVORITE_PRODUCTS_API = `http://localhost:8080/api/favorites/user/${userId}`;
+
+   const[productFavorites,setProductFavorites] = useState([]);
+    // setProductFavorites(sentRequest(FAVORITE_PRODUCTS_API,GET,null,token));
   useEffect(() => {
     axios
         .get(`${PRODUCT_API}`, {
@@ -31,6 +39,28 @@ function ShopCard(props) {
         })
   }, [PRODUCT_API, props]);
 
+  const [arrayIdProductFavorite,setArrayIdProductFavorite] = useState([]);
+
+    useEffect(() => {
+        axios
+            .get(`${FAVORITE_PRODUCTS_API}`)
+            .then(res => {
+                const arrayProductId = [];
+                res.data.favoriteProductDtoResponses.forEach(item => {
+                    arrayProductId.push(item.productDtoResponse.id)
+                })
+                setArrayIdProductFavorite(arrayProductId);
+                console.log(arrayIdProductFavorite)
+            })
+            .catch(err => {console.log(err)
+            })
+    }, [arrayIdProductFavorite, props]);
+
+    const addInFavoriteListHandler = props => {
+        console.log(props,userId)
+        const body = {userId,productId:props}
+        const res = sentRequest(URL_FAVORITE_PRODUCT,POST, body,token)
+    }
   return (
     <>
       {products.map((item) => {
@@ -52,8 +82,19 @@ function ShopCard(props) {
                   <span>{markDtoResponse.tag}</span>
                 </div>
               )}
+                {arrayIdProductFavorite.includes(id) &&
+                <div className={"cart-icon-list-favorite favorite-yes"}>
+                    <li>
+                        <a >
+                            <img
+                                src="/assets/images/icon/Icon-favorites3.svg"
+                                alt=""
+                            />
+                        </a>
+                    </li>
+                </div> }
+
               <div className="collection-img">
-                
               <Link legacyBehavior to={`/shop-details/${id}`}>   
                 <img className="hover_image" style={{width:'200px', height: '200px'}} src={image} alt="" />
                 </Link>
@@ -67,10 +108,10 @@ function ShopCard(props) {
                   </Link>
                 </div>
                   <ul className="cart-icon-list">
-                      <li>
-                          <a href="#">
+                      <li onClick={addInFavoriteListHandler.bind(null, id)}>
+                          <a >
                               <img
-                                  src="assets/images/icon/Icon-favorites3.svg"
+                                  src="/assets/images/icon/Icon-favorites3.svg"
                                   alt=""
                               />
                           </a>

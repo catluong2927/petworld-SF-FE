@@ -2,6 +2,7 @@ import {useSelector} from "react-redux";
 
 export const URL_ORDER = "orders";
 export const URL_PACKAGE_DETAIL = 'package-details';
+export const URL_FAVORITE_PRODUCT ="favorite-products";
 export const URL_REVIEW_PACKAGE = 'package-detail-reviews/package-detail';
 export const URL_REVIEW = 'package-detail-reviews';
 export const PUT = 'PUT';

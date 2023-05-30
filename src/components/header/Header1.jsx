@@ -350,7 +350,7 @@ function Header1() {
                                 </form>
                             </li>
                             <li>
-                                <a href="/order">
+                                <a href="/favorite-products">
                                     <svg
                                         width={14}
                                         height={13}

@@ -18,6 +18,8 @@ import ErrorPage from "./pages/404";
 import Contact from "./pages/contact";
 import Profile from "./pages/profile";
 import Auth from "./hoc/Auth";
+import FavoriteProduct from "./components/favoriteProduct/FavoriteProduct";
+import ProfileSection from "./components/userProfile/UserProfile";
 
 
 
@@ -40,6 +42,8 @@ const router = createBrowserRouter([
       {path:'order', element:<Auth><Order/></Auth>},
       {path:'contact', element:<Contact/>},
       {path:'profile', element:<Profile/>},
+      {path:'favorite-products',element:<FavoriteProduct/>},
+      {path:'/pro',element:<ProfileSection/>},
     ]},
     ]
 )
