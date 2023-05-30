@@ -9373,6 +9373,7 @@ footer.style2 .social-area ul li:hover a i {
 }
 .services-details-area .tab-content2 .tab-pane .reviews-area .review-form form .form-inner2 input {
   margin-right: 5px;
+  display:none;
 }
 .services-details-area .tab-content2 .tab-pane .reviews-area .review-form form .form-inner2 .review-rate-area p {
   margin-bottom: 0;
@@ -9386,7 +9387,7 @@ footer.style2 .social-area ul li:hover a i {
 }
 .services-details-area .tab-content2 .tab-pane .reviews-area .review-form form .form-inner2 .review-rate-area .rate:not(:checked) > input {
   position: absolute;
-  top: -9999px;
+  /*top: -9999px;*/
 }
 .services-details-area .tab-content2 .tab-pane .reviews-area .review-form form .form-inner2 .review-rate-area .rate:not(:checked) > label {
   float: right;
@@ -13344,3 +13345,7 @@ p.title-order {
     transform: scale(1.5) !important;
 }
 
+.user-review-image {
+  width: 5rem;
+  height: 5rem;
+}

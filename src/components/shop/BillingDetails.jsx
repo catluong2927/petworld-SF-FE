@@ -3,8 +3,8 @@ import {sentRequest} from "../../pages/ServicePackage";
 import { useNavigate } from 'react-router-dom';
 import {useDispatch, useSelector} from "react-redux";
 import {deleteAllItems} from "../../store/cartInventorySlice";
-import {DELETE, POST, URL_CART, URL_ORDER} from "../../utilities/constantVariable";
-import {getAllOrders, increaseOneOrder} from "../../store/order-slice";
+import {DELETE,  URL_CART, URL_ORDER} from "../../utilities/constantVariable";
+import { increaseOneOrder} from "../../store/orderSlice";
 
 function BillingDetails(props) {
   const addressRef = useRef();
@@ -13,8 +13,10 @@ function BillingDetails(props) {
   const dispatch = useDispatch();
   const isLogin = useSelector((state) => state.auth.login?.currentUser);
   let email = "";
+  let token = "";
   if(isLogin){
     email = isLogin.userDtoResponse.email;
+    token = isLogin.token;
   }
   const URL = URL_ORDER + '/' + email;
   const navigate = useNavigate();
@@ -54,6 +56,7 @@ function BillingDetails(props) {
       phoneNumber: phoneNumberRef.current.value,
       address: addressRef.current.value,
       note: noteRef.current.value,
+      token,
       date: new Date(),
       status: 'Waiting for confirm',
       total: props.onGetTotal,
@@ -67,7 +70,7 @@ function BillingDetails(props) {
       const res =  sentRequest(URL_CART, DELETE, deleteCartDetailIdList);
         res.then(
             props.toast.current.show({severity:'success', summary: 'Success', detail:`Check out successfully`, life: 1000}),
-            navigate('/order')
+             navigate('/order')
         ).catch(
             props.toast.current.show({severity:'success', summary: 'Success', detail:`Failed payment!`, life: 1000}),
         )

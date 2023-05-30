@@ -4,10 +4,9 @@ import ProductPriceCount from "./ProductPriceCount";
 import {sentRequest} from "../../pages/ServicePackage";
 import {useDispatch, useSelector} from "react-redux";
 import {addItem} from "../../store/cartInventorySlice";
-import { sentRequest } from "../../pages/ServicePackage";
-import { useSelector } from "react-redux";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { useMemo } from "react";
+import {GET} from "../../utilities/constantVariable";
 
 function ProductDetails(props) {
   const { id } = useParams();
@@ -21,8 +20,10 @@ function ProductDetails(props) {
   const dispatch = useDispatch();
   const isLogin = useSelector((state) => state.auth.login?.currentUser);
   let email = "";
+  let token = '';
   if (isLogin) {
     email = isLogin.userDtoResponse.email;
+    token = isLogin.token;
   }
   function discoutPrice(price, sale) {
     return price * (1 - sale / 100);
@@ -55,7 +56,7 @@ function ProductDetails(props) {
   })
 
   useEffect(() => {
-    const res = sentRequest(URL_PRODUCT_DETAIL);
+    const res = sentRequest(URL_PRODUCT_DETAIL, GET, null, token);
     res.then((data) => {
       setProduct(data);
       setMainImage(data.image);
@@ -73,6 +74,7 @@ function ProductDetails(props) {
     type: true,
     typeId: product.id,
     image: product.image,
+    token,
     name: product.name,
     originalPrice: product.price,
     price: finalPrice,
@@ -162,7 +164,7 @@ function ProductDetails(props) {
             <div className="shop-quantity d-flex align-items-center justify-content-start mb-20">
               <div className="quantity d-flex align-items-center">
                 <ProductPriceCount
-                  price={product.price}
+                  price={finalPrice}
                   onSendCart={setProductPriceCount}
                 />
               </div>
