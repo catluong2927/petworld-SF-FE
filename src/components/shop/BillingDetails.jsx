@@ -67,7 +67,7 @@ function BillingDetails(props) {
     if(cartItems.length !== 0) {
       dispatch(increaseOneOrder(data));
       dispatch(deleteAllItems());
-      const res =  sentRequest(URL_CART, DELETE, deleteCartDetailIdList);
+      const res =  sentRequest(URL_CART, DELETE, deleteCartDetailIdList, token);
         res.then(
             props.toast.current.show({severity:'success', summary: 'Success', detail:`Check out successfully`, life: 1000}),
              navigate('/order')
