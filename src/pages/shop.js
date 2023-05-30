@@ -5,7 +5,6 @@ import ShopCard from "../components/shop/ShopCard";
 import Layout from "../layout/Layout";
 import { useEffect } from "react";
 import axios from "axios";
-import {useSelector} from "react-redux";
 
 
 function Shop() {
@@ -15,26 +14,19 @@ function Shop() {
   const [totalPages, setTotalPages] = useState(0);
   const [category, setCategory] = useState([]);
   const [checkedCategory, setCheckedCategory] = useState([]);
-  const isLogin = useSelector((state) => state.auth.login?.currentUser);
-  let token = '';
-  if(isLogin){
-    token = isLogin.token;
-  }
-  console.log(token)
+
+  const token = useRouteLoaderData('token');
+  console.log(token);
 
   const CATEGORY_API = process.env.REACT_APP_FETCH_API + `/categorys`;
   useEffect(() => {
-    axios.get(`${CATEGORY_API}`, {
-
-      headers: {
-        'Authorization': `Bearer ${token}` // Truyền t
-      }
+    axios
+    .get(`${CATEGORY_API}`)
+    .then(res => {
+        setCategory(res.data.content)
     })
-        .then(res => {
-          setCategory(res.data.content);
-        })
-        .catch(err => {
-        });
+    .catch(err => {console.log(err)
+    })
   }, []);
 
 

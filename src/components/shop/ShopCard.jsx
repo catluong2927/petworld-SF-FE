@@ -1,7 +1,6 @@
 import {Link} from "react-router-dom";
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import {useSelector} from "react-redux";
 
 function discoutPrice(price, sale){
   return price*(1 - (sale/100));
@@ -11,18 +10,10 @@ function ShopCard(props) {
 
   const PRODUCT_API = process.env.REACT_APP_FETCH_API + `/products?size=${props.sizePages}&page=${props.currentPage}&categoryIds=${props.checkedCategory}`;
   const [products, setProducts] = useState([]);
-    const isLogin = useSelector((state) => state.auth.login?.currentUser);
-    let token= '';
-    if(isLogin){
-        token = isLogin.token;
-    }
+
   useEffect(() => {
     axios
-        .get(`${PRODUCT_API}`, {
-            headers: {
-                'Authorization': `Bearer ${token}`
-            }
-        })
+        .get(`${PRODUCT_API}`)
         .then(res => {
             setProducts(res.data.content)
             props.setTotalPages(res.data.totalPages)
@@ -66,16 +57,7 @@ function ShopCard(props) {
                     <a>View Details</a>
                   </Link>
                 </div>
-                  <ul className="cart-icon-list">
-                      <li>
-                          <a href="#">
-                              <img
-                                  src="assets/images/icon/Icon-favorites3.svg"
-                                  alt=""
-                              />
-                          </a>
-                      </li>
-                  </ul>
+                
               </div>
               <div className="collection-content text-center">
                 <h4>

@@ -8,20 +8,16 @@ import Home from "./pages";
 import AboutPage from "./pages/about";
 import LoginPage from "./pages/login";
 import SignUpPage from "./pages/sign-up";
-import CloudinaryUploader from "./components/uploadFile/imageUpload";
-import {useState} from "react";
-import {tokenLoader} from "./utilities/author";
 import CartPage from "./pages/cart";
 import CheckOutPage from "./pages/check-out";
 import {Order} from "./components/order/Order";
-import ErrorPage from "./pages/404";
+
 import Contact from "./pages/contact";
 import Profile from "./pages/profile";
 import Auth from "./hoc/Auth";
-
-
-
+import FavoriteProduct from "./components/favoriteProduct/FavoriteProduct";
 const router = createBrowserRouter([
+
   {path:  '/',children:[
       {index: true, element:<Home/>},
           {path:'service-packages', children:[
@@ -29,6 +25,7 @@ const router = createBrowserRouter([
           {path: ':packageId',id:'services',  element: <ServiceDetails/>},                                                     
           ]},
       {path: 'shop', element: <Shop/>},
+      {path: 'favorite', element: <FavoriteProduct />},
       {path: 'shop-details/:id', element: <ShopDetail/>},
       {path: 'test',  element: <Home1Service/>},
       {path:'about', element:<AboutPage/>},
@@ -40,15 +37,12 @@ const router = createBrowserRouter([
       {path:'contact', element:<Contact/>},
       {path:'profile', element:<Profile/>},
     ]},
-
     ]
 )
-
 function App() {
-
-    return (
-        <RouterProvider router={router}/>
-    );
+  return (
+        <RouterProvider router={router} />
+  );
 }
 
 export default App;

@@ -5,7 +5,7 @@ import Layout from "../layout/Layout";
 import {useDispatch, useSelector} from "react-redux";
 import {addItemByOne, decreaseItemByOne, deleteAllItems, deleteItem, firstCallApi} from "../store/cartInventorySlice";
 import {sentRequest} from "./ServicePackage";
-import {GET, URL_CART} from "../utilities/constantVariable";
+import {URL_CART} from "../utilities/constantVariable";
 
 function CartPage() {
   const [data, setData] = useState([]);
@@ -15,15 +15,13 @@ function CartPage() {
   const cartItems = useSelector((state) => state.cartInventory.items);
   const cartTotal = useSelector((state) => state.cartInventory.cartTotal)
   let email = "";
-  let token= '';
   if(isLogin){
     email = isLogin.userDtoResponse.email;
-    token = isLogin.token;
   }
 
   useEffect(() => {
     const URL = `${URL_CART}/${email}`
-      const res = sentRequest(URL, GET, null, token);
+      const res = sentRequest(URL);
       res.then(data => {
         dispatch(deleteAllItems());
         dispatch(firstCallApi(data))
@@ -40,7 +38,6 @@ function CartPage() {
     setShouldFetchData(!shouldFetchData);
     const body = {
     id: props.typeId,
-      token,
       userEmail: email,
       ...props
     };
@@ -53,7 +50,6 @@ function CartPage() {
     setShouldFetchData(!shouldFetchData)
     const body = {
       userEmail: email,
-      token,
       ...props,
       amount: 1,
     };
@@ -64,7 +60,6 @@ function CartPage() {
     setShouldFetchData(!shouldFetchData)
     const body = {
       userEmail: email,
-      token,
       ...props,
       amount: 1,
     };

@@ -5,10 +5,8 @@ import React, {useEffect, useRef, useState} from "react";
 import {sentRequest} from "../../pages/ServicePackage";
 import {useDispatch, useSelector} from "react-redux";
 import {Toast} from "primereact/toast";
-import {cancelOrder, deleteAllOrders, getAllOrders} from "../../store/orderSlice";
+import {cancelOrder, deleteAllOrders, getAllOrders} from "../../store/order-slice";
 import Modal from "./CustomePrompt";
-import {GET} from "../../utilities/constantVariable";
-
 
 
 export const Order = () => {
@@ -21,17 +19,14 @@ export const Order = () => {
     const [id, setId] = useState(0);
     const navigate = useNavigate();
     let email = "";
-    let token = '';
     if(isLogin){
         email = isLogin.userDtoResponse.email;
-        token = isLogin.token;
     }
-
     const URL_ORDER = `orders/${email}`;
     const [showModal, setShowModal] = useState(false);
     useEffect(() => {
         dispatch(deleteAllOrders)
-        const res = sentRequest(URL_ORDER, GET, null, token);
+        const res = sentRequest(URL_ORDER);
         res.then(data => {
             dispatch(getAllOrders(data))
         }).catch()
@@ -55,7 +50,7 @@ export const Order = () => {
 
     const cancelBillHandler = () => {
         setShouldRender(!shouldRender);
-        const canceledOrder = {id: id, status: "Canceled" , token}
+        const canceledOrder = {id: id, status: "Canceled" }
         dispatch(cancelOrder(canceledOrder))
         navigate('/order')
         setShowModal(!showModal)
@@ -75,14 +70,13 @@ export const Order = () => {
                     </Modal>
                 )}
             <div className="col-lg-4">
-                {orders.map((element, index) => (<div className="widget-area" key={element.id}>
+                {orders.map((element) => (<div className="widget-area" key={element.id}>
                     <div className="single-widgets widget_egns_recent_post mb-30 order">
                         <div>
                         </div>
                       <span className="widget-title order-header">
                         <h3>{element.status}</h3>
-                          {element.status === 'Waiting for confirm'? <button className='order-cancle'
-                                             onClick={openModal.bind(null, element.id ? element.id: orders.length + 1)} >
+                          {element.status === 'Waiting for confirm'? <button className='order-cancle' onClick={openModal.bind(null, element.id)} >
                               <h4 className='order-cancle-btn'> Cancel Order</h4></button>: ''}
                       </span>
                         <div className="recent-post-wraper">
@@ -148,7 +142,7 @@ export const Order = () => {
                                 </tr>
                                 <tr>
                                     <th>Total price: </th>
-                                    <td className={"order-detail-price"}>$ {element.total.toLocaleString()} </td>
+                                    <td className={"order-detail-price"}>{element.total.toLocaleString()} $</td>
                                 </tr>
                             </table>
                         </div>

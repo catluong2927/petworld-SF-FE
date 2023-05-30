@@ -13,7 +13,7 @@ import {
 } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
 import cartInventorySlice from "../store/cartInventorySlice";
-import OrderSlice from "../store/orderSlice";
+import OrderSlice from "../store/order-slice";
 const persistConfig = {
     key: 'root',
     version: 1,
