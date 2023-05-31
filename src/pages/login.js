@@ -113,20 +113,20 @@ function LoginPage() {
                                                         </div>
                                                         <p className="error">{errors.password}</p>
                                                     </div>
-                                                    <div className="col-12">
-                                                        <div
-                                                            className="form-agreement form-inner d-flex justify-content-between flex-wrap">
-                                                            <div className="form-group">
-                                                                <input type="checkbox" id="html"/>
-                                                                <label htmlFor="html">
-                                                                    I agree to the <Link  to="#">Terms &amp; Policy</Link>
-                                                                </label>
-                                                            </div>
-                                                            <Link to="#" className="forgot-pass">
-                                                                Forgotten Password
-                                                            </Link>
-                                                        </div>
-                                                    </div>
+                                                    {/*<div className="col-12">*/}
+                                                    {/*    <div*/}
+                                                    {/*        className="form-agreement form-inner d-flex justify-content-between flex-wrap">*/}
+                                                    {/*        <div className="form-group">*/}
+                                                    {/*            <input type="checkbox" id="html"/>*/}
+                                                    {/*            <label htmlFor="html">*/}
+                                                    {/*                I agree to the <Link  to="#">Terms &amp; Policy</Link>*/}
+                                                    {/*            </label>*/}
+                                                    {/*        </div>*/}
+                                                    {/*        <Link to="#" className="forgot-pass">*/}
+                                                    {/*            Forgotten Password*/}
+                                                    {/*        </Link>*/}
+                                                    {/*    </div>*/}
+                                                    {/*</div>*/}
                                                 </div>
                                                 <button className="account-btn" type="submit">Log in</button>
                                             </form>

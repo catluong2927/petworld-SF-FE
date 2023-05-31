@@ -16,6 +16,7 @@ import ErrorPage from "./pages/404";
 import Contact from "./pages/contact";
 import Profile from "./pages/profile";
 import Auth from "./hoc/Auth";
+import ChangPassword from "./pages/updatepassword";
 
 
 
@@ -37,6 +38,7 @@ const router = createBrowserRouter([
       {path:'order', element:<Auth><Order/></Auth>},
       {path:'contact', element:<Contact/>},
       {path:'profile', element:<Profile/>},
+      {path:'updatepassword', element:<ChangPassword/>},
     ]},
     ]
 )

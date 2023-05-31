@@ -1,24 +1,19 @@
-import {Link, useNavigate} from "react-router-dom";
-import React, {useEffect, useRef, useState} from "react";
+import React, {useEffect, useState} from "react";
 import Breadcrumb from "../components/breadcrumb/Breadcrumb";
 import Layout from "../layout/Layout";
 import "./sign-up.css";
-import {Toast} from "primereact/toast";
 import "primereact/resources/themes/lara-light-indigo/theme.css";
 import "primereact/resources/primereact.min.css";
-import {Formik} from "formik";
-
-import {logout, signUpUser} from "../redux/apiRequest";
-import {useDispatch, useSelector} from "react-redux";
+import {useSelector} from "react-redux";
 
 
 function Profile() {
     const data = useSelector((state)=>state.users.users?.userDetail);
 
-    // const [user,setUser] = useState({});
-    // useEffect(() => {
-    //     setUser(data);
-    // }, [user]);
+    const [user,setUser] = useState({});
+    useEffect(() => {
+        setUser(data);
+    }, [user]);
     return (
         <>
             <Layout>
