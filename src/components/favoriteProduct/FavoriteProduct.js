@@ -5,6 +5,8 @@ import axios from "axios";
 import Favorite from "./Favorite";
 import Breadcrumb from "../breadcrumb/Breadcrumb";
 import Layout from "../../layout/Layout";
+import {sentRequest} from "../../pages/ServicePackage";
+import {DELETE, POST, URL_FAVORITE_PRODUCT} from "../../utilities/constantVariable";
 
 function FavoriteProduct() {
 
@@ -40,6 +42,8 @@ function FavoriteProduct() {
         setCurrentPage(page);
         window.scroll(0,0);
     };
+
+
 
 
     const checkbokHandler = (event) => {
