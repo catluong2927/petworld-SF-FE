@@ -9,7 +9,7 @@ function discoutPrice(price, sale){
     return price*(1 - (sale/100));
 }
 function ShopCard(props) {
-
+    const [arrayIdProductFavorite,setArrayIdProductFavorite] = useState([]);
     const isLogin = useSelector(state => state.auth.login?.currentUser)
     const [products, setProducts] = useState([]);
     let token= '';
@@ -26,20 +26,25 @@ function ShopCard(props) {
             .get(`${FAVORITE_API}`)
             .then(res => {
                 const arrayProduct = [];
+                const arrayProductId = [];
                 res.data.favoriteProductDtoResponses.forEach(item => {
-                    arrayProduct.push(item.productDtoResponse)
+                    arrayProduct.push(item.productDtoResponse);
+                    arrayProductId.push(item.productDtoResponse.id)
                 })
+                setArrayIdProductFavorite(arrayProductId)
                 setProducts(arrayProduct);
             })
             .catch(err => {console.log(err)
             })
-    }, [FAVORITE_API, props]);
-    console.log(products)
+    }, [FAVORITE_API, props, arrayIdProductFavorite.length]);
 
     const deleteFavoriteListHandler = props => {
-        console.log(props,userId)
+        setArrayIdProductFavorite(prevState => prevState.slice(0, prevState.length - 1));
         const body = {userId,productId:props}
-        const res = sentRequest(URL_DELETE_FAVORITE_PRODUCT,DELETE,body,token)
+        const res = sentRequest(URL_DELETE_FAVORITE_PRODUCT,DELETE,body,token);
+        if(arrayIdProductFavorite.length === 1){
+            window.location.reload(true);
+        }
     }
 
     return (

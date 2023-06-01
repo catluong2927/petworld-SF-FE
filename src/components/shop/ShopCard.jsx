@@ -51,7 +51,6 @@ function ShopCard(props) {
                     arrayProductId.push(item.productDtoResponse.id)
                 })
                 setArrayIdProductFavorite(arrayProductId);
-                console.log(arrayIdProductFavorite)
             })
             .catch(err => {console.log(err)
             })
