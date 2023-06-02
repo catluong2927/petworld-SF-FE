@@ -13,6 +13,7 @@ function ShopCard(props) {
 
   const PRODUCT_API = process.env.REACT_APP_FETCH_API + `/products?size=${props.sizePages}&page=${props.currentPage}&categoryIds=${props.checkedCategory}`;
   const [products, setProducts] = useState([]);
+  const [shouldRender, setShouldRender] = useState(false);
   const isLogin = useSelector((state) => state.auth.login?.currentUser);
     let token= '';
     let userId = 0;
@@ -24,6 +25,7 @@ function ShopCard(props) {
 
    const[productFavorites,setProductFavorites] = useState([]);
     // setProductFavorites(sentRequest(FAVORITE_PRODUCTS_API,GET,null,token));
+  const [arrayIdProductFavorite,setArrayIdProductFavorite] = useState([]);
   useEffect(() => {
     axios
         .get(`${PRODUCT_API}`, {
@@ -37,9 +39,8 @@ function ShopCard(props) {
         })
         .catch(err => {console.log(err)
         })
-  }, [PRODUCT_API, props]);
+  }, [PRODUCT_API, props, shouldRender, arrayIdProductFavorite.length]);
 
-  const [arrayIdProductFavorite,setArrayIdProductFavorite] = useState([]);
 
     useEffect(() => {
         axios
@@ -54,13 +55,16 @@ function ShopCard(props) {
             })
             .catch(err => {console.log(err)
             })
-    }, [arrayIdProductFavorite, props]);
+    }, [ props]);
+
 
     const addInFavoriteListHandler = props => {
-        console.log(props,userId)
+        setArrayIdProductFavorite(prevState => [...prevState, props])
+        setShouldRender(!shouldRender);
         const body = {userId,productId:props}
         const res = sentRequest(URL_FAVORITE_PRODUCT,POST, body,token)
     }
+
   return (
     <>
       {products.map((item) => {

@@ -74,7 +74,7 @@ function FavoriteProduct() {
     return (
         <>
             <Layout>
-                <Breadcrumb pageName="Shop" pageTitle="Shop" />
+                <Breadcrumb pageName="Your Favorite" pageTitle="Your Favorite" />
                 <div className="shop-page pt-120 mb-120">
                     <div className="container">
                         <div className="row">
