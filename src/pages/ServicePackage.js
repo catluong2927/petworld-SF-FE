@@ -7,8 +7,9 @@ import BreadcrumbService from "../components/breadcrumb/BreadcrumbService";
 import ServiceNavigation from "../components/service/ServiceNavigation";
 import {useSelector} from "react-redux";
 
-const fetchData = async (packageName, pageSize, currentPage, sortedField = "", token = "") => {
-    const URL = `http://localhost:8080/api/package-details/search/${packageName}?size=${pageSize}&page=${currentPage}&sort=${sortedField}`;
+const fetchData = async (packageName, pageSize, currentPage, sortedField = "", sortOrder, token = "") => {
+
+    const URL = `http://localhost:8080/api/package-details/search/${packageName}?size=${pageSize}&page=${currentPage}&sort=${sortedField}${sortOrder === "asc" ? ",asc" : ",desc"}`;
 
     const headers = {
         'Content-Type': 'application/json',
@@ -35,6 +36,7 @@ export const ServicePackage = () => {
     const  packageName = useParams();
     const [isSortedByPrice, setIsSortedByPrice] = useState(false);
     const [isSortedByCenterName, setIsSortedByCenterName] = useState(false);
+    const [isSortedAsDesc, setSortedAsDesc] = useState(false);
     const [currentPage, setCurrentPage] = useState(0);
     const pageSize = 9;
     const [data, setData] = useState([]);
@@ -47,6 +49,10 @@ export const ServicePackage = () => {
     console.log(isLogin)
     useEffect(() => {
         let sortedField= '';
+        let sortOrder = 'asc';
+        if(isSortedAsDesc){
+            sortOrder ="desc";
+        }
         if(isSortedByPrice){
             sortedField = 'price';
         }
@@ -54,14 +60,14 @@ export const ServicePackage = () => {
             sortedField = 'center';
         }
         const fetchPage = async () => {
-            const { servicePackages, totalPages } = await fetchData(packageName.name, pageSize, currentPage, sortedField, token);
+            const { servicePackages, totalPages } = await fetchData(packageName.name, pageSize, currentPage, sortedField,sortOrder, token);
             setData(servicePackages);
             setTotalPages(totalPages);
         };
         fetchPage();
 
 
-    }, [currentPage, pageSize, isSortedByPrice]);
+    }, [currentPage, pageSize, isSortedByPrice, isSortedAsDesc]);
 
     const getCurrentPageHandler = (currentPage) => {
         setCurrentPage(currentPage)
@@ -75,6 +81,9 @@ export const ServicePackage = () => {
         setIsSortedByPrice(false)
     }
 
+    const sortAsDescHandler = () => {
+        setSortedAsDesc(!isSortedAsDesc)
+    }
     return (
         <Layout>
             <BreadcrumbService/>
@@ -93,20 +102,20 @@ export const ServicePackage = () => {
                                 <label className="service-package-checkbox-label">
                                     Center Name
                                     <input type="checkbox" onClick={sortByCenterNameHandler} />
-                                    <span className="service-package-checkmark" />
+                                    <span className="service-package-checkmark service-package-checkmark--hr" />
                                     {isSortedByCenterName && <p className="service-package-checkmark--checked"></p>}
                                 </label>
-                                <label className="service-package-checkbox-label">
+                                <label className="service-package-checkbox-label service-package-checkbox-label--space">
                                     Asc
-                                    <input type="checkbox" />
+                                    <input type="checkbox" onClick={sortAsDescHandler} />
                                     <span className="service-package-checkmark" />
-                                    {<p className="service-package-checkmark--checked"></p>}
+                                    {!isSortedAsDesc && <p className="service-package-checkmark--checked"></p>}
                                 </label>
-                                <label className="service-package-checkbox-label">
+                                <label className="service-package-checkbox-label" >
                                     Desc
-                                    <input type="checkbox" />
+                                    <input type="checkbox" onClick={sortAsDescHandler} />
                                     <span className="service-package-checkmark" />
-                                    {<p className="service-package-checkmark--checked"></p>}
+                                    {isSortedAsDesc && <p className="service-package-checkmark--checked"></p>}
                                 </label>
                                 <label className="service-package-checkbox-label">
                                     Bones &amp; Rawhide

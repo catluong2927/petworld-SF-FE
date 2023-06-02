@@ -4042,7 +4042,7 @@ a.ui-button:active,
   position: relative;
   transition: 0.35s;
   overflow: hidden;
-  max-width: 18.75rem;
+  max-width: 18.75rem!important;
   max-height: 25rem;
   min-width: 17rem;
   min-height: 21rem;
@@ -13389,4 +13389,22 @@ p.title-order {
 .user-review-image {
   width: 5rem;
   height: 5rem;
+}
+.package-image:hover {
+  width: 16rem;
+}
+
+.service-package-sidebar::before {
+  content: "";
+  opacity: 0.05;
+  background: var(--title-color1);
+  height: 1px;
+  width: 100%;
+  margin-top: 104px;
+  position: absolute;
+  left: 0;
+  top: 73px;
+}
+.service-package-checkbox-label--space {
+  margin-top: 29px;
 }
