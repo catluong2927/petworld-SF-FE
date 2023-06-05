@@ -4044,7 +4044,7 @@ a.ui-button:active,
   position: relative;
   transition: 0.35s;
   overflow: hidden;
-  max-width: 18.75rem;
+  max-width: 18.75rem!important;
   max-height: 25rem;
   min-width: 17rem;
   min-height: 21rem;
@@ -13392,15 +13392,13 @@ p.title-order {
   width: 5rem;
   height: 5rem;
 }
-
-
 .avatar-edit{
   position: relative;
 }
 
 .edit-icon{
   position: absolute;
-  width: 30 px;
+  width: 30px;
   height: 30px;
   margin-left: -2rem;
   border-radius: 30px;
@@ -13411,4 +13409,22 @@ p.title-order {
   height: 150px;
   margin-left: -2rem;
   border-radius: 150px;
+}
+.package-image:hover {
+  width: 16rem;
+}
+
+.service-package-sidebar::before {
+  content: "";
+  opacity: 0.05;
+  background: var(--title-color1);
+  height: 1px;
+  width: 100%;
+  margin-top: 104px;
+  position: absolute;
+  left: 0;
+  top: 73px;
+}
+.service-package-checkbox-label--space {
+  margin-top: 29px;
 }

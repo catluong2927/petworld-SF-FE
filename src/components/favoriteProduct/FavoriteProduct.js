@@ -5,6 +5,8 @@ import axios from "axios";
 import Favorite from "./Favorite";
 import Breadcrumb from "../breadcrumb/Breadcrumb";
 import Layout from "../../layout/Layout";
+import {sentRequest} from "../../pages/ServicePackage";
+import {DELETE, POST, URL_FAVORITE_PRODUCT} from "../../utilities/constantVariable";
 
 function FavoriteProduct() {
 
@@ -42,6 +44,8 @@ function FavoriteProduct() {
     };
 
 
+
+
     const checkbokHandler = (event) => {
         var updatedList = [...checkedCategory];
         if (event.target.checked) {
@@ -74,7 +78,7 @@ function FavoriteProduct() {
     return (
         <>
             <Layout>
-                <Breadcrumb pageName="Shop" pageTitle="Shop" />
+                <Breadcrumb pageName="Your Favorite" pageTitle="Your Favorite" />
                 <div className="shop-page pt-120 mb-120">
                     <div className="container">
                         <div className="row">

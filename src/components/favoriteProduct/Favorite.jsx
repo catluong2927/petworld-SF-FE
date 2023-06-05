@@ -2,33 +2,52 @@ import {Link} from "react-router-dom";
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import {useSelector} from "react-redux";
+import {sentRequest} from "../../pages/ServicePackage";
+import {DELETE, POST, URL_FAVORITE_PRODUCT} from "../../utilities/constantVariable";
 
 function discoutPrice(price, sale){
     return price*(1 - (sale/100));
 }
-
 function ShopCard(props) {
-
+    const [arrayIdProductFavorite,setArrayIdProductFavorite] = useState([]);
     const isLogin = useSelector(state => state.auth.login?.currentUser)
-    const FAVORITE_API = process.env.REACT_APP_FETCH_API + `/favorites/user/${isLogin.userDtoResponse.id}`;
     const [products, setProducts] = useState([]);
+    let token= '';
+    let userId = 0;
+    if(isLogin){
+        token = isLogin.token;
+        userId = isLogin.userDtoResponse.id;
+    }
+    const FAVORITE_API = process.env.REACT_APP_FETCH_API + `/favorites/user/${isLogin.userDtoResponse.id}`;
+    const URL_DELETE_FAVORITE_PRODUCT = "favorite-products";
+
     useEffect(() => {
         axios
             .get(`${FAVORITE_API}`)
             .then(res => {
                 const arrayProduct = [];
+                const arrayProductId = [];
                 res.data.favoriteProductDtoResponses.forEach(item => {
-                    arrayProduct.push(item.productDtoResponse)
+                    arrayProduct.push(item.productDtoResponse);
+                    arrayProductId.push(item.productDtoResponse.id)
                 })
+                setArrayIdProductFavorite(arrayProductId)
                 setProducts(arrayProduct);
             })
             .catch(err => {console.log(err)
             })
-    }, [FAVORITE_API, props]);
-    console.log(products)
+    }, [FAVORITE_API, props, arrayIdProductFavorite.length]);
+
+    const deleteFavoriteListHandler = props => {
+        setArrayIdProductFavorite(prevState => prevState.slice(0, prevState.length - 1));
+        const body = {userId,productId:props}
+        const res = sentRequest(URL_DELETE_FAVORITE_PRODUCT,DELETE,body,token);
+        if(arrayIdProductFavorite.length === 1){
+            window.location.reload(true);
+        }
+    }
 
     return (
-
         <>
             {products.map((item) => {
                 const {
@@ -49,6 +68,8 @@ function ShopCard(props) {
                                     <span>{markDtoResponse.tag}</span>
                                 </div>
                             )}
+
+
                             <div className="collection-img">
 
                                 <Link legacyBehavior to={`/shop-details/${id}`}>
@@ -63,6 +84,17 @@ function ShopCard(props) {
                                         <a>View Details</a>
                                     </Link>
                                 </div>
+
+                                <ul className="cart-icon-list">
+                                    <li onClick={deleteFavoriteListHandler.bind(null, id)}>
+                                        <a >
+                                            <img
+                                                src="/assets/images/icon/delete.svg"
+                                                alt=""
+                                            />
+                                        </a>
+                                    </li>
+                                </ul>
 
                             </div>
                             <div className="collection-content text-center">
