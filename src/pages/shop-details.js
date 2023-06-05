@@ -20,6 +20,7 @@ function ShopDetails() {
       .get(`${PRODUCT_DETAIL_API}`)
       .then(res => {
         setProduct(res.data)
+        window.scroll(0,0)
       })
       .catch(err => { throw err })
   }), [id, PRODUCT_DETAIL_API])
