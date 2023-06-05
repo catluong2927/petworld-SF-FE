@@ -3,7 +3,7 @@ label {
 }
 
 .custom-input-error label {
-    color: red;
+    color: red !important;
 }
 
 .custom-input-error input {

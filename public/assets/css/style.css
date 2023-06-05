@@ -1478,6 +1478,7 @@ header.style-1 .nav-right ul li a {
   background-color: transparent;
   transition: 0.35s;
   position: relative;
+  text-decoration: none;
 }
 
 header.style-1 .nav-right ul li a svg {
@@ -1612,6 +1613,7 @@ header.style-1 .main-menu ul > li a {
   font-family: var(--font-cabin);
   transition: all 0.5s ease-out 0s;
   position: relative;
+  text-decoration: none;
 }
 @media (max-width: 1500px) {
   header.style-1 .main-menu ul > li a {
@@ -13389,6 +13391,24 @@ p.title-order {
 .user-review-image {
   width: 5rem;
   height: 5rem;
+}
+.avatar-edit{
+  position: relative;
+}
+
+.edit-icon{
+  position: absolute;
+  width: 30px;
+  height: 30px;
+  margin-left: -2rem;
+  border-radius: 30px;
+}
+.image-loading{
+  /*position: absolute;*/
+  width: 150px;
+  height: 150px;
+  margin-left: -2rem;
+  border-radius: 150px;
 }
 .package-image:hover {
   width: 16rem;

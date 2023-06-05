@@ -10,7 +10,6 @@ import {
     logoutSuccess,
     logoutFail,
 } from "./authSlice";
-import {getUserFail, getUserStart, getUserSuccess} from "./userSlice";
 
 export const loginUser = async (form, dispatch, navigate, toast) => {
     const LOGIN_API = process.env.REACT_APP_FETCH_API;
@@ -60,19 +59,4 @@ export const logout = async (dispatch,navigate) =>{
     }
 }
 
-export const getUserDetail = async (userId,token,dispatch,navigate) =>{
-    const LOGIN_API = process.env.REACT_APP_FETCH_API;
-    dispatch(getUserStart());
 
-    try{
-        const res = await axios.get(`${LOGIN_API}/users/${userId}`,{
-           headers: {
-               Authorization: `Bearer ${token}`
-           }
-       })
-        dispatch(getUserSuccess(res.data));
-        navigate("/profile");
-    }catch (err){
-        dispatch(getUserFail())
-    }
-}

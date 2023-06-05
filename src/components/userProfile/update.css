@@ -1,0 +1,17 @@
+label {
+    display: block;
+}
+
+.custom-input-error label {
+    color: red;
+}
+
+.custom-input-error input {
+    border: 2px solid red !important;
+    border-radius: 4px !important;
+}
+
+.error {
+    color: red;
+    margin: 0;
+}
