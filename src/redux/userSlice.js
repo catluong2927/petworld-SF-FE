@@ -12,6 +12,16 @@ const userSlice = createSlice({
             success: '',
             isFetching: false,
             error: false
+        },
+        update: {
+            success: '',
+            isFetching: false,
+            error: false
+        },
+        image:{
+            isUpdated: '',
+            isFetching: false,
+            error: false
         }
     },
     reducers: {
@@ -39,6 +49,30 @@ const userSlice = createSlice({
             state.password.isFetching = false;
             state.password.error = true
         },
+        updateUserStart: (state) => {
+            state.update.isFetching = true;
+        },
+        updateUserSuccess: (state, action) => {
+            state.update.isFetching = false;
+            state.update.userDetail = action.payload;
+            state.update.error = false
+        },
+        updateUserFail: (state) => {
+            state.update.isFetching = false;
+            state.update.error = true
+        },
+        updateImageStart: (state) => {
+            state.image.isFetching = true;
+        },
+        updateImageSuccess: (state,action) => {
+            state.image.isFetching = false;
+            state.image.isUpdated = action.payload;
+            state.image.error = false
+        },
+        updateImageFail: (state) => {
+            state.image.isFetching = false;
+            state.image.error = true
+        },
     }
 })
 
@@ -49,5 +83,11 @@ export const {
     editPassStart,
     editPassSuccess,
     editPassFail,
+    updateUserStart,
+    updateUserSuccess,
+    updateUserFail,
+    updateImageStart,
+    updateImageSuccess,
+    updateImageFail
 } = userSlice.actions;
 export default userSlice.reducer;

@@ -9,6 +9,7 @@ const initialState = {
     navState: false,
     scrollY: 0,
 };
+
 function reducer(state, action) {
     switch (action.type) {
         case "home":
@@ -29,11 +30,16 @@ function reducer(state, action) {
             throw new Error();
     }
 }
+
 function Header1() {
     const isLogin = useSelector((state) => state.auth.login?.currentUser);
+    const isEdit = useSelector((state) => state.user.image?.isUpdated);
     const currentRoute = useLocation().pathname;
     const [state, dispatch] = useReducer(reducer, initialState);
     const headerRef = useRef(null);
+    const [user, setUser] = useState({})
+    const [avatar, setAvatar] = useState('');
+    const [newAvatar,setNewAvatar] = useState('')
     const handleScroll = () => {
         const {scrollY} = window;
         dispatch({type: "setScrollY", payload: scrollY});
@@ -44,6 +50,18 @@ function Header1() {
             window.removeEventListener("scroll", handleScroll);
         };
     }, []);
+
+    useEffect(() => {
+        setUser(isLogin?.userDtoResponse)
+        if (isLogin) {
+            setAvatar(user.avatar);
+        }
+    }, [user])
+    useEffect(() => {
+        if(isEdit !== null){
+            setNewAvatar(isEdit);
+        }
+    }, [isEdit])
     return (
         <>
             <div className="top-bar">
@@ -162,7 +180,7 @@ function Header1() {
                                     }
                                 >
                                     <li>
-                                        <a href="/service-packages/search/DayCare">
+                                        <a href="/service-packages/search/Day care">
                                             <p className={`menu-item-children ${currentRoute === "/service-packages/search/Day Care" ? "active" : ""}`}>
                                                 Day Care
                                             </p>
@@ -174,7 +192,7 @@ function Header1() {
                                         </a>
                                     </li>
                                     <li>
-                                        <a href="/service-packages/search/'Pet's Sapa'">
+                                        <a href="/service-packages/search/Pet's Sap">
                                             <p className='menu-item-children'>'Pet's Sapa'</p>
                                         </a>
                                     </li>
@@ -222,7 +240,7 @@ function Header1() {
                                 </ul>
                             </li>
                             <li className="menu-item-has-children">
-                                <p className='menu-list-navigation-has-children'>SHOP</p>
+                                <p className='menu-list-navigation-has-children'>SHOPPING</p>
                                 <i
                                     className="bi bi-plus dropdown-icon"
                                     onClick={() => dispatch({type: "shop"})}
@@ -237,7 +255,7 @@ function Header1() {
                                     <li>
                                         <Link to="/shop">
                                             <p className={`menu-item-children ${currentRoute === "/shop" ? "active" : ""}`}>
-                                                Shop
+                                                products
                                             </p>
                                         </Link>
                                     </li>
@@ -330,10 +348,14 @@ function Header1() {
                     <div className="nav-right d-flex jsutify-content-end align-items-center">
                         <ul>
                             <li className="search-btn">
-                                <Link to="/search">
+                                <Link to="/http://192.168.4.228:8081/">
                                     <svg width={15} height={15} viewBox="0 0 15 15">
-                                        <path
-                                            d="M13.8914 12.3212L11.3164 9.74312C11.1877 9.63999 11.0332 9.56265 10.8787 9.56265H10.4667C11.1619 8.6603 11.5997 7.52593 11.5997 6.26265C11.5997 3.32358 9.1792 0.900146 6.2437 0.900146C3.28245 0.900146 0.887695 3.32358 0.887695 6.26265C0.887695 9.22749 3.28245 11.6251 6.2437 11.6251C7.4797 11.6251 8.6127 11.2126 9.5397 10.4908V10.9291C9.5397 11.0837 9.5912 11.2384 9.71995 11.3673L12.2692 13.9197C12.5267 14.1775 12.9129 14.1775 13.1447 13.9197L13.8657 13.1978C14.1232 12.9658 14.1232 12.5791 13.8914 12.3212ZM6.2437 9.56265C4.41545 9.56265 2.9477 8.09312 2.9477 6.26265C2.9477 4.45796 4.41545 2.96265 6.2437 2.96265C8.0462 2.96265 9.5397 4.45796 9.5397 6.26265C9.5397 8.09312 8.0462 9.56265 6.2437 9.56265Z"/>
+                                        <path d="M428,41.534H30c-16.569,0-30,13.431-30,30v252c0,16.568,13.432,30,30,30h132.1l43.942,52.243
+			                                    c5.7,6.777,14.103,10.69,22.959,10.69c8.856,0,17.258-3.912,22.959-10.69l43.942-52.243H428c16.568,0,30-13.432,30-30v-252
+			                                    C458,54.965,444.568,41.534,428,41.534z M323.916,281.534H82.854c-8.284,0-15-6.716-15-15s6.716-15,15-15h241.062
+			                                    c8.284,0,15,6.716,15,15S332.2,281.534,323.916,281.534z M67.854,198.755c0-8.284,6.716-15,15-15h185.103c8.284,0,15,6.716,15,15
+			                                    s-6.716,15-15,15H82.854C74.57,213.755,67.854,207.039,67.854,198.755z M375.146,145.974H82.854c-8.284,0-15-6.716-15-15
+			                                    s6.716-15,15-15h292.291c8.284,0,15,6.716,15,15C390.146,139.258,383.43,145.974,375.146,145.974z"/>
                                     </svg>
                                 </Link>
                                 <form className="nav__search-form">
@@ -347,7 +369,7 @@ function Header1() {
                                 </form>
                             </li>
                             <li>
-                                <Link to="/order">
+                                <a href="/favorite-products">
                                     <svg
                                         width={14}
                                         height={13}
@@ -357,7 +379,7 @@ function Header1() {
                                         <path
                                             d="M12.4147 1.51371C11.0037 0.302997 8.92573 0.534835 7.61736 1.87434L7.12993 2.38954L6.61684 1.87434C5.33413 0.534835 3.23047 0.302997 1.81948 1.51371C0.203258 2.90473 0.126295 5.37767 1.56294 6.87174L6.53988 12.0237C6.84773 12.3586 7.38647 12.3586 7.69433 12.0237L12.6713 6.87174C14.1079 5.37767 14.0309 2.90473 12.4147 1.51371Z"/>
                                     </svg>
-                                </Link>
+                                </a>
                             </li>
                             <li>
                                 <Link to="/cart">
@@ -372,31 +394,39 @@ function Header1() {
                                     </svg>
                                 </Link>
                             </li>
-                            {isLogin ?
-                                <li className="user-profile-has--hover">
-                                    <img className='user-avatar'
-                                         src={isLogin.userDtoResponse.avatar}
-                                    />
-                                    <UserInfor/>
-                                </li>
-                                :
-                                <li>
-                                    <Link to="/login">
-                                        <svg
-                                            width={15}
-                                            height={15}
-                                            viewBox="0 0 15 15"
-                                            xmlns="http://www.w3.org/2000/svg"
-                                        >
-                                            <g clipPath="url(#clip0_1585_341)">
-                                                <path
-                                                    d="M6.98716 0.938832C6.28609 1.04711 5.65949 1.38227 5.169 1.90563C4.62972 2.48055 4.3498 3.14571 4.31128 3.94235C4.25735 5.0561 4.80177 6.12086 5.74167 6.73703C6.20391 7.04125 6.64818 7.19594 7.18747 7.23977C8.18643 7.31711 9.03901 7.00258 9.72724 6.29875C10.2742 5.74188 10.5516 5.13344 10.6183 4.35743C10.7108 3.32102 10.3205 2.3568 9.54234 1.68133C9.03901 1.24821 8.57676 1.03164 7.93733 0.938832C7.62916 0.895004 7.26964 0.892426 6.98716 0.938832Z"/>
-                                                <path
-                                                    d="M4.65531 7.29655C3.49456 7.4203 2.68821 8.25561 2.31327 9.7303C2.06418 10.7126 1.99998 11.8933 2.15919 12.5405C2.29016 13.0587 2.71902 13.5846 3.21465 13.8373C3.43807 13.9507 3.75907 14.0435 4.02871 14.0744C4.18793 14.0951 5.40004 14.1002 7.71896 14.0951L11.1729 14.0873L11.3912 14.0255C12.2027 13.8037 12.7574 13.2572 12.9603 12.4889C13.0656 12.0893 13.0527 11.1354 12.9295 10.3826C12.6598 8.70678 11.9767 7.70131 10.8956 7.38678C10.6491 7.31459 10.2074 7.26045 10.0764 7.28623C9.95057 7.30944 9.77594 7.40225 9.38047 7.65749C8.95931 7.93077 8.90025 7.9617 8.58438 8.0803C8.21972 8.21694 7.91926 8.27624 7.56745 8.27624C7.20792 8.27624 6.93058 8.22467 6.56592 8.09577C6.2218 7.97202 6.20639 7.96428 5.66711 7.62139C5.38463 7.44092 5.17405 7.32491 5.09187 7.3017C4.94806 7.26561 4.94806 7.26561 4.65531 7.29655Z"/>
-                                            </g>
-                                        </svg>
-                                    </Link>
-                                </li>
+                            {
+                                isLogin ?
+                                    newAvatar?
+                                    <li className="user-profile-has--hover">
+                                        <img className='user-avatar'
+                                             src={newAvatar}
+                                        />
+                                        <UserInfor/>
+                                    </li>:
+                                        <li className="user-profile-has--hover">
+                                            <img className='user-avatar'
+                                                 src={avatar}
+                                            />
+                                            <UserInfor/>
+                                        </li>
+                                    :
+                                    <li>
+                                        <Link to="/login">
+                                            <svg
+                                                width={15}
+                                                height={15}
+                                                viewBox="0 0 15 15"
+                                                xmlns="http://www.w3.org/2000/svg"
+                                            >
+                                                <g clipPath="url(#clip0_1585_341)">
+                                                    <path
+                                                        d="M6.98716 0.938832C6.28609 1.04711 5.65949 1.38227 5.169 1.90563C4.62972 2.48055 4.3498 3.14571 4.31128 3.94235C4.25735 5.0561 4.80177 6.12086 5.74167 6.73703C6.20391 7.04125 6.64818 7.19594 7.18747 7.23977C8.18643 7.31711 9.03901 7.00258 9.72724 6.29875C10.2742 5.74188 10.5516 5.13344 10.6183 4.35743C10.7108 3.32102 10.3205 2.3568 9.54234 1.68133C9.03901 1.24821 8.57676 1.03164 7.93733 0.938832C7.62916 0.895004 7.26964 0.892426 6.98716 0.938832Z"/>
+                                                    <path
+                                                        d="M4.65531 7.29655C3.49456 7.4203 2.68821 8.25561 2.31327 9.7303C2.06418 10.7126 1.99998 11.8933 2.15919 12.5405C2.29016 13.0587 2.71902 13.5846 3.21465 13.8373C3.43807 13.9507 3.75907 14.0435 4.02871 14.0744C4.18793 14.0951 5.40004 14.1002 7.71896 14.0951L11.1729 14.0873L11.3912 14.0255C12.2027 13.8037 12.7574 13.2572 12.9603 12.4889C13.0656 12.0893 13.0527 11.1354 12.9295 10.3826C12.6598 8.70678 11.9767 7.70131 10.8956 7.38678C10.6491 7.31459 10.2074 7.26045 10.0764 7.28623C9.95057 7.30944 9.77594 7.40225 9.38047 7.65749C8.95931 7.93077 8.90025 7.9617 8.58438 8.0803C8.21972 8.21694 7.91926 8.27624 7.56745 8.27624C7.20792 8.27624 6.93058 8.22467 6.56592 8.09577C6.2218 7.97202 6.20639 7.96428 5.66711 7.62139C5.38463 7.44092 5.17405 7.32491 5.09187 7.3017C4.94806 7.26561 4.94806 7.26561 4.65531 7.29655Z"/>
+                                                </g>
+                                            </svg>
+                                        </Link>
+                                    </li>
                             }
                         </ul>
                         <div className="sidebar-button mobile-menu-btn">
@@ -413,4 +443,5 @@ function Header1() {
         </>
     );
 }
+
 export default Header1;

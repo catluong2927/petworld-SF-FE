@@ -1,36 +1,89 @@
 import Layout from "../../layout/Layout";
 import Breadcrumb from "../breadcrumb/Breadcrumb";
-import {Link} from "react-router-dom";
-import React, {useEffect, useState} from "react";
+import {Link, useNavigate} from "react-router-dom";
+import React, {useEffect, useRef, useState} from "react";
 import {sentRequest} from "../../pages/ServicePackage";
-import {useSelector} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
+import {Toast} from "primereact/toast";
+import {cancelOrder, deleteAllOrders, getAllOrders} from "../../store/orderSlice";
+import Modal from "./CustomePrompt";
+import {GET} from "../../utilities/constantVariable";
 
-export const Order = (props) => {
+
+
+export const Order = () => {
+    const toast = useRef(null);
     const [orders, setOrders] = useState([]);
     const isLogin = useSelector((state) => state.auth.login?.currentUser);
+    const dispatch = useDispatch();
+    const [shouldRender, setShouldRender] = useState(false);
+    const getOrders = useSelector((state) => state.order.products);
+    const [id, setId] = useState(0);
+    const navigate = useNavigate();
     let email = "";
+    let token = '';
     if(isLogin){
         email = isLogin.userDtoResponse.email;
+        token = isLogin.token;
     }
-    const URL_ORDER = `orders/${email}`;
-    useEffect(() => {
-        const res = sentRequest(URL_ORDER);
-        res.then(data => {
-            setOrders(data);
-        }).catch(
 
-        )
+    const URL_ORDER = `orders/${email}`;
+    const [showModal, setShowModal] = useState(false);
+    useEffect(() => {
+        dispatch(deleteAllOrders)
+        const res = sentRequest(URL_ORDER, GET, null, token);
+        res.then(data => {
+            dispatch(getAllOrders(data))
+        }).catch()
+
     }, [])
+
+    useEffect(() => {
+        dispatch(deleteAllOrders)
+        setOrders(getOrders)
+    }, [shouldRender]);
+
     let totalBill = 0;
+    const openModal = (props) => {
+        setShowModal(true);
+        setId(props);
+    };
+
+    const closeModal = () => {
+        setShowModal(false);
+    };
+
+    const cancelBillHandler = () => {
+        setShouldRender(!shouldRender);
+        const canceledOrder = {id: id, status: "Canceled" , token}
+        dispatch(cancelOrder(canceledOrder))
+        navigate('/order')
+        setShowModal(!showModal)
+    }
+
     return (<>
         <Layout>
             <Breadcrumb pageName="Your Order" pageTitle="Your Order"/>
+            <Toast ref={toast}/>
+                {showModal && (
+                    <Modal onClose={closeModal}>
+                        <h3 className='order-cancel-modal-alert'>Are you Sure?</h3>
+                        <div className='order-cancle-modal-btn'>
+                            <button className='order-cancle-modal--no' onClick={closeModal}>No</button>
+                            <button className='order-cancle-moal--yes' onClick={cancelBillHandler}>Ok</button>
+                        </div>
+                    </Modal>
+                )}
             <div className="col-lg-4">
-                {orders.map((element) => (<div className="widget-area" key={element.id}>
+                {orders.map((element, index) => (<div className="widget-area" key={element.id}>
                     <div className="single-widgets widget_egns_recent_post mb-30 order">
+                        <div>
+                        </div>
                       <span className="widget-title order-header">
                         <h3>{element.status}</h3>
-
+                          {element.status === 'Waiting for confirm'? <button className='order-cancle'
+                                             onClick={openModal.bind(null, element.id ? element.id: orders.length + 1)} >
+                              <h4 className='order-cancle-btn'> Cancel Order</h4></button>: ''}
                       </span>
                         <div className="recent-post-wraper">
                             {Array.isArray(element.orderDetailDtoResponses) && element.orderDetailDtoResponses.map((item) => (
@@ -71,7 +124,7 @@ export const Order = (props) => {
                                 </tr>
                                 <tr>
                                     <th>Order's Name: </th>
-                                    <td>{element.userDtoResponse.fullName}</td>
+                                    <td>{element.fullName? element.fullName: element.userDtoResponse.fullName}</td>
                                 </tr>
                                 <tr>
                                     <th>Phone Number:</th>
@@ -86,8 +139,16 @@ export const Order = (props) => {
                                     <td>{element.note}</td>
                                 </tr>
                                 <tr>
+                                    <th>Shipping fee</th>
+                                    <td>$ 1</td>
+                                </tr>
+                                <tr>
+                                    <th>Tax</th>
+                                    <td> $ {((element.total / 1.1) * 0.1).toFixed(2)}</td>
+                                </tr>
+                                <tr>
                                     <th>Total price: </th>
-                                    <td className={"order-detail-price"}>{element.total} $</td>
+                                    <td className={"order-detail-price"}>$ {element.total.toLocaleString()} </td>
                                 </tr>
                             </table>
                         </div>

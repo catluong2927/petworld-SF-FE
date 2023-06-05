@@ -5,6 +5,7 @@ import ShopCard from "../components/shop/ShopCard";
 import Layout from "../layout/Layout";
 import { useEffect } from "react";
 import axios from "axios";
+import {useSelector} from "react-redux";
 
 
 function Shop() {
@@ -14,19 +15,26 @@ function Shop() {
   const [totalPages, setTotalPages] = useState(0);
   const [category, setCategory] = useState([]);
   const [checkedCategory, setCheckedCategory] = useState([]);
-
-  const token = useRouteLoaderData('token');
-  console.log(token);
+  const isLogin = useSelector((state) => state.auth.login?.currentUser);
+  let token = '';
+  if(isLogin){
+    token = isLogin.token;
+  }
+  console.log(token)
 
   const CATEGORY_API = process.env.REACT_APP_FETCH_API + `/categorys`;
   useEffect(() => {
-    axios
-    .get(`${CATEGORY_API}`)
-    .then(res => {
-        setCategory(res.data.content)
+    axios.get(`${CATEGORY_API}`, {
+
+      headers: {
+        'Authorization': `Bearer ${token}` // Truyền t
+      }
     })
-    .catch(err => {console.log(err)
-    })
+        .then(res => {
+          setCategory(res.data.content);
+        })
+        .catch(err => {
+        });
   }, []);
 
 
@@ -39,6 +47,7 @@ function Shop() {
   //Cập nhật lại số trang hiện tại
   function changePageNumber(page) {
     setCurrentPage(page);
+    window.scroll(0,0);
   };
 
  
@@ -102,35 +111,15 @@ function Shop() {
                   </div>
                 </div>
                 <div className="shop-widget">
-                  <div className="check-box-item">
-                    <h5 className="shop-widget-title">Brand</h5>
-                    <div className="checkbox-container">
-                      <label className="containerss">
-                        Fancy Feast
-                        <input type="checkbox" defaultChecked="checked" />
-                        <span className="checkmark" />
-                      </label>
-                      <label className="containerss">
-                        Gentle Giants
-                        <input type="checkbox" />
-                        <span className="checkmark" />
-                      </label>
-                      <label className="containerss">
-                        Purina Pro Plan
-                        <input type="checkbox" />
-                        <span className="checkmark" />
-                      </label>
-                      <label className="containerss">
-                        Stella &amp; Chewy's
-                        <input type="checkbox" />
-                        <span className="checkmark" />
-                      </label>
-                      <label className="containerss">
-                        Pet Dreams
-                        <input type="checkbox" />
-                        <span className="checkmark" />
-                      </label>
-                    </div>
+                  <div className="item">
+                    <h5 className="shop-widget-title">Brands included</h5>
+                    <ul className="container">
+                        <li>Korea </li>
+                        <li>VietNam </li>
+                        <li>Japan</li>
+                        <li>America</li>
+                        <li>ChiNa</li>
+                    </ul>
                   </div>
                 </div>
               </div>
@@ -155,17 +144,6 @@ function Shop() {
                           <option name="21" value={"21"} >21</option>
                         </select>
                       </div>
-                      {/* <div className="single-select two">
-                        <select
-                          style={{ outline: "none" }}
-                          className="defult-select-drowpown"
-                          id="eyes-dropdown"
-                        >
-                          <option>Default</option>
-                          <option>Grid</option>
-                          <option>Closed</option>
-                        </select>
-                      </div> */}
                     </div>
                   </div>
                 </div>

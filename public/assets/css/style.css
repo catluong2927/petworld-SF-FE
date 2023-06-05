@@ -10,7 +10,7 @@ Template Name: Scooby - Petcare HTML Template
 5. Preloader
 6. Pagination
 7. search area
-8. Mobile-menu 
+8. Mobile-menu
 9. Topbar-section
 10. Header-section
 11. Banner-section
@@ -1478,6 +1478,7 @@ header.style-1 .nav-right ul li a {
   background-color: transparent;
   transition: 0.35s;
   position: relative;
+  text-decoration: none;
 }
 
 header.style-1 .nav-right ul li a svg {
@@ -1612,6 +1613,7 @@ header.style-1 .main-menu ul > li a {
   font-family: var(--font-cabin);
   transition: all 0.5s ease-out 0s;
   position: relative;
+  text-decoration: none;
 }
 @media (max-width: 1500px) {
   header.style-1 .main-menu ul > li a {
@@ -7661,6 +7663,12 @@ footer.style2 .social-area ul li:hover a i {
 /*=======================================
  7. Home Three Collection
 =======================================*/
+
+
+.col-lg-4.col-md-4.col-sm-6 :hover{
+  scale: 1.05;
+}
+
 .collection-card {
   border: 1px solid #ececec;
   border-radius: 10px;
@@ -7670,6 +7678,8 @@ footer.style2 .social-area ul li:hover a i {
   width: 100%;
   margin: 0 auto;
 }
+
+
 .collection-card .offer-card {
   position: absolute;
   left: -1px;
@@ -7780,8 +7790,49 @@ footer.style2 .social-area ul li:hover a i {
   transition: 0.35s;
 }
 .collection-card .cart-icon-list li a:hover {
-  background-color: var(--title-color2);
+  /*background-color: var(--title-color2);*/
+  background-color: #fd2020;
 }
+/*///////////////////////////////////////////////////////////*/
+.cart-icon-list-favorite {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  position: absolute;
+  right: 5%;
+  top: 1%;
+  opacity: 1;
+  transform: scale(1);
+  transition: 0.4s;
+  z-index: 9!important;
+}
+
+
+
+.cart-icon-list-favorite li {
+  margin-bottom: 10px;
+}
+
+.cart-icon-list-favorite li:last-child {
+  margin-bottom: 0;
+}
+
+.cart-icon-list-favorite li a {
+  width: 30px;
+  height: 30px;
+  background: red;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: 0.35s;
+}
+
+.collection-card:hover .cart-icon-list-favorite {
+  display:none;
+}
+
+/*/////////////////////////////////////////////////////////////*/
 .collection-card .collection-content {
   padding: 15px 10px 25px;
 }
@@ -9365,6 +9416,7 @@ footer.style2 .social-area ul li:hover a i {
 }
 .services-details-area .tab-content2 .tab-pane .reviews-area .review-form form .form-inner2 input {
   margin-right: 5px;
+  display:none;
 }
 .services-details-area .tab-content2 .tab-pane .reviews-area .review-form form .form-inner2 .review-rate-area p {
   margin-bottom: 0;
@@ -9378,7 +9430,7 @@ footer.style2 .social-area ul li:hover a i {
 }
 .services-details-area .tab-content2 .tab-pane .reviews-area .review-form form .form-inner2 .review-rate-area .rate:not(:checked) > input {
   position: absolute;
-  top: -9999px;
+  /*top: -9999px;*/
 }
 .services-details-area .tab-content2 .tab-pane .reviews-area .review-form form .form-inner2 .review-rate-area .rate:not(:checked) > label {
   float: right;
@@ -12059,7 +12111,7 @@ footer.style2 .social-area ul li:hover a i {
   color: var(--white);
 }
 .checkout-section .added-product-summary .added-products .single-product .product-img {
-  min-width: 90px;
+  width: 120px;
   height: 100px;
   padding-right: 25px;
 }
@@ -12071,7 +12123,7 @@ footer.style2 .social-area ul li:hover a i {
 .checkout-section .added-product-summary .added-products .single-product .product-img img {
   -o-object-fit: cover;
   object-fit: cover;
-  max-width: 90px;
+  width: 90px;
   height: 90px;
 }
 .checkout-section .added-product-summary .added-products .single-product .product-info .product-title {
@@ -12956,7 +13008,7 @@ footer.style2 .social-area ul li:hover a i {
 select#duration:focus {
   border: none;
   outline: none;
-}/*# sourceMappingURL=style.css.map */
+}/*# sourceMappingURL=UserProfile.css.map */
 
 /*ADD FOR NEW INTERFACE*/
 .pet-image{
@@ -13044,10 +13096,10 @@ select#duration:focus {
   height: 100px;
 }
 .product-image {
-    width: 42rem;
-    height: 30rem;
+  width: 42rem;
+  height: 30rem;
 }
-                                                                                  
+
 .package-price {
   font-size: 1.25rem;
   font-weight: 700;
@@ -13122,7 +13174,7 @@ select#duration:focus {
   display: flex;
   justify-content: space-between;
   gap: 30rem;
-  ;
+;
 }
 .order-detail-content--name {
   color: #333;
@@ -13273,3 +13325,90 @@ p.title-order {
   color : var(--primary-color3) !important;
 }
 
+.product-price {
+  color : var(--primary-color3);
+  padding-left: 2rem;
+  font-size: 15px;
+}
+.order-cancle-btn {
+  margin-left: 23rem;
+}
+.order-cancle-btn:hover {
+  color : red;
+  font-weight: 500;
+}
+.order-cancle {
+  background: none;
+}
+.order-cancle:hover {
+  color : var(--primary-color3);
+}
+
+.form-inner-phone input[type="text"]:invalid {
+  color: red;
+  border-color: red;
+}
+
+.form-inner-phone input[type="text"]::placeholder {
+  color: red;
+}
+.order-cancel-modal-alert {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #333;
+  font-family: var(--font-dosis);
+  letter-spacing: 0.02em;
+  text-transform: capitalize;
+  line-height: 1;
+}
+.order-cancle-modal-btn {
+  display: flex;
+  justify-content: space-between;
+}
+
+.order-cancle-modal--no,
+.order-cancle-moal--yes {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 4px;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.order-cancle-modal--no {
+  background-color: #ccc;
+  color: #333;
+}
+
+.order-cancle-moal--yes {
+  background-color: #f44336;
+  color: #fff;
+}
+.hover_image :hover{
+  transform: scale(1.5) !important;
+}
+
+.user-review-image {
+  width: 5rem;
+  height: 5rem;
+}
+
+
+.avatar-edit{
+  position: relative;
+}
+
+.edit-icon{
+  position: absolute;
+  width: 30 px;
+  height: 30px;
+  margin-left: -2rem;
+  border-radius: 30px;
+}
+.image-loading{
+  /*position: absolute;*/
+  width: 150px;
+  height: 150px;
+  margin-left: -2rem;
+  border-radius: 150px;
+}

@@ -38,7 +38,7 @@ export const UserInfor = () => {
                 </Link>
                 </li>
                 <li className= 'inforuserli'>
-                <Link to='/updatepassword' className='none-border-circle custom-tag'>
+                <Link to='/updatePassword' className='none-border-circle custom-tag'>
                     <span className='infor-link' >Settings</span>
                 </Link>
                 </li>
