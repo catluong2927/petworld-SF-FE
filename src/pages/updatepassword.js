@@ -21,6 +21,12 @@ function ChangPassword() {
     const navigate = useNavigate();
     const [email,setEmail] = useState('');
     const [token,setToken] = useState('');
+    const [showPassword, setShowPassword] = useState(false);
+    const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+    const [showCurrentPassword, setShowCurrentPassword] = useState(false);
+    const REGEX = {
+        newPassword: /^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=])(?=\S+$).{8,}$/,
+    };
     useEffect(()=>{
         setEmail(response.userDtoResponse.email);
         setToken(response.token)
@@ -33,13 +39,16 @@ function ChangPassword() {
         });
     }
 
-    function handleValidateLogin() {
+    function handleValidateChangePass() {
         const errors = {};
         if (!form.currentPass) {
             errors.currentPass = "Required";
         }
         if (!form.newPassword) {
             errors.newPassword = "Required";
+        }else if (!REGEX.newPassword.test(form.newPassword)) {
+            errors.newPassword = "have at least 8 characters, have uppercase letters, lowercase letters, special characters";
+            console.log("code");
         }
         if (!form.confirmPassword) {
             errors.confirmPassword = "Required";
@@ -58,7 +67,18 @@ function ChangPassword() {
         await changePassword(password, dispatch, navigate, toast, token);
     }
 
-
+    function handleShowPass(event){
+        event.preventDefault();
+        setShowPassword(!showPassword);
+    }
+    function handleShowConfirmPass(event){
+        event.preventDefault();
+        setShowConfirmPassword(!showConfirmPassword)
+    }
+    function handleShowCurrentPass(event){
+        event.preventDefault();
+        setShowCurrentPassword(!showCurrentPassword)
+    }
 
     return (
         <>
@@ -81,7 +101,7 @@ function ChangPassword() {
                                     </div>
                                     <Formik
                                         initialValues={form}
-                                        validate={handleValidateLogin}
+                                        validate={handleValidateChangePass}
                                         onSubmit={handleSubmit}
                                     >
                                         {({errors, handleSubmit}) => (
@@ -92,12 +112,19 @@ function ChangPassword() {
                                                             errors.currentPass ? "custom-input-error" : ""
                                                         }`}>
                                                             <label>Your Current Password *</label>
-                                                            <input type="password"
+                                                            <input type={showCurrentPassword ? 'text' : 'password'}
                                                                    placeholder="Enter Your Current Password"
                                                                    name="currentPass"
                                                                    value={form.currentPass || ""}
                                                                    onChange={handleChangeUpdate}
                                                             />
+                                                            {
+                                                                showCurrentPassword?<i className="bi bi-eye-fill" id="togglePassword"
+                                                                                onClick={handleShowCurrentPass}
+                                                                />:<i className="bi bi-eye-slash" id="togglePassword"
+                                                                      onClick={handleShowCurrentPass}
+                                                                />
+                                                            }
                                                         </div>
                                                         <p className="error">{errors.currentPass}</p>
                                                     </div>
@@ -107,14 +134,20 @@ function ChangPassword() {
                                                         }`}>
                                                             <label>New Password *</label>
                                                             <input
-                                                                type="password"
+                                                                type={showPassword ? 'text' : 'password'}
                                                                 name="newPassword"
                                                                 id="password"
                                                                 placeholder="Enter New Password"
                                                                 value={form.newPassword || ""}
                                                                 onChange={handleChangeUpdate}
                                                             />
-                                                            <i className="bi bi-eye-slash" id="togglePassword"/>
+                                                            {
+                                                                showPassword?<i className="bi bi-eye-fill" id="togglePassword1"
+                                                                                onClick={handleShowPass}
+                                                                />:<i className="bi bi-eye-slash" id="togglePassword1"
+                                                                      onClick={handleShowPass}
+                                                                />
+                                                            }
                                                         </div>
                                                         <p className="error">{errors.newPassword}</p>
                                                     </div>
@@ -124,14 +157,20 @@ function ChangPassword() {
                                                         }`}>
                                                             <label>Confirm New Password *</label>
                                                             <input
-                                                                type="password"
+                                                                type={showConfirmPassword ? 'text' : 'password'}
                                                                 name="confirmPassword"
                                                                 id="confirmPassword"
                                                                 placeholder="Enter New Password"
                                                                 value={form.confirmPassword || ""}
                                                                 onChange={handleChangeUpdate}
                                                             />
-                                                            <i className="bi bi-eye-slash" id="togglePassword"/>
+                                                            {
+                                                                showConfirmPassword?<i className="bi bi-eye-fill" id="togglePassword"
+                                                                                       onClick={handleShowConfirmPass}
+                                                                />:<i className="bi bi-eye-slash" id="togglePassword"
+                                                                      onClick={handleShowConfirmPass}
+                                                                />
+                                                            }
                                                         </div>
                                                         <p className="error">{errors.confirmPassword}</p>
                                                     </div>

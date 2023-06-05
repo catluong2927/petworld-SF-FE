@@ -28,6 +28,8 @@ function SignUpPage() {
     const [messEmailErr, setMessEmailErr] = useState(false);
     const [phone, setPhone] = useState(null);
     const [messPhoneErr, setMessPhoneErr] = useState(false);
+    const [showPassword, setShowPassword] = useState(false);
+    const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
 
     const REGEX = {
@@ -153,6 +155,14 @@ function SignUpPage() {
 
     }, [phone, LOGIN_API])
 
+    function handleShowPass(event){
+        event.preventDefault();
+        setShowPassword(!showPassword);
+    }
+    function handleShowConfirmPass(event){
+        event.preventDefault();
+        setShowConfirmPassword(!showConfirmPassword)
+    }
 
     return (
         <>
@@ -256,17 +266,22 @@ function SignUpPage() {
                                                         }`}>
                                                             <label>Password *</label>
                                                             <input
-                                                                type="password"
+                                                                type={showPassword ? 'text' : 'password'}
                                                                 name="password"
                                                                 id="password"
                                                                 placeholder="Enter Your Password"
                                                                 value={form.password || ""}
                                                                 onChange={handleChangeSignup}
                                                             />
-                                                            <i className="bi bi-eye-slash" id="togglePassword"/>
-                                                            <p className="error">{errors.password}</p>
-
+                                                            {
+                                                                showPassword?<i className="bi bi-eye-fill" id="togglePassword1"
+                                                                                onClick={handleShowPass}
+                                                                />:<i className="bi bi-eye-slash" id="togglePassword1"
+                                                                      onClick={handleShowPass}
+                                                                />
+                                                            }
                                                         </div>
+                                                        <p className="error">{errors.password}</p>
                                                     </div>
                                                     <div className="col-md-12">
                                                         <div className={`form-inner ${
@@ -274,17 +289,22 @@ function SignUpPage() {
                                                         }`}>
                                                             <label>Confirm Password *</label>
                                                             <input
-                                                                type="password"
+                                                                type={showConfirmPassword ? 'text' : 'password'}
                                                                 name="confirmPassword"
                                                                 id="confirmpassword"
                                                                 placeholder="Enter Your Password"
                                                                 value={form.confirmPassword || ""}
                                                                 onChange={handleChangeSignup}
                                                             />
-                                                            <i className="bi bi-eye-slash" id="togglePassword2"/>
-                                                            <p className="error">{errors.confirmPassword}</p>
-
+                                                            {
+                                                                showConfirmPassword?<i className="bi bi-eye-fill" id="togglePassword"
+                                                                                onClick={handleShowConfirmPass}
+                                                                />:<i className="bi bi-eye-slash" id="togglePassword"
+                                                                      onClick={handleShowConfirmPass}
+                                                                />
+                                                            }
                                                         </div>
+                                                        <p className="error">{errors.confirmPassword}</p>
                                                     </div>
                                                     <div className="col-md-12">
                                                         <div
