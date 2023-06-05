@@ -9,25 +9,25 @@ import {useSelector} from "react-redux";
 
 
 function Shop() {
-
+  const CATEGORY_API = process.env.REACT_APP_FETCH_API + `/categorys`;
   const [sizePage, setSizePage] = useState(9);
   const [currentPage, setCurrentPage] = useState(0);
   const [totalPages, setTotalPages] = useState(0);
   const [category, setCategory] = useState([]);
   const [checkedCategory, setCheckedCategory] = useState([]);
   const isLogin = useSelector((state) => state.auth.login?.currentUser);
-  let token = '';
-  if(isLogin){
-    token = isLogin.token;
-  }
-  console.log(token)
 
-  const CATEGORY_API = process.env.REACT_APP_FETCH_API + `/categorys`;
+  const [token, setToken] = useState('');
+
   useEffect(() => {
-    axios.get(`${CATEGORY_API}`, {
+    setToken(isLogin.token);
+  },[token])
 
+  useEffect(() => {
+    axios
+      .get(`${CATEGORY_API}`, {
       headers: {
-        'Authorization': `Bearer ${token}` // Truyền t
+        'Authorization': `Bearer ${token}`
       }
     })
         .then(res => {
@@ -35,7 +35,7 @@ function Shop() {
         })
         .catch(err => {
         });
-  }, []);
+  }, [token]);
 
 
   //Cập nhật lại size
@@ -118,7 +118,7 @@ function Shop() {
                         <li>VietNam </li>
                         <li>Japan</li>
                         <li>America</li>
-                        <li>ChiNa</li>
+                        <li>China</li>
                     </ul>
                   </div>
                 </div>

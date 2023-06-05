@@ -79,7 +79,7 @@ function ShopCard(props) {
                     <div key={id} className="col-lg-4 col-md-4 col-sm-6">
                         <div className="collection-card">
                             {markDtoResponse.tag === "" ? ("") : (
-                                <div
+                                <div    
                                     className= {markDtoResponse.tagBadge === "" ? "offer-card" : `offer-card ${markDtoResponse.tagBadge}`}
                                 >
                                     <span>{markDtoResponse.tag}</span>

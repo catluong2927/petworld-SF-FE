@@ -13383,7 +13383,7 @@ p.title-order {
   color: #fff;
 }
 .hover_image :hover{
-  transform: scale(1.5) !important;
+  transform: scale(0.1) !important;
 }
 
 .user-review-image {
