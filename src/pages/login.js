@@ -19,6 +19,7 @@ function LoginPage() {
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const [errorMess,setErrorMess] = useState('');
+    const [showPassword, setShowPassword] = useState(false);
     useEffect(()=>{
         setErrorMess(response)
     },[response]);
@@ -43,6 +44,10 @@ function LoginPage() {
 
     const handleSubmit = async (e) => {
         await loginUser(form, dispatch, navigate, toast)
+    }
+    function handleShowPass(event){
+        event.preventDefault();
+        setShowPassword(!showPassword);
     }
 
     console.log(response);
@@ -102,14 +107,20 @@ function LoginPage() {
                                                         }`}>
                                                             <label>Password *</label>
                                                             <input
-                                                                type="password"
+                                                                type={showPassword ? 'text' : 'password'}
                                                                 name="password"
                                                                 id="password"
                                                                 placeholder="Password"
                                                                 value={form.password || ""}
                                                                 onChange={handleChangeLogin}
                                                             />
-                                                            <i className="bi bi-eye-slash" id="togglePassword"/>
+                                                            {
+                                                                showPassword?<i className="bi bi-eye-fill" id="togglePassword"
+                                                                                onClick={handleShowPass}
+                                                                />:<i className="bi bi-eye-slash" id="togglePassword"
+                                                                      onClick={handleShowPass}
+                                                                />
+                                                            }
                                                         </div>
                                                         <p className="error">{errors.password}</p>
                                                     </div>

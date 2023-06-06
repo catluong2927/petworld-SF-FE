@@ -66,7 +66,7 @@ export const updateInfor = async (data, dispatch, navigate, toast, token) => {
                 Authorization: `Bearer ${token}`
             }
         })
-        dispatch(updateUserSuccess());
+        dispatch(updateUserSuccess);
         await toast.current.show({
             severity: 'success',
             summary: 'Success',
@@ -76,7 +76,7 @@ export const updateInfor = async (data, dispatch, navigate, toast, token) => {
         await getUserDetail(data.id, token, dispatch, navigate)
 
     } catch (err) {
-        dispatch(updateUserFail());
+        dispatch(updateUserFail);
         toast.current.show(
             {severity: 'error', summary: 'Error', detail: 'update infor fail', life: 1500})
     }
