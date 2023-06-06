@@ -29,7 +29,7 @@ function ProfileSection() {
     const [user, setUser] = useState({});
     const [phone, setPhone] = useState('')
     const [phoneUser,setPhoneUser] = useState('');
-    const [messPhoneErr, setMessPhoneErr] = useState('');
+    const [messPhoneErr, setMessPhoneErr] = useState(false);
 
     useEffect(() => {
         if (userResponse) {
@@ -63,7 +63,7 @@ function ProfileSection() {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        if(messPhoneErr === '') {
+        if(!messPhoneErr) {
             await updateInfor(user, dispatch, navigate, toast, token);
         }
     }
@@ -78,8 +78,7 @@ function ProfileSection() {
                 .catch(err => {
                     setMessPhoneErr(err.response.data)
                 })
-        }else setMessPhoneErr('')
-
+        }else setMessPhoneErr(false)
     }, [phone, LOGIN_API])
     console.log('messPhoneErr: ', messPhoneErr)
     return (
@@ -171,16 +170,6 @@ function ProfileSection() {
                                                                        className="col-md-4 col-lg-3 col-form-label">Profile
                                                                     Image</label>
                                                                 <div className="col-md-8 col-lg-9">
-
-                                                                    {/*<CloudinaryUploader/>*/}
-                                                                    {/*<div className="pt-2">*/}
-                                                                    {/*    <a href="#" className="btn btn-primary btn-sm"*/}
-                                                                    {/*       title="Upload new profile image"><i*/}
-                                                                    {/*        className="bi bi-upload"></i></a>*/}
-                                                                    {/*    <a href="#" className="btn btn-danger btn-sm"*/}
-                                                                    {/*       title="Remove my profile image"><i*/}
-                                                                    {/*        className="bi bi-trash"></i></a>*/}
-                                                                    {/*</div>*/}
                                                                 </div>
                                                             </div>
                                                             <div className="row mb-3">
