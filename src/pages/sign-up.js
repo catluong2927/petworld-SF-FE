@@ -129,12 +129,12 @@ function SignUpPage() {
         await signUpUser(data, dispatch, navigate, toast);
     }
     useEffect(()=>{
-           axios.get(`${LOGIN_API}/auth?account=${userName}`)
+            axios.get(`${LOGIN_API}/auth?account=${userName}`)
                 .then(res => setMessErrName(res.data))
                 .catch(err => {
                     setMessErrName(err.response.data)
                 })
-
+        console.log(1)
     },[userName,LOGIN_API])
 
     useEffect(() => {
