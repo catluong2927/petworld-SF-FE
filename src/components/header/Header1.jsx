@@ -39,7 +39,7 @@ function Header1() {
     const headerRef = useRef(null);
     const [user, setUser] = useState({})
     const [avatar, setAvatar] = useState('');
-    const [newAvatar,setNewAvatar] = useState('')
+    const [newAvatar,setNewAvatar] = useState('');
     const handleScroll = () => {
         const {scrollY} = window;
         dispatch({type: "setScrollY", payload: scrollY});

@@ -61,7 +61,7 @@ export const updateInfor = async (data, dispatch, navigate, toast, token) => {
     const LOGIN_API = process.env.REACT_APP_FETCH_API;
     dispatch(updateUserStart);
     try {
-        const res = await axios.put(`${LOGIN_API}/users`, data, {
+        await axios.put(`${LOGIN_API}/users`, data, {
             headers: {
                 Authorization: `Bearer ${token}`
             }

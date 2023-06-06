@@ -13,16 +13,11 @@ import {useDispatch, useSelector} from "react-redux";
 
 
 function LoginPage() {
-    const response = useSelector((state)=>state.auth.login?.error);
     const toast = useRef(null);
     const [form, setForm] = useState({});
     const dispatch = useDispatch();
     const navigate = useNavigate();
-    const [errorMess,setErrorMess] = useState('');
     const [showPassword, setShowPassword] = useState(false);
-    useEffect(()=>{
-        setErrorMess(response)
-    },[response]);
 
     function handleChangeLogin(event) {
         setForm({
@@ -50,8 +45,7 @@ function LoginPage() {
         setShowPassword(!showPassword);
     }
 
-    console.log(response);
-
+    console.log(form)
     return (
         <>
             <div className="card flex justify-content-center gap-2">
@@ -99,7 +93,6 @@ function LoginPage() {
                                                             />
                                                         </div>
                                                         <p className="error">{errors.account}</p>
-                                                        {errorMess && <p className="error">{errorMess}</p>}
                                                     </div>
                                                     <div className="col-12">
                                                         <div className={`form-inner ${
