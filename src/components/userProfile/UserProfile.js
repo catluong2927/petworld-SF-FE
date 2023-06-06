@@ -29,17 +29,15 @@ function ProfileSection() {
     const [user, setUser] = useState({});
     const [phone, setPhone] = useState('')
     const [phoneUser,setPhoneUser] = useState('');
-    const [messPhoneErr, setMessPhoneErr] = useState('')
+    const [messPhoneErr, setMessPhoneErr] = useState('');
+
     useEffect(() => {
-        setToken(userResponse.token);
-        setPhoneUser(userResponse?.userDtoResponse.phone);
-    }, [userResponse]);
-    useEffect(() => {
-        if (userResponse.userDtoResponse.id && token) {
-            axios
+        if (userResponse) {
+            setPhoneUser(userResponse.userDtoResponse.phone);
+           axios
                 .get(`${LOGIN_API}/users/${userResponse.userDtoResponse.id}`, {
                     headers: {
-                        Authorization: `Bearer ${token}`
+                        Authorization: `Bearer ${userResponse.token}`
                     }
                 })
                 .then(res => {
@@ -49,7 +47,12 @@ function ProfileSection() {
                     throw err;
                 });
         }
-    }, [token]);
+    }, [userResponse]);
+    useEffect(()=>{
+        if(user){
+            setToken(userResponse.token);
+        }
+    },[user])
 
     function handleChangeEdit(event) {
         setUser({
@@ -69,7 +72,7 @@ function ProfileSection() {
 
     }
     useEffect(() => {
-        if (user.phone != phoneUser) {
+        if (phone != phoneUser) {
             axios.get(`${LOGIN_API}/auth?account=${phone}`)
                 .then(res => setMessPhoneErr(res.data))
                 .catch(err => {
@@ -78,7 +81,7 @@ function ProfileSection() {
         }else setMessPhoneErr('')
 
     }, [phone, LOGIN_API])
-
+    console.log('messPhoneErr: ', messPhoneErr)
     return (
         <>
             <div className="card flex justify-content-center gap-2">

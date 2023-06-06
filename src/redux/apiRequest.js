@@ -13,19 +13,19 @@ import {
 
 export const loginUser = async (form, dispatch, navigate, toast) => {
     const LOGIN_API = process.env.REACT_APP_FETCH_API;
-    dispatch(loginStart());
+    dispatch(loginStart);
     try {
         const res = await axios.post(`${LOGIN_API}/auth/login`, form);
         dispatch(loginSuccess(res.data));
         toast.current.show({severity: 'success', summary: 'Success', detail: 'Login successfully', life: 1000})
         setTimeout(() => {
             navigate("/")
+            window.scroll(0,0);
         }, 1000);
-
     } catch (err) {
         dispatch(loginFail());
         toast.current.show(
-            {severity: 'error', summary: 'Error', detail: 'Login fail', life: 1500})
+            {severity: 'error', summary: 'Error', detail: 'Login fail, your account is not valid', life: 1500})
     }
 }
 export const signUpUser = async (data, dispatch, navigate, toast) => {
