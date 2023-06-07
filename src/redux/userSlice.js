@@ -71,7 +71,8 @@ const userSlice = createSlice({
         },
         updateImageFail: (state) => {
             state.image.isFetching = false;
-            state.image.error = true
+            state.image.isUpdated = '';
+            state.image.error = true;
         },
     }
 })

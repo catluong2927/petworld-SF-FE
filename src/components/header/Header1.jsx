@@ -33,7 +33,8 @@ function reducer(state, action) {
 
 function Header1() {
     const isLogin = useSelector((state) => state.auth.login?.currentUser);
-    const isEdit = useSelector((state) => state.user.image?.isUpdated);
+    // const [isEdit, setIsEdit]= useState(false);
+    const edit = useSelector((state) => state.user.image.isUpdated);
     const currentRoute = useLocation().pathname;
     const [state, dispatch] = useReducer(reducer, initialState);
     const headerRef = useRef(null);
@@ -52,18 +53,25 @@ function Header1() {
     }, []);
 
     useEffect(() => {
-        setUser(isLogin?.userDtoResponse)
-        if(isLogin){
-            setAvatar(isLogin?.userDtoResponse.avatar);
+        if(isLogin && !edit){
+            console.log(1)
+            setUser(isLogin.userDtoResponse)
+            setAvatar(isLogin.userDtoResponse.avatar);
             setNewAvatar('')
+            console.log(2);
         }
-    }, [user,isLogin])
-    useEffect(() => {
-        if (isEdit !== null) {
-            setNewAvatar(isEdit);
-            setAvatar('')
+    }, [isLogin])
+    useEffect( () => {
+
+        if (edit != '') {
+            console.log(3)
+            setNewAvatar(edit);
+            setAvatar('');
+            console.log(4)
         }
-    }, [isEdit])
+
+    }, [edit])
+    console.log(newAvatar)
     return (
         <>
             <div className="top-bar">
