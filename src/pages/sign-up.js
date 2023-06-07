@@ -47,7 +47,7 @@ function SignUpPage() {
     let roles = [];
     if (isCheckedCus) {
         const customer = {
-            "id": 2,
+            "id": 4,
             "name": "ROLE_CUSTOMER",
             "desc": "Khách hàng"
         }
@@ -55,7 +55,7 @@ function SignUpPage() {
     }
     if (isCheckedOwn) {
         const owner = {
-            "id": 3,
+            "id": 2,
             "name": "ROLE_OWNER",
             "desc": "Trung tâm dịch vụ"
         }

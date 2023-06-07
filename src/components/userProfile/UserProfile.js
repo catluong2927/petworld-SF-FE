@@ -13,7 +13,7 @@ import "./assets/vendor/bootstrap/js/bootstrap.bundle.min"
 import {useDispatch, useSelector} from "react-redux";
 import Layout from "../../layout/Layout";
 import Breadcrumb from "../breadcrumb/Breadcrumb";
-import {Link, useNavigate, useParams} from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
 import {changePassword, updateInfor} from "../../redux/userRequest";
 import axios from "axios";
 import {Toast} from "primereact/toast";
@@ -32,7 +32,9 @@ function ProfileSection() {
     const [messPhoneErr, setMessPhoneErr] = useState(false);
 
     useEffect(() => {
+        console.log(userResponse)
         if (userResponse) {
+            console.log(1);
             setPhoneUser(userResponse.userDtoResponse.phone);
            axios
                 .get(`${LOGIN_API}/users/${userResponse.userDtoResponse.id}`, {
@@ -47,6 +49,7 @@ function ProfileSection() {
                     throw err;
                 });
         }
+        console.log(2)
     }, [userResponse]);
     useEffect(()=>{
         if(user){
