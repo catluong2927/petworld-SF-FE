@@ -10,6 +10,7 @@ import {
     logoutSuccess,
     logoutFail,
 } from "./authSlice";
+import {updateImageFail} from "./userSlice";
 
 export const loginUser = async (form, dispatch, navigate, toast) => {
     const LOGIN_API = process.env.REACT_APP_FETCH_API;
@@ -52,7 +53,9 @@ export const logout = async (dispatch,navigate) =>{
     dispatch(logoutStart());
     try{
         localStorage.removeItem('persist:root')
+        dispatch(updateImageFail());
         dispatch(logoutSuccess());
+        console.log("clear")
         navigate("/login")
     }catch (err){
         dispatch(logoutFail());
