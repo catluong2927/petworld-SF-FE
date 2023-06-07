@@ -39,7 +39,7 @@ function Header1() {
     const headerRef = useRef(null);
     const [user, setUser] = useState({})
     const [avatar, setAvatar] = useState('');
-    const [newAvatar,setNewAvatar] = useState('')
+    const [newAvatar, setNewAvatar] = useState('');
     const handleScroll = () => {
         const {scrollY} = window;
         dispatch({type: "setScrollY", payload: scrollY});
@@ -53,13 +53,15 @@ function Header1() {
 
     useEffect(() => {
         setUser(isLogin?.userDtoResponse)
-        if (isLogin) {
-            setAvatar(user.avatar);
+        if(isLogin){
+            setAvatar(isLogin?.userDtoResponse.avatar);
+            setNewAvatar('')
         }
-    }, [user])
+    }, [user,isLogin])
     useEffect(() => {
-        if(isEdit !== null){
+        if (isEdit !== null) {
             setNewAvatar(isEdit);
+            setAvatar('')
         }
     }, [isEdit])
     return (
@@ -396,13 +398,13 @@ function Header1() {
                             </li>
                             {
                                 isLogin ?
-                                    newAvatar?
-                                    <li className="user-profile-has--hover">
-                                        <img className='user-avatar'
-                                             src={newAvatar}
-                                        />
-                                        <UserInfor/>
-                                    </li>:
+                                    newAvatar ?
+                                        <li className="user-profile-has--hover">
+                                            <img className='user-avatar'
+                                                 src={newAvatar}
+                                            />
+                                            <UserInfor/>
+                                        </li> :
                                         <li className="user-profile-has--hover">
                                             <img className='user-avatar'
                                                  src={avatar}

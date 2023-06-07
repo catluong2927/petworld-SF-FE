@@ -13,7 +13,7 @@ import "./assets/vendor/bootstrap/js/bootstrap.bundle.min"
 import {useDispatch, useSelector} from "react-redux";
 import Layout from "../../layout/Layout";
 import Breadcrumb from "../breadcrumb/Breadcrumb";
-import {Link, useNavigate, useParams} from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
 import {changePassword, updateInfor} from "../../redux/userRequest";
 import axios from "axios";
 import {Toast} from "primereact/toast";
@@ -29,17 +29,17 @@ function ProfileSection() {
     const [user, setUser] = useState({});
     const [phone, setPhone] = useState('')
     const [phoneUser,setPhoneUser] = useState('');
-    const [messPhoneErr, setMessPhoneErr] = useState('')
+    const [messPhoneErr, setMessPhoneErr] = useState(false);
+
     useEffect(() => {
-        setToken(userResponse.token);
-        setPhoneUser(userResponse?.userDtoResponse.phone);
-    }, [userResponse]);
-    useEffect(() => {
-        if (userResponse.userDtoResponse.id && token) {
-            axios
+        console.log(userResponse)
+        if (userResponse) {
+            console.log(1);
+            setPhoneUser(userResponse.userDtoResponse.phone);
+           axios
                 .get(`${LOGIN_API}/users/${userResponse.userDtoResponse.id}`, {
                     headers: {
-                        Authorization: `Bearer ${token}`
+                        Authorization: `Bearer ${userResponse.token}`
                     }
                 })
                 .then(res => {
@@ -49,7 +49,13 @@ function ProfileSection() {
                     throw err;
                 });
         }
-    }, [token]);
+        console.log(2)
+    }, [userResponse]);
+    useEffect(()=>{
+        if(user){
+            setToken(userResponse.token);
+        }
+    },[user])
 
     function handleChangeEdit(event) {
         setUser({
@@ -60,7 +66,7 @@ function ProfileSection() {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        if(messPhoneErr === '') {
+        if(!messPhoneErr) {
             await updateInfor(user, dispatch, navigate, toast, token);
         }
     }
@@ -69,16 +75,15 @@ function ProfileSection() {
 
     }
     useEffect(() => {
-        if (user.phone != phoneUser) {
+        if (phone != phoneUser) {
             axios.get(`${LOGIN_API}/auth?account=${phone}`)
                 .then(res => setMessPhoneErr(res.data))
                 .catch(err => {
                     setMessPhoneErr(err.response.data)
                 })
-        }else setMessPhoneErr('')
-
+        }else setMessPhoneErr(false)
     }, [phone, LOGIN_API])
-
+    console.log('messPhoneErr: ', messPhoneErr)
     return (
         <>
             <div className="card flex justify-content-center gap-2">
@@ -168,16 +173,6 @@ function ProfileSection() {
                                                                        className="col-md-4 col-lg-3 col-form-label">Profile
                                                                     Image</label>
                                                                 <div className="col-md-8 col-lg-9">
-
-                                                                    {/*<CloudinaryUploader/>*/}
-                                                                    {/*<div className="pt-2">*/}
-                                                                    {/*    <a href="#" className="btn btn-primary btn-sm"*/}
-                                                                    {/*       title="Upload new profile image"><i*/}
-                                                                    {/*        className="bi bi-upload"></i></a>*/}
-                                                                    {/*    <a href="#" className="btn btn-danger btn-sm"*/}
-                                                                    {/*       title="Remove my profile image"><i*/}
-                                                                    {/*        className="bi bi-trash"></i></a>*/}
-                                                                    {/*</div>*/}
                                                                 </div>
                                                             </div>
                                                             <div className="row mb-3">
