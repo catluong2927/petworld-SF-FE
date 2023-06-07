@@ -54,8 +54,8 @@ export const logout = async (dispatch,navigate) =>{
     try{
         localStorage.removeItem('persist:root')
         dispatch(updateImageFail());
+        dispatch(loginFail());
         dispatch(logoutSuccess());
-        console.log("clear")
         navigate("/login")
     }catch (err){
         dispatch(logoutFail());
