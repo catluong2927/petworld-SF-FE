@@ -140,11 +140,11 @@ function Shop() {
                           id="color-dropdown"
                           onChange={handleSizeChange}
                         >
-                          <option name="9" value={"9"} >9</option>
-                          <option name="12" value={"12"} >12</option>
-                          <option name="15" value={"15"} >15</option>
-                          <option name="18" value={"18"} >18</option>
-                          <option name="21" value={"21"} >21</option>
+                          <option value={"9"} >9</option>
+                          <option value={"12"} >12</option>
+                          <option value={"15"} >15</option>
+                          <option value={"18"} >18</option>
+                          <option value={"21"} >21</option>
                         </select>
                       </div>
                     </div>
