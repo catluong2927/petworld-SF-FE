@@ -38,13 +38,13 @@ function Shop() {
   }, [token]);
 
 
-  //Cập nhật lại size
+
   function handleSizeChange(event) {
     setSizePage(event.target.value);
     setCurrentPage(0);
   }
 
-  //Cập nhật lại số trang hiện tại
+
   function changePageNumber(page) {
     setCurrentPage(page);
     window.scroll(0,0);
@@ -66,7 +66,7 @@ function Shop() {
 
 
   console.log(checkedCategory)
-  //Phân trang
+
   function contentPageNumber() {
     let content = []
     for (let i = 0; i < totalPages; i++) {
