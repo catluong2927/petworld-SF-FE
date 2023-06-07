@@ -24,7 +24,6 @@ function ShopCard(props) {
     const FAVORITE_PRODUCTS_API = `http://localhost:8080/api/favorites/user/${userId}`;
 
     const[productFavorites,setProductFavorites] = useState([]);
-    // setProductFavorites(sentRequest(FAVORITE_PRODUCTS_API,GET,null,token));
     const [arrayIdProductFavorite,setArrayIdProductFavorite] = useState([]);
     useEffect(() => {
         axios

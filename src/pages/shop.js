@@ -55,7 +55,9 @@ function Shop() {
     var updatedList = [...checkedCategory];
     if (event.target.checked) {
       updatedList = [...checkedCategory, event.target.value];
+
       setCurrentPage(0);
+      
     } else {
       updatedList.splice(checkedCategory.indexOf(event.target.value), 1);
       setCurrentPage(0);
