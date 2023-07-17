@@ -72,7 +72,7 @@ function ProfileSection() {
     }
     const handleBlurEdit = async () => {
         await setPhone(user.phone);
-
+        console.log(phone)
     }
     useEffect(() => {
         if (phone !== phoneUser) {
@@ -81,6 +81,7 @@ function ProfileSection() {
                 .catch(err => {
                     setMessPhoneErr(err.response.data)
                 })
+            console.log("checkphone")
         }else setMessPhoneErr(false)
     }, [phone, LOGIN_API])
     console.log('messPhoneErr: ', messPhoneErr)
@@ -250,45 +251,7 @@ function ProfileSection() {
                                                                         <p className="error">this Phone already
                                                                             exists</p>}
                                                                 </div>
-
                                                             </div>
-
-                                                            {/*<div className="row mb-3">*/}
-                                                            {/*    <label htmlFor="Twitter" className="col-md-4 col-lg-3 col-form-label">Twitter*/}
-                                                            {/*        Profile</label>*/}
-                                                            {/*    <div className="col-md-8 col-lg-9">*/}
-                                                            {/*        <input name="twitter" type="text" className="form-control"*/}
-                                                            {/*               id="Twitter" value="https://twitter.com/#"/>*/}
-                                                            {/*    </div>*/}
-                                                            {/*</div>*/}
-
-                                                            {/*<div className="row mb-3">*/}
-                                                            {/*    <label htmlFor="Facebook" className="col-md-4 col-lg-3 col-form-label">Facebook*/}
-                                                            {/*        Profile</label>*/}
-                                                            {/*    <div className="col-md-8 col-lg-9">*/}
-                                                            {/*        <input name="facebook" type="text" className="form-control"*/}
-                                                            {/*               id="Facebook" value="https://facebook.com/#"/>*/}
-                                                            {/*    </div>*/}
-                                                            {/*</div>*/}
-
-                                                            {/*<div className="row mb-3">*/}
-                                                            {/*    <label htmlFor="Instagram" className="col-md-4 col-lg-3 col-form-label">Instagram*/}
-                                                            {/*        Profile</label>*/}
-                                                            {/*    <div className="col-md-8 col-lg-9">*/}
-                                                            {/*        <input name="instagram" type="text" className="form-control"*/}
-                                                            {/*               id="Instagram" value="https://instagram.com/#"/>*/}
-                                                            {/*    </div>*/}
-                                                            {/*</div>*/}
-
-                                                            {/*<div className="row mb-3">*/}
-                                                            {/*    <label htmlFor="Linkedin" className="col-md-4 col-lg-3 col-form-label">Linkedin*/}
-                                                            {/*        Profile</label>*/}
-                                                            {/*    <div className="col-md-8 col-lg-9">*/}
-                                                            {/*        <input name="linkedin" type="text" className="form-control"*/}
-                                                            {/*               id="Linkedin" value="https://linkedin.com/#"/>*/}
-                                                            {/*    </div>*/}
-                                                            {/*</div>*/}
-
                                                             <div className="text-center">
                                                                 <button type="submit" className="btn btn-primary">Save
                                                                     Changes
